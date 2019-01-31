@@ -22,6 +22,5 @@ class UsersListFragment : Fragment() {
     }
 
     private fun subscribeUI(binding: FragmentUsersListBinding) {
-        TODO("IMPLEMENT $binding")
     }
 }

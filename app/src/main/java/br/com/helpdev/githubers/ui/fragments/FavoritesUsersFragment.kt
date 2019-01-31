@@ -22,6 +22,5 @@ class FavoritesUsersFragment : Fragment() {
     }
 
     private fun subscribeUI(binding: FragmentFavoritesUsersBinding) {
-        TODO("IMPLEMENT $binding")
     }
 }
