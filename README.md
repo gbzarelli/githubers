@@ -10,16 +10,16 @@ entre outras opções que vou inserir aos poucos no scopo do projeto.
 
 ## Link Uteis:
 
-    ### Android guias / arquitetura
-        - https://developer.android.com/jetpack/docs/guide
-        - https://developer.android.com/guide/
+### Android guias / arquitetura
+    - https://developer.android.com/jetpack/docs/guide
+    - https://developer.android.com/guide/
 
-    ### Documentações
-        - https://developer.github.com/v3/
+### Documentações
+    - https://developer.github.com/v3/
 
-    ### Coroutines
-        - https://proandroiddev.com/kotlin-coroutines-patterns-anti-patterns-f9d12984c68e
-        - https://proandroiddev.com/coroutines-for-android-6f9b9f966056
+### Coroutines
+    - https://proandroiddev.com/kotlin-coroutines-patterns-anti-patterns-f9d12984c68e
+    - https://proandroiddev.com/coroutines-for-android-6f9b9f966056
 
-    ### Room
-        - https://medium.com/androiddevelopers/7-pro-tips-for-room-fbadea4bfbd1
+### Room
+    - https://medium.com/androiddevelopers/7-pro-tips-for-room-fbadea4bfbd1
