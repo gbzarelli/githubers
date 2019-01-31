@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            app:startDestination="@+id/fragment_fav_users">
+
+    <fragment
+            android:id="@+id/fragment_fav_users"
+            android:name="br.com.helpdev.githubers.ui.fragments.FavUsersFragment"
+            android:label="@string/nav_item_title_users_list"
+            tools:layout="@layout/fragment_fav_users">
+    </fragment>
+
+</navigation>

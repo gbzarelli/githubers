@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">GitHubers</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="title_activity_githubers">GitHubers</string>
+
+    <string name="nav_item_title_users_list">Users list</string>
+    <string name="nav_item_title_favorites_users">Favorites users</string>
+    <string name="nav_item_title_favorites_gists">Favorites gists</string>
+
+    <string name="nav_header_icon_content_description">Logo icon</string>
 </resources>

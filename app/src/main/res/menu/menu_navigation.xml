@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools">
+
+
+    <item android:id="@+id/nav_favorites_users"
+          android:title="@string/nav_item_title_favorites_users"/>
+
+    <item android:id="@+id/nav_users_list"
+          android:title="@string/nav_item_title_users_list"/>
+
+    <item android:id="@+id/nav_favorites_gists"
+          android:title="@string/nav_item_title_favorites_gists"/>
+
+</menu>
