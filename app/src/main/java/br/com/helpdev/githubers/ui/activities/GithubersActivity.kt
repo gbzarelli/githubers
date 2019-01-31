@@ -32,8 +32,7 @@ class GithubersActivity : AppCompatActivity() {
         /** Faz a ligação da activity com o layout /
          * Make the activity bind with the layout */
         val binding: ActivityGithubersBinding = DataBindingUtil.setContentView(
-            this,
-            R.layout.activity_githubers
+            this, R.layout.activity_githubers
         )
         drawerLayout = binding.drawerLayout
 

@@ -3,13 +3,29 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
-            app:startDestination="@+id/fragment_fav_users">
+            app:startDestination="@+id/favorites_users_fragment">
+
+    <!--
+        Todos fragments que estão associados ao menu do DrawerLayout DEVEM ter o MESMO id
+        configurado no xml de menu. Essa associação é necessária para que o Android utilize
+        a navegação do DrawerLayout.
+
+        All fragments that associated in DrawerLayout menu MUST be the same configured id on menu xml.
+         This association is required for that the Android use navigation of the DrawerLayout.
+    -->
 
     <fragment
-            android:id="@+id/fragment_fav_users"
-            android:name="br.com.helpdev.githubers.ui.fragments.FavUsersFragment"
+            android:id="@+id/favorites_users_fragment"
+            android:name="br.com.helpdev.githubers.ui.fragments.FavoritesUsersFragment"
+            android:label="@string/nav_item_title_favorites_users"
+            tools:layout="@layout/fragment_favorites_users">
+    </fragment>
+
+    <fragment
+            android:id="@+id/users_list_fragment"
+            android:name="br.com.helpdev.githubers.ui.fragments.UsersListFragment"
             android:label="@string/nav_item_title_users_list"
-            tools:layout="@layout/fragment_fav_users">
+            tools:layout="@layout/fragment_users_list">
     </fragment>
 
 </navigation>
