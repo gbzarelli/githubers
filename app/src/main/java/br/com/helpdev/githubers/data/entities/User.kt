@@ -6,10 +6,11 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 
 /**
+{
 "login": "mojombo",
 "id": 1,
 "node_id": "MDQ6VXNlcjE=",
-"avatar_url": "https://avatars0.githubusercontent.com/u/1v=4",
+"avatar_url": "https://avatars0.githubusercontent.com/u/1?v=4",
 "gravatar_id": "",
 "url": "https://api.github.com/users/mojombo",
 "html_url": "https://github.com/mojombo",
@@ -24,6 +25,7 @@ import androidx.room.PrimaryKey
 "received_events_url": "https://api.github.com/users/mojombo/received_events",
 "type": "User",
 "site_admin": false
+}
  */
 @Entity(
     tableName = "user",

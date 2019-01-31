@@ -6,6 +6,14 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 
+/**
+ * Interface utilizada pelo Retrofit; Aqui mapeamos as chamadas da API
+ * --
+ * Interface used by Retrofit: Here maping the calls of api
+ *
+ * -> Docs: https://developer.github.com/v3/
+ * -> Addrs: https://api.github.com/
+ */
 interface GithubService {
 
     @GET("users")

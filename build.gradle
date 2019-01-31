@@ -14,6 +14,8 @@ buildscript {
         roomVersion = '2.1.0-alpha04'
         uiAutomatorVersion = '2.2.0-alpha4'
         workVersion = '1.0.0-beta03'
+        materialVersion = '1.1.0-alpha03'
+        recyclerViewVersion = '1.1.0-alpha02'
 
         coreTestingVersion = '2.0.0'
         coroutinesVersion = "1.0.1"
@@ -25,8 +27,6 @@ buildscript {
         ktlintVersion = '0.29.0'
         ktxVersion = '1.0.1'
         lifecycleVersion = '2.0.0'
-        materialVersion = '1.1.0-alpha03'
-        recyclerViewVersion = '1.0.0'
         runnerVersion = '1.0.1'
         supportLibraryVersion = '1.0.2'
     }
