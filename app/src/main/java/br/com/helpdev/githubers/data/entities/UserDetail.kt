@@ -45,24 +45,25 @@ import java.util.*
         parentColumns = ["user_id"],
         childColumns = ["user_id"]
     )],
-    indices = [Index("user_id","email")]
+    indices = [Index("user_id", "email")],
+    primaryKeys = ["user_id"]
 )
 data class UserDetail(
-    @PrimaryKey @ColumnInfo(name = "user_id") var id: Int = 0,
-    var name: String = "",
-    var company: String = "",
-    var blog: String = "",
-    var location: String = "",
-    var email: String = "",
-    var hireable: String = "",
-    var bio: String = "",
-    var public_repos: Int = 0,
-    var public_gists: Int = 0,
-    var followers: Int = 0,
-    var following: Int = 0,
-    var created_at: Calendar? = null,
-    var updated_at: Calendar? = null
-){
+    @ColumnInfo(name = "user_id") val id: Int,
+    val name: String?,
+    val company: String?,
+    val blog: String?,
+    val location: String?,
+    val email: String?,
+    val hireable: String?,
+    val bio: String?,
+    val public_repos: Int,
+    val public_gists: Int,
+    val followers: Int,
+    val following: Int,
+    val created_at: Calendar? = null,
+    val updated_at: Calendar? = null
+) {
     override fun toString(): String {
         return "UserDetail(id=$id, name='$name', company='$company', blog='$blog', location='$location', email='$email', hireable='$hireable', bio='$bio', public_repos=$public_repos, public_gists=$public_gists, followers=$followers, following=$following, created_at=$created_at, updated_at=$updated_at)"
     }

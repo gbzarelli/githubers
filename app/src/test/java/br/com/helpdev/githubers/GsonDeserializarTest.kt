@@ -35,7 +35,6 @@ class GsonDeserializarTest {
     fun convertJsonUserRepo_toObjectUserRepo_withSuccess() {
         val fromJson = GsonFactory.getGson().fromJson<UserRepo>(JSON_USER_REPO_1, UserRepo::class.java)
         assertNotNull(fromJson.owner)
-        checkUser(fromJson.owner!!)
         assertEquals(fromJson.size, 1197)
         assertEquals(fromJson.has_wiki, true)
         fromJson.created_at.let {

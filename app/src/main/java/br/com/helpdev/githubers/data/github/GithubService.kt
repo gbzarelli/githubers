@@ -1,7 +1,7 @@
 package br.com.helpdev.githubers.data.github
 
-import br.com.helpdev.githubers.data.entities.UserRepo
 import br.com.helpdev.githubers.data.entities.User
+import br.com.helpdev.githubers.data.entities.UserRepo
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

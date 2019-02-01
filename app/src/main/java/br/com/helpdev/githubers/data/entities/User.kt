@@ -29,30 +29,31 @@ import androidx.room.PrimaryKey
  */
 @Entity(
     tableName = "user",
-    indices = [Index("user_id")]
+    indices = [Index("user_id", "login")],
+    primaryKeys = ["user_id"]
 )
 data class User(
-    val login: String = "",
-    @PrimaryKey @ColumnInfo(name = "user_id") val id: Int = 0,
-    val node_id: String = "",
-    val avatar_url: String = "",
-    val gravatar_id: String = "",
-    val url: String = "",
-    val html_url: String = "",
-    val followers_url: String = "",
-    val following_url: String = "",
-    val gists_url: String = "",
-    val starred_url: String = "",
-    val subscriptions_url: String = "",
-    val organizations_url: String = "",
-    val repos_url: String = "",
-    val events_url: String = "",
-    val received_events_url: String = "",
-    val type: String = "",
-    val site_admin: Boolean = false
+    val login: String?,
+    @ColumnInfo(name = "user_id") val id: Int,
+    val node_id: String?,
+    val avatar_url: String?,
+    val gravatar_id: String?,
+    val url: String?,
+    val html_url: String?,
+    val followers_url: String?,
+    val following_url: String?,
+    val gists_url: String?,
+    val starred_url: String?,
+    val subscriptions_url: String?,
+    val organizations_url: String?,
+    val repos_url: String?,
+    val events_url: String?,
+    val received_events_url: String?,
+    val type: String?,
+    val site_admin: Boolean
 ) {
     override fun toString(): String {
-        return "User(login='$login', id=$id, node_id='$node_id', avatar_url='$avatar_url', gravatar_id='$gravatar_id', url='$url', html_url='$html_url', followers_url='$followers_url', following_url='$following_url', gists_url='$gists_url', starred_url='$starred_url', subscriptions_url='$subscriptions_url', organizations_url='$organizations_url', repos_url='$repos_url', events_url='$events_url', received_events_url='$received_events_url', type='$type', site_admin=$site_admin)"
+        return "User(login=$login, id=$id, node_id=$node_id, avatar_url=$avatar_url, gravatar_id=$gravatar_id, url=$url, html_url=$html_url, followers_url=$followers_url, following_url=$following_url, gists_url=$gists_url, starred_url=$starred_url, subscriptions_url=$subscriptions_url, organizations_url=$organizations_url, repos_url=$repos_url, events_url=$events_url, received_events_url=$received_events_url, type=$type, site_admin=$site_admin)"
     }
 }
 

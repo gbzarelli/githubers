@@ -8,7 +8,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CalendarDeserializer : JsonDeserializer<Calendar> {
+internal class CalendarDeserializer : JsonDeserializer<Calendar> {
 
     override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext?): Calendar? {
         return json?.asString.let {
