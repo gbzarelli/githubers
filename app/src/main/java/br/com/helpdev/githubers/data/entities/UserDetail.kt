@@ -62,4 +62,8 @@ data class UserDetail(
     var following: Int = 0,
     var created_at: Calendar? = null,
     var updated_at: Calendar? = null
-)
+){
+    override fun toString(): String {
+        return "UserDetail(id=$id, name='$name', company='$company', blog='$blog', location='$location', email='$email', hireable='$hireable', bio='$bio', public_repos=$public_repos, public_gists=$public_gists, followers=$followers, following=$following, created_at=$created_at, updated_at=$updated_at)"
+    }
+}

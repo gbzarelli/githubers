@@ -103,31 +103,28 @@ import java.util.*
  */
 @Entity(
     tableName = "user_repos",
-    foreignKeys = [ForeignKey(
-        entity = User::class,
-        parentColumns = ["user_id"],
-        childColumns = ["owner.user_id"]
-    )],
     indices = [Index("id")]
 )
 class UserRepo(
+
     @PrimaryKey var id: Int = 0,
-    var node_id: String = "",
+    @Embedded var owner: User? = null,
+
+    @ColumnInfo(name = "repo_node_id") var node_id: String = "",
     var name: String = "",
     var full_name: String = "",
     var private: Boolean = false,
-    var owner: User? = null,// ?
-    var html_url: String = "",
+    @ColumnInfo(name = "repo_html_url") var html_url: String = "",
     var description: String = "",
     var fork: Boolean = false,
-    var url: String = "",
+    @ColumnInfo(name = "repo_url") var url: String = "",
     var forks_url: String = "",
     var keys_url: String = "",
     var collaborators_url: String = "",
     var teams_url: String = "",
     var hooks_url: String = "",
     var issue_events_url: String = "",
-    var events_url: String = "",
+    @ColumnInfo(name = "repo_events_url") var events_url: String = "",
     var assignees_url: String = "",
     var branches_url: String = "",
     var tags_url: String = "",
@@ -182,4 +179,8 @@ class UserRepo(
     var open_issues: Int = 0,
     var watchers: Int = 0,
     var default_branch: String = ""
-)
+){
+    override fun toString(): String {
+        return "UserRepo(id=$id, owner=$owner, node_id='$node_id', name='$name', full_name='$full_name', private=$private, html_url='$html_url', description='$description', fork=$fork, url='$url', forks_url='$forks_url', keys_url='$keys_url', collaborators_url='$collaborators_url', teams_url='$teams_url', hooks_url='$hooks_url', issue_events_url='$issue_events_url', events_url='$events_url', assignees_url='$assignees_url', branches_url='$branches_url', tags_url='$tags_url', blobs_url='$blobs_url', git_tags_url='$git_tags_url', git_refs_url='$git_refs_url', trees_url='$trees_url', statuses_url='$statuses_url', ulanguages_urlrl='$ulanguages_urlrl', stargazers_url='$stargazers_url', contributors_url='$contributors_url', subscribers_url='$subscribers_url', subscription_url='$subscription_url', commits_url='$commits_url', git_commits_url='$git_commits_url', comments_url='$comments_url', issue_comment_url='$issue_comment_url', contents_url='$contents_url', compare_url='$compare_url', merges_url='$merges_url', downloads_url='$downloads_url', issues_url='$issues_url', pulls_url='$pulls_url', milestones_url='$milestones_url', notifications_url='$notifications_url', labels_url='$labels_url', releases_url='$releases_url', deployments_url='$deployments_url', created_at=$created_at, updated_at=$updated_at, pushed_at=$pushed_at, git_url='$git_url', ssh_url='$ssh_url', clone_url='$clone_url', svn_url='$svn_url', homepage='$homepage', size=$size, stargazers_count=$stargazers_count, watchers_count=$watchers_count, language='$language', has_issues=$has_issues, has_projects=$has_projects, has_downloads=$has_downloads, has_wiki=$has_wiki, has_pages=$has_pages, forks_count=$forks_count, mirror_url='$mirror_url', archived=$archived, open_issues_count=$open_issues_count, license='$license', forks=$forks, open_issues=$open_issues, watchers=$watchers, default_branch='$default_branch')"
+    }
+}
