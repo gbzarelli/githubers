@@ -14,6 +14,7 @@ entre outras opções que vou inserir aos poucos no scopo do projeto.
     - https://developer.android.com/jetpack/docs/guide
     - https://developer.android.com/guide/
     - https://github.com/googlesamples/android-architecture-components
+    - https://github.com/googlesamples/android-sunflower
 
 ### Docs
     - https://developer.github.com/v3/

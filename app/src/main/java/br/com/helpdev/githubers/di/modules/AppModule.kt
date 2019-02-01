@@ -25,6 +25,7 @@ import br.com.helpdev.githubers.data.github.GithubService
 import br.com.helpdev.githubers.data.gson.GsonFactory
 import br.com.helpdev.githubers.utilities.DATABASE_NAME
 import br.com.helpdev.githubers.utilities.GITHUB_BASE_URL
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -32,14 +33,19 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Suppress("unused")
-@Module(includes = [])
+@Module(includes = [ViewModelModule::class])
 class AppModule {
+
     @Singleton
     @Provides
-    fun provideGithubService(): GithubService {
+    fun provideGson() = GsonFactory.getGson()
+
+    @Singleton
+    @Provides
+    fun provideGithubService(gson: Gson): GithubService {
         return Retrofit.Builder()
             .baseUrl(GITHUB_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create(GsonFactory.getGson()))
+            .addConverterFactory(GsonConverterFactory.create(gson))
 //            .addCallAdapterFactory(LiveDataCallAdapterFactory())
             .build()
             .create(GithubService::class.java)
