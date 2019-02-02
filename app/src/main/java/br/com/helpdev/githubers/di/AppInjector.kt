@@ -38,36 +38,35 @@ object AppInjector {
     fun init(githubApp: GithubersApp) {
         DaggerAppComponent.builder().application(githubApp)
             .build().inject(githubApp)
-        githubApp
-            .registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
-                override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-                    handleActivity(activity)
-                }
+        githubApp.registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
+            override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+                handleActivity(activity)
+            }
 
-                override fun onActivityStarted(activity: Activity) {
+            override fun onActivityStarted(activity: Activity) {
 
-                }
+            }
 
-                override fun onActivityResumed(activity: Activity) {
+            override fun onActivityResumed(activity: Activity) {
 
-                }
+            }
 
-                override fun onActivityPaused(activity: Activity) {
+            override fun onActivityPaused(activity: Activity) {
 
-                }
+            }
 
-                override fun onActivityStopped(activity: Activity) {
+            override fun onActivityStopped(activity: Activity) {
 
-                }
+            }
 
-                override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle?) {
+            override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle?) {
 
-                }
+            }
 
-                override fun onActivityDestroyed(activity: Activity) {
+            override fun onActivityDestroyed(activity: Activity) {
 
-                }
-            })
+            }
+        })
     }
 
     private fun handleActivity(activity: Activity) {

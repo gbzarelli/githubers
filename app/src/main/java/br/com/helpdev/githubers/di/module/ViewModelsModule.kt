@@ -22,9 +22,13 @@ package br.com.helpdev.githubers.di.module
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import br.com.helpdev.githubers.di.ViewModelKey
+import br.com.helpdev.githubers.ui.favrepos.FavoritesReposViewModel
 import br.com.helpdev.githubers.ui.favusers.FavoritesUsersViewModel
+import br.com.helpdev.githubers.ui.repo.RepoViewModel
+import br.com.helpdev.githubers.ui.repolist.RepoListViewModel
+import br.com.helpdev.githubers.ui.user.UserViewModel
 import br.com.helpdev.githubers.ui.userslist.UsersListViewModel
-import br.com.helpdev.githubers.util.factory.ViewModelInjectFactory
+import br.com.helpdev.githubers.util.viewmodel.factory.ViewModelInjectFactory
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -33,6 +37,10 @@ import dagger.multibindings.IntoMap
 @Module
 abstract class ViewModelsModule {
 
+    /**********************************************
+     * ADICIONAR OS VIEWS MODELS QUE USAM DI AQUI!
+     *********************************************/
+
     @Binds
     @IntoMap
     @ViewModelKey(FavoritesUsersViewModel::class)
@@ -40,8 +48,30 @@ abstract class ViewModelsModule {
 
     @Binds
     @IntoMap
+    @ViewModelKey(FavoritesReposViewModel::class)
+    abstract fun bindFavoritesReposViewModel(usersListViewModel: FavoritesReposViewModel): ViewModel
+
+    @Binds
+    @IntoMap
     @ViewModelKey(UsersListViewModel::class)
-    abstract fun bindUserViewModel(usersListViewModel: UsersListViewModel): ViewModel
+    abstract fun bindUsersListViewModel(usersListViewModel: UsersListViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(RepoListViewModel::class)
+    abstract fun bindRepoListViewModel(usersListViewModel: RepoListViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(RepoViewModel::class)
+    abstract fun bindRepoViewModel(usersListViewModel: RepoViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(UserViewModel::class)
+    abstract fun bindUserViewModel(usersListViewModel: UserViewModel): ViewModel
+
+    // ******************
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelInjectFactory): ViewModelProvider.Factory

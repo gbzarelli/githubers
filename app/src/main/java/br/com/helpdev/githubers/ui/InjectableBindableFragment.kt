@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import br.com.helpdev.githubers.di.Injectable
-import br.com.helpdev.githubers.util.factory.ViewModelInjectFactory
+import br.com.helpdev.githubers.util.viewmodel.factory.ViewModelInjectFactory
 import javax.inject.Inject
 
 abstract class InjectableBindableFragment<T : ViewDataBinding> : Fragment(), Injectable {

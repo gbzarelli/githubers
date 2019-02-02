@@ -7,6 +7,11 @@ import java.util.*
 @Entity(
     tableName = "repo",
     indices = [Index("repo_id", "owner_user_id", "owner_login")],
+//    foreignKeys = [ForeignKey(
+//        entity = User::class,
+//        parentColumns = ["user_id"],
+//        childColumns = ["owner_user_id"]
+//    )],
     primaryKeys = ["repo_id"]
 )
 data class UserRepo(
@@ -15,7 +20,7 @@ data class UserRepo(
     @ColumnInfo(name = "repo_html_url") val html_url: String?,
     @ColumnInfo(name = "repo_url") val url: String?,
     @ColumnInfo(name = "repo_events_url") val events_url: String?,
-    @Embedded(prefix = "owner_") val owner: Owner?,
+    @Embedded(prefix = "owner_") val owner: Owner,
     val name: String?,
     val full_name: String?,
 

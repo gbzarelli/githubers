@@ -29,6 +29,11 @@ import dagger.android.ContributesAndroidInjector
 @Suppress("unused")
 @Module
 abstract class GithubersFragmentsModule {
+
+    /**********************************************
+     * ADICIONAR OS FRAGMENTS DA ACTIVITY GITHUBERS AQUI!
+     *********************************************/
+
     @ContributesAndroidInjector
     abstract fun contributeFavoritesFragment(): FavoritesUsersFragment
 
