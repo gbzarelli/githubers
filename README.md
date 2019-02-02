@@ -1,3 +1,5 @@
+<img src="https://github.com/helpdeveloper/githubers/blob/master/app/src/main/ic_launcher-web.png" width="128">
+
 # Githubers
 
 Projeto com tudo que há de novo no Android. JetPack - https://developer.android.com/jetpack/docs/guide. 
