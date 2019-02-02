@@ -19,6 +19,24 @@
             android:name="br.com.helpdev.githubers.ui.favusers.FavoritesUsersFragment"
             android:label="@string/nav_item_title_favorites_users"
             tools:layout="@layout/fragment_favorites_users">
+        <action android:id="@+id/action_favorites_users_fragment_to_repo_user" app:destination="@id/repo_user"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim"
+        />
+    </fragment>
+
+    <fragment
+            android:id="@+id/favorites_repos_fragment"
+            android:name="br.com.helpdev.githubers.ui.favrepos.FavoritesReposFragment"
+            android:label="@string/nav_item_title_favorites_repos"
+            tools:layout="@layout/fragment_favorites_repos">
+        <action android:id="@+id/action_favorites_repos_fragment_to_repo_fragment" app:destination="@id/repo_fragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
 
     <fragment
@@ -26,6 +44,29 @@
             android:name="br.com.helpdev.githubers.ui.userslist.UsersListFragment"
             android:label="@string/nav_item_title_users_list"
             tools:layout="@layout/fragment_users_list">
+        <action android:id="@+id/action_users_list_fragment_to_repo_user" app:destination="@id/repo_user"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
 
+    <fragment
+            android:id="@+id/repo_user"
+            android:name="br.com.helpdev.githubers.ui.user.UserFragment"
+            android:label="@string/nav_item_title_user"
+            tools:layout="@layout/fragment_user">
+        <action android:id="@+id/action_repo_user_to_repo_fragment" app:destination="@id/repo_fragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+    </fragment>
+
+    <fragment
+            android:id="@+id/repo_fragment"
+            android:name="br.com.helpdev.githubers.ui.repo.RepoFragment"
+            android:label="@string/nav_item_title_repo"
+            tools:layout="@layout/fragment_repo">
+    </fragment>
 </navigation>

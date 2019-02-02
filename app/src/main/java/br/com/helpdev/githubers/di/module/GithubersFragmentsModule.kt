@@ -17,7 +17,11 @@
 
 package br.com.helpdev.githubers.di.module
 
+import br.com.helpdev.githubers.ui.favrepos.FavoritesReposFragment
 import br.com.helpdev.githubers.ui.favusers.FavoritesUsersFragment
+import br.com.helpdev.githubers.ui.repo.RepoFragment
+import br.com.helpdev.githubers.ui.repolist.RepoListFragment
+import br.com.helpdev.githubers.ui.user.UserFragment
 import br.com.helpdev.githubers.ui.userslist.UsersListFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -30,5 +34,17 @@ abstract class GithubersFragmentsModule {
 
     @ContributesAndroidInjector
     abstract fun contributeUsersListFragment(): UsersListFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeUserFragment(): UserFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeRepoListFragment(): RepoListFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeRepoFragment(): RepoFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeFavoritesReposFragment(): FavoritesReposFragment
 
 }

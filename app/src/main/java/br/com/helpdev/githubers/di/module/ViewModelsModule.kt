@@ -24,7 +24,7 @@ import androidx.lifecycle.ViewModelProvider
 import br.com.helpdev.githubers.di.ViewModelKey
 import br.com.helpdev.githubers.ui.favusers.FavoritesUsersViewModel
 import br.com.helpdev.githubers.ui.userslist.UsersListViewModel
-import br.com.helpdev.githubers.viewmodel.factory.ViewModelInjectFactory
+import br.com.helpdev.githubers.util.factory.ViewModelInjectFactory
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

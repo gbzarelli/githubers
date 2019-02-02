@@ -6,4 +6,6 @@
     <item android:id="@+id/users_list_fragment"
           android:title="@string/nav_item_title_users_list"/>
 
+    <item android:id="@+id/favorites_repos_fragment"
+          android:title="@string/nav_item_title_favorites_repos"/>
 </menu>

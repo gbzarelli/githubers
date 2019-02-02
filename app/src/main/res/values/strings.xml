@@ -2,8 +2,13 @@
     <string name="app_name">GitHubers</string>
     <string name="title_activity_githubers">GitHubers</string>
 
+    <string name="nav_item_title_user">User</string>
+    <string name="nav_item_title_repo_list">Repo list</string>
+    <string name="nav_item_title_repo">Repo</string>
+
     <string name="nav_item_title_users_list">Users list</string>
     <string name="nav_item_title_favorites_users">Favorites users</string>
+    <string name="nav_item_title_favorites_repos">Favorites repos</string>
     <string name="nav_item_title_favorites_gists">Favorites gists</string>
 
     <string name="nav_header_icon_content_description">Logo icon</string>

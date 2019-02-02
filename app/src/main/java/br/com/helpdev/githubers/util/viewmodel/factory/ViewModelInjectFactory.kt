@@ -16,7 +16,7 @@
  * Source: https://github.com/googlesamples/android-architecture-components/blob/master/GithubBrowserSample/app/src/main/java/com/android/example/github/viewmodel/GithubViewModelFactory.kt
  */
 
-package br.com.helpdev.githubers.viewmodel.factory
+package br.com.helpdev.githubers.util.viewmodel.factory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
