@@ -1,8 +1,8 @@
 package br.com.helpdev.githubers
 
-import br.com.helpdev.githubers.data.entities.User
-import br.com.helpdev.githubers.data.entities.UserRepo
-import br.com.helpdev.githubers.data.gson.GsonFactory
+import br.com.helpdev.githubers.data.entity.User
+import br.com.helpdev.githubers.data.entity.UserRepo
+import br.com.helpdev.githubers.util.gson.GsonFactory
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Test

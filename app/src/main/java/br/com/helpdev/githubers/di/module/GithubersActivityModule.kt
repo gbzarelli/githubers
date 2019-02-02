@@ -15,35 +15,16 @@
  *
  * Sample from: https://github.com/googlesamples/android-architecture-components/tree/88747993139224a4bb6dbe985adf652d557de621/GithubBrowserSample/app/src/main/java/com/android/example/github/di
  */
+package br.com.helpdev.githubers.di.module
 
-package br.com.helpdev.githubers.di
 
-import android.app.Application
-import br.com.helpdev.githubers.GithubersApp
-import br.com.helpdev.githubers.di.module.AppModule
-import br.com.helpdev.githubers.di.module.GithubersActivityModule
-import dagger.BindsInstance
-import dagger.Component
-import dagger.android.AndroidInjectionModule
-import javax.inject.Singleton
+import br.com.helpdev.githubers.ui.GithubersActivity
+import dagger.Module
+import dagger.android.ContributesAndroidInjector
 
 @Suppress("unused")
-@Singleton
-@Component(
-    modules = [
-        AndroidInjectionModule::class,
-        AppModule::class,
-        GithubersActivityModule::class
-    ]
-)
-interface AppComponent {
-    @Component.Builder
-    interface Builder {
-        @BindsInstance
-        fun application(application: Application): Builder
-
-        fun build(): AppComponent
-    }
-
-    fun inject(githubApp: GithubersApp)
+@Module
+abstract class GithubersActivityModule {
+    @ContributesAndroidInjector(modules = [GithubersFragmentsModule::class])
+    abstract fun contributeMainActivity(): GithubersActivity
 }

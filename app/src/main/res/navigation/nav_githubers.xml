@@ -16,14 +16,14 @@
 
     <fragment
             android:id="@+id/favorites_users_fragment"
-            android:name="br.com.helpdev.githubers.ui.fragments.FavoritesUsersFragment"
+            android:name="br.com.helpdev.githubers.ui.favusers.FavoritesUsersFragment"
             android:label="@string/nav_item_title_favorites_users"
             tools:layout="@layout/fragment_favorites_users">
     </fragment>
 
     <fragment
             android:id="@+id/users_list_fragment"
-            android:name="br.com.helpdev.githubers.ui.fragments.UsersListFragment"
+            android:name="br.com.helpdev.githubers.ui.userslist.UsersListFragment"
             android:label="@string/nav_item_title_users_list"
             tools:layout="@layout/fragment_users_list">
     </fragment>
