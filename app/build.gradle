@@ -63,6 +63,10 @@ dependencies {
     // --> CONSUME WEBSERVICES
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    // --> Retrofit with coroutines easily:
+    //-- -- https://android.jlelse.eu/kotlin-coroutines-and-retrofit-e0702d0b8e8f
+    //-- -- https://github.com/JakeWharton/retrofit2-kotlin-coroutines-adapter
+    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$rootProject.retrofitCoroutinesVersion"
 
     /** COROUTINES */
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion"

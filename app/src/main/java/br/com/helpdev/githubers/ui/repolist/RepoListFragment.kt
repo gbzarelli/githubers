@@ -1,20 +1,26 @@
 package br.com.helpdev.githubers.ui.repolist
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import br.com.helpdev.githubers.databinding.FragmentRepoListBinding
-import br.com.helpdev.githubers.ui.InjectableBindableFragment
+import br.com.helpdev.githubers.ui.InjectableBindingFragment
 
 /**
  * A placeholder fragment containing a simple view.
  */
-class RepoListFragment : InjectableBindableFragment<FragmentRepoListBinding>() {
+class RepoListFragment : InjectableBindingFragment<FragmentRepoListBinding, RepoListViewModel>
+    (RepoListViewModel::class.java) {
 
-    override fun binding(inflater: LayoutInflater, container: ViewGroup?) =
+    override fun binding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
         FragmentRepoListBinding.inflate(inflater, container, false)
 
 
-    override fun subscribeUI(binding: FragmentRepoListBinding) {
+    override fun subscribeUI(
+        viewModel: RepoListViewModel,
+        binding: FragmentRepoListBinding,
+        savedInstanceState: Bundle?
+    ) {
     }
 
 }

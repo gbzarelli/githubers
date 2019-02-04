@@ -7,6 +7,5 @@ import javax.inject.Inject
 class RepoViewModel @Inject constructor(private val githubUserRepository: GithubUserRepository) :
     ViewModel() {
 
-    fun getX() = githubUserRepository.getX()
 
 }

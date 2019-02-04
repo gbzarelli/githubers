@@ -1,24 +1,41 @@
 package br.com.helpdev.githubers.ui.favusers
 
+import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
 import br.com.helpdev.githubers.databinding.FragmentFavoritesUsersBinding
-import br.com.helpdev.githubers.ui.InjectableBindableFragment
+import br.com.helpdev.githubers.ui.InjectableBindingFragment
 
 /**
  * A placeholder fragment containing a simple view.
  */
-class FavoritesUsersFragment : InjectableBindableFragment<FragmentFavoritesUsersBinding>() {
+class FavoritesUsersFragment : InjectableBindingFragment<FragmentFavoritesUsersBinding, FavoritesUsersViewModel>
+    (FavoritesUsersViewModel::class.java) {
 
-    override fun binding(inflater: LayoutInflater, container: ViewGroup?) =
-        FragmentFavoritesUsersBinding.inflate(inflater, container, false)
+    companion object {
+        private val TAG by lazy { FavoritesUsersFragment::class.java.simpleName }
+    }
 
+    override fun binding(
+        inflater: LayoutInflater,
+        container: ViewGroup?, savedInstanceState: Bundle?
+    ) = FragmentFavoritesUsersBinding.inflate(inflater, container, false)
 
-    override fun subscribeUI(binding: FragmentFavoritesUsersBinding) {
-        val viewModel = ViewModelProviders.of(this, viewModelInjectFactory).get(FavoritesUsersViewModel::class.java)
-        Toast.makeText(activity, "X: {${viewModel.getX()}}", Toast.LENGTH_LONG).show()
+    override fun subscribeUI(
+        viewModel: FavoritesUsersViewModel,
+        binding: FragmentFavoritesUsersBinding,
+        savedInstanceState: Bundle?
+    ) {
+
+        viewModel.getNetworkServiceStatus().observe(this, Observer {
+            Log.d(TAG, "OBSERVER getNetworkServiceStatus: {$it}")
+        })
+
+        viewModel.getUserList().observe(this, Observer {
+            Log.d(TAG, "OBSERVER getUserList: {$it}")
+        })
     }
 }
 

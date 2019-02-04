@@ -28,7 +28,10 @@ import androidx.room.Index
  */
 @Entity(
     tableName = "user",
-    indices = [Index("user_id", "login")],
+    indices = [
+        Index("user_id"),
+        Index("login")
+    ],
     primaryKeys = ["user_id"]
 )
 data class User(

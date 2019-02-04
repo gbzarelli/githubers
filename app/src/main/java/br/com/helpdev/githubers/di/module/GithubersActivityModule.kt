@@ -25,6 +25,11 @@ import dagger.android.ContributesAndroidInjector
 @Suppress("unused")
 @Module
 abstract class GithubersActivityModule {
+
+    /**********************************************
+     * ADICIONAR AS ACTIVITIES AQUI!
+     *********************************************/
+
     @ContributesAndroidInjector(modules = [GithubersFragmentsModule::class])
     abstract fun contributeMainActivity(): GithubersActivity
 }

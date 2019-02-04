@@ -7,6 +7,5 @@ import javax.inject.Inject
 class FavoritesReposViewModel @Inject constructor(private val githubUserRepository: GithubUserRepository) :
     ViewModel() {
 
-    fun getX() = githubUserRepository.getX()
 
 }

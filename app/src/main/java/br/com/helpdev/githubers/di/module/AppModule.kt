@@ -26,6 +26,7 @@ import br.com.helpdev.githubers.util.DATABASE_NAME
 import br.com.helpdev.githubers.util.GITHUB_BASE_URL
 import br.com.helpdev.githubers.util.gson.GsonFactory
 import com.google.gson.Gson
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -46,8 +47,8 @@ class AppModule {
         return Retrofit.Builder()
             .baseUrl(GITHUB_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
-            .build()
-            .create(GithubService::class.java)
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
+            .build().create(GithubService::class.java)
     }
 
     @Singleton

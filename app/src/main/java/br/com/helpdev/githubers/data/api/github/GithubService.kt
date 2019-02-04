@@ -2,7 +2,9 @@ package br.com.helpdev.githubers.data.api.github
 
 import br.com.helpdev.githubers.data.entity.User
 import br.com.helpdev.githubers.data.entity.UserRepo
+import kotlinx.coroutines.Deferred
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -17,12 +19,12 @@ import retrofit2.http.Path
 interface GithubService {
 
     @GET("users")
-    fun listUsers(): Call<List<User>>
+    fun listUsers(): Deferred<Response<List<User>>>
 
     @GET("users/{user}")
-    fun getUser(@Path("user") user: String): Call<User>
+    fun getUser(@Path("user") user: String): Deferred<Response<User>>
 
     @GET("users/{user}/repos")
-    fun getRepos(@Path("user") user: String): Call<List<UserRepo>>
+    fun getRepos(@Path("user") user: String): Deferred<Response<List<UserRepo>>>
 
 }

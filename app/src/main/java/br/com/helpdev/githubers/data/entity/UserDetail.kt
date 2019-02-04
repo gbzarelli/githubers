@@ -40,13 +40,17 @@ import java.util.*
  */
 @Entity(
     tableName = "user_detail",
-    foreignKeys = [ForeignKey(
-        entity = User::class,
-        parentColumns = ["user_id"],
-        childColumns = ["user_id"]
-    )],
-    indices = [Index("user_id", "email")],
-    primaryKeys = ["user_id"]
+    primaryKeys = ["user_id"],
+    indices = [
+        Index("user_id"),
+        Index("email")
+    ],
+    foreignKeys = [
+        ForeignKey(
+            entity = User::class,
+            parentColumns = ["user_id"],
+            childColumns = ["user_id"]
+        )]
 )
 data class UserDetail(
     @ColumnInfo(name = "user_id") val id: Int,

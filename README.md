@@ -24,7 +24,11 @@ entre outras opções que vou inserir aos poucos no scopo do projeto.
 ### Coroutines
     - https://proandroiddev.com/kotlin-coroutines-patterns-anti-patterns-f9d12984c68e
     - https://proandroiddev.com/coroutines-for-android-6f9b9f966056
-
+    
+    - Coroutine Adapter para Retrofit2: 
+        - https://github.com/JakeWharton/retrofit2-kotlin-coroutines-adapter
+        - https://android.jlelse.eu/kotlin-coroutines-and-retrofit-e0702d0b8e8f
+    
 ### Room - Object relation map (ORM)
     - https://medium.com/androiddevelopers/7-pro-tips-for-room-fbadea4bfbd1
 

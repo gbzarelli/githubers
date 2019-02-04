@@ -6,13 +6,18 @@ import java.util.*
 
 @Entity(
     tableName = "repo",
-    indices = [Index("repo_id", "owner_user_id", "owner_login")],
-//    foreignKeys = [ForeignKey(
-//        entity = User::class,
-//        parentColumns = ["user_id"],
-//        childColumns = ["owner_user_id"]
-//    )],
-    primaryKeys = ["repo_id"]
+    primaryKeys = ["repo_id"],
+    indices = [
+        Index("repo_id"),
+        Index("owner_user_id"),
+        Index("owner_login")
+    ],
+    foreignKeys = [
+        ForeignKey(
+            entity = User::class,
+            parentColumns = ["user_id"],
+            childColumns = ["owner_user_id"]
+        )]
 )
 data class UserRepo(
     @ColumnInfo(name = "repo_id") val id: Int,
