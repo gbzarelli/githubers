@@ -1,11 +1,11 @@
 package br.com.helpdev.githubers.ui.favusers
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import br.com.helpdev.githubers.data.entity.User
 import br.com.helpdev.githubers.data.repository.GithubUserRepository
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.*
 import javax.inject.Inject
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 
 class FavoritesUsersViewModel @Inject constructor(private val githubUserRepository: GithubUserRepository) :
     ViewModel() {
@@ -13,13 +13,28 @@ class FavoritesUsersViewModel @Inject constructor(private val githubUserReposito
     private val job = Job()
     private val coroutineScope = CoroutineScope(Dispatchers.Main + job)
 
-    fun getUserList() = githubUserRepository.getUserList(coroutineScope)
+    private var userList: LiveData<List<User>>? = null
 
-    fun getNetworkServiceStatus() =
-        githubUserRepository.getNetworkServiceStatus(GithubUserRepository.LOAD_SERVICE_USERS)
+    fun getFavoriteUsersList(): LiveData<List<User>> {
+        return userList ?: githubUserRepository.getFavUsers().also { userList = it }
+    }
 
     override fun onCleared() {
         super.onCleared()
         job.cancel()
     }
+
+    fun addToFavorite(id: Int) {
+        coroutineScope.launch {
+            githubUserRepository.addToFavorite(id)
+        }
+    }
+
+    fun removeToFavorite(id: Int) {
+        coroutineScope.launch {
+            githubUserRepository.removeToFavorite(id)
+        }
+    }
+
+
 }

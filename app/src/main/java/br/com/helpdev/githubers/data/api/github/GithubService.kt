@@ -15,6 +15,7 @@ import retrofit2.http.Path
  *
  * -> Docs: https://developer.github.com/v3/
  * -> Addrs: https://api.github.com/
+ *
  */
 interface GithubService {
 
@@ -26,5 +27,13 @@ interface GithubService {
 
     @GET("users/{user}/repos")
     fun getRepos(@Path("user") user: String): Deferred<Response<List<UserRepo>>>
+
+    /**
+     *
+     * TODO CREATE SEARCH METHODS:
+     *  https://api.github.com/search/repositories?q=helpdev
+     *  https://api.github.com/search/users?q=helpdeveloper
+     *
+     */
 
 }

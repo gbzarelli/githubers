@@ -25,6 +25,8 @@
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"
                 app:popExitAnim="@anim/nav_default_pop_exit_anim"
         />
+        <action android:id="@+id/action_favorites_users_fragment_to_users_list_fragment"
+                app:destination="@id/users_list_fragment"/>
     </fragment>
 
     <fragment

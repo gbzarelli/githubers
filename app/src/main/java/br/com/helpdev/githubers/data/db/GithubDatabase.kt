@@ -6,6 +6,7 @@ import androidx.room.TypeConverters
 import br.com.helpdev.githubers.data.db.dao.UserDetailDao
 import br.com.helpdev.githubers.data.db.dao.UserRepoDao
 import br.com.helpdev.githubers.data.db.dao.UserDao
+import br.com.helpdev.githubers.data.entity.FavUser
 import br.com.helpdev.githubers.data.entity.User
 import br.com.helpdev.githubers.data.entity.UserDetail
 import br.com.helpdev.githubers.data.entity.UserRepo
@@ -14,7 +15,7 @@ import br.com.helpdev.githubers.util.DATABASE_VERSION
 @Database(
     version = DATABASE_VERSION,
     exportSchema = false,
-    entities = [User::class, UserDetail::class, UserRepo::class]
+    entities = [User::class, UserDetail::class, UserRepo::class, FavUser::class]
 )
 @TypeConverters(Converters::class)
 abstract class GithubDatabase : RoomDatabase() {

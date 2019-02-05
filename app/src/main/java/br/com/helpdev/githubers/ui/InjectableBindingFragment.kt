@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import br.com.helpdev.githubers.di.Injectable
 import br.com.helpdev.githubers.di.util.ViewModelInjectFactory
+import br.com.helpdev.githubers.ui.favusers.FavoritesUsersFragment
 import javax.inject.Inject
 
 /**
@@ -21,6 +22,10 @@ import javax.inject.Inject
  */
 abstract class InjectableBindingFragment<T : ViewDataBinding, Z : ViewModel>
     (private val viewModelClass: Class<out ViewModel>) : Fragment(), Injectable {
+
+    companion object {
+        internal val TAG by lazy { FavoritesUsersFragment::class.java.simpleName }
+    }
 
     @Inject
     lateinit var viewModelInjectFactory: ViewModelInjectFactory

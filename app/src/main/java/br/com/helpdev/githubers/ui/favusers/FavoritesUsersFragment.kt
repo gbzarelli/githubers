@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import br.com.helpdev.githubers.databinding.FragmentFavoritesUsersBinding
 import br.com.helpdev.githubers.ui.InjectableBindingFragment
 
@@ -13,10 +14,6 @@ import br.com.helpdev.githubers.ui.InjectableBindingFragment
  */
 class FavoritesUsersFragment : InjectableBindingFragment<FragmentFavoritesUsersBinding, FavoritesUsersViewModel>
     (FavoritesUsersViewModel::class.java) {
-
-    companion object {
-        private val TAG by lazy { FavoritesUsersFragment::class.java.simpleName }
-    }
 
     override fun binding(
         inflater: LayoutInflater,
@@ -29,13 +26,21 @@ class FavoritesUsersFragment : InjectableBindingFragment<FragmentFavoritesUsersB
         savedInstanceState: Bundle?
     ) {
 
-        viewModel.getNetworkServiceStatus().observe(this, Observer {
-            Log.d(TAG, "OBSERVER getNetworkServiceStatus: {$it}")
+        viewModel.getFavoriteUsersList().observe(this, Observer {
+            Log.d(TAG, "OBSERVER getFavoriteUsersList: {$it}")
         })
 
-        viewModel.getUserList().observe(this, Observer {
-            Log.d(TAG, "OBSERVER getUserList: {$it}")
-        })
+
+        //TODO - load de favorite list with the viewModel
+
+        /**
+         * Ao clicar no FAB realiza a navegação para a UsersListFragment
+         * Clicking the FAB navigates to the UsersListFragment
+         */
+        binding.fab.setOnClickListener {
+            it.findNavController()
+                .navigate(FavoritesUsersFragmentDirections.actionFavoritesUsersFragmentToUsersListFragment())
+        }
     }
 }
 

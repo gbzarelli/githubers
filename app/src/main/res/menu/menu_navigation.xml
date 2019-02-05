@@ -1,10 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/favorites_users_fragment"
-          android:title="@string/nav_item_title_favorites_users"/>
-
     <item android:id="@+id/users_list_fragment"
           android:title="@string/nav_item_title_users_list"/>
+
+    <item android:id="@+id/favorites_users_fragment"
+          android:title="@string/nav_item_title_favorites_users"/>
 
     <item android:id="@+id/favorites_repos_fragment"
           android:title="@string/nav_item_title_favorites_repos"/>

@@ -3,6 +3,7 @@ package br.com.helpdev.githubers.data.repository
 import androidx.lifecycle.LiveData
 import br.com.helpdev.githubers.data.api.github.GithubService
 import br.com.helpdev.githubers.data.db.dao.UserDao
+import br.com.helpdev.githubers.data.entity.FavUser
 import br.com.helpdev.githubers.data.entity.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,11 +25,30 @@ class GithubUserRepository @Inject constructor(var userDao: UserDao, var githubS
         return userDao.load()
     }
 
+    fun getFavUsers(): LiveData<List<User>> = userDao.loadFavorites()
+
     override suspend fun call(id: Int) {
         if (LOAD_SERVICE_USERS == id) {
             githubService.listUsers().await().apply {
-                if (isSuccessful) body()?.let { withContext(Dispatchers.IO) { userDao.save(it) } }
+                if (isSuccessful) body()?.let { saveUsers(it) }
             }
+        }
+    }
+
+    private suspend fun saveUsers(user: List<User>) {
+        withContext(Dispatchers.IO) { userDao.save(user) }
+    }
+
+
+    suspend fun addToFavorite(id: Int) {
+        withContext(Dispatchers.IO) {
+            userDao.insertFavorite(FavUser(id))
+        }
+    }
+
+    suspend fun removeToFavorite(id: Int) {
+        withContext(Dispatchers.IO) {
+            userDao.insertFavorite(FavUser(id))
         }
     }
 }
