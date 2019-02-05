@@ -2,7 +2,8 @@ package br.com.helpdev.githubers
 
 import br.com.helpdev.githubers.data.entity.User
 import br.com.helpdev.githubers.data.entity.UserRepo
-import br.com.helpdev.githubers.util.gson.GsonFactory
+import br.com.helpdev.githubers.di.module.AppModule
+import com.google.gson.Gson
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Test
@@ -13,7 +14,7 @@ import java.util.*
  */
 class GsonDeserializarTest {
 
-    private val gson = GsonFactory.getGson()
+    private val gson = AppModule().provideGson()
 
     @Test
     fun convertJsonUser_toObjectUser_withSuccess() {
@@ -33,7 +34,7 @@ class GsonDeserializarTest {
 
     @Test
     fun convertJsonUserRepo_toObjectUserRepo_withSuccess() {
-        val fromJson = GsonFactory.getGson().fromJson<UserRepo>(JSON_USER_REPO_1, UserRepo::class.java)
+        val fromJson = gson.fromJson<UserRepo>(JSON_USER_REPO_1, UserRepo::class.java)
         assertNotNull(fromJson.owner)
         assertEquals(fromJson.size, 1197)
         assertEquals(fromJson.has_wiki, true)

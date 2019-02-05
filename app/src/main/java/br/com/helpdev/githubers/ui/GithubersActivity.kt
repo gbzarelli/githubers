@@ -21,17 +21,20 @@ import javax.inject.Inject
 
 /**
  * Atividade principal. Nela é configurado o DrawerLayout e a navegação dos fragments.
- * Esta classe utiliza recursos do DataBinding e Navigation do androidx
+ * Esta classe utiliza recursos do DataBinding e Navigation do androidx.
  *
+ * A implementação do HasSupportFragmentInjector define essa activity como injetora de
+ * dependencias para seus fragments.
+ *
+ * Main activity. In it is configured the DrawerLayout and navigation of fragments.
+ * This class uses androidx's DataBinding and Navigation features.
+ *
+ * HasSupportFragmentInjector implementation defines this activity as a
+ * dependencies for your fragments.
+
  * @author Guilherme Biff Zarelli
  */
-class GithubersActivity : AppCompatActivity(), HasSupportFragmentInjector {
-
-    /**
-     * TODO - documentar
-     */
-    @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+class GithubersActivity : InjectableFragmentActivity() {
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navController: NavController
@@ -63,13 +66,7 @@ class GithubersActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
         // Configura a view de navegação / Set up navigation menu
         binding.navigationView.setupWithNavController(navController)
-
     }
-
-    /**
-     * TODO - documentar
-     */
-    override fun supportFragmentInjector() = dispatchingAndroidInjector
 
     /**
      * Configura o botão de voltar. Fecha o DrawerLayout se estiver aberto, se não,

@@ -28,7 +28,7 @@ import br.com.helpdev.githubers.ui.repo.RepoViewModel
 import br.com.helpdev.githubers.ui.repolist.RepoListViewModel
 import br.com.helpdev.githubers.ui.user.UserViewModel
 import br.com.helpdev.githubers.ui.userslist.UsersListViewModel
-import br.com.helpdev.githubers.util.viewmodel.factory.ViewModelInjectFactory
+import br.com.helpdev.githubers.di.util.ViewModelInjectFactory
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

@@ -9,13 +9,18 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import br.com.helpdev.githubers.di.Injectable
-import br.com.helpdev.githubers.ui.favrepos.FavoritesReposViewModel
-import br.com.helpdev.githubers.util.viewmodel.factory.ViewModelInjectFactory
+import br.com.helpdev.githubers.di.util.ViewModelInjectFactory
 import javax.inject.Inject
 
+/**
+ * Fragment abstrato que realiza o auto-binding com a view e já com suporte a DI.
+ * Também abstrai o carregamento do ViewModel.
+ *
+ * Abstract fragment that performs auto-binding with the view and already with DI support.
+ * Also abstracts the loading of the ViewModel.
+ */
 abstract class InjectableBindingFragment<T : ViewDataBinding, Z : ViewModel>
-    (private val viewModelClass: Class<out ViewModel>) :
-    Fragment(), Injectable {
+    (private val viewModelClass: Class<out ViewModel>) : Fragment(), Injectable {
 
     @Inject
     lateinit var viewModelInjectFactory: ViewModelInjectFactory
@@ -24,9 +29,9 @@ abstract class InjectableBindingFragment<T : ViewDataBinding, Z : ViewModel>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = binding(inflater, container, savedInstanceState)
+        /** Load ViewModel and call subscribeUI */
         ViewModelProviders.of(this, viewModelInjectFactory).get(viewModelClass).also {
-            @Suppress("UNCHECKED_CAST")
-            subscribeUI(it as Z, binding, savedInstanceState)
+            @Suppress("UNCHECKED_CAST") subscribeUI(it as Z, binding, savedInstanceState)
         }
         return binding.root
     }

@@ -24,23 +24,41 @@ import br.com.helpdev.githubers.data.api.github.GithubService
 import br.com.helpdev.githubers.data.db.GithubDatabase
 import br.com.helpdev.githubers.util.DATABASE_NAME
 import br.com.helpdev.githubers.util.GITHUB_BASE_URL
-import br.com.helpdev.githubers.util.gson.GsonFactory
+import br.com.helpdev.githubers.util.gson.CalendarDeserializer
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
 import javax.inject.Singleton
 
+/**
+ * DI Modules
+ */
 @Suppress("unused")
 @Module(includes = [ViewModelsModule::class])
 class AppModule {
 
+    /**
+     * Prove uma instância do Gson para serialização de json.
+     * Provide an instance of Gson for json serialization
+     */
     @Singleton
     @Provides
-    fun provideGson() = GsonFactory.getGson()
+    fun provideGson() = GsonBuilder().apply {
+        registerTypeAdapter(
+            Calendar::class.java,
+            CalendarDeserializer()
+        )
+    }.create()!!
 
+    /**
+     * Prove uma instância do GithubService para comunicação com a API do Github
+     * Provide an instance of GithubService for communication with the Github API
+     */
     @Singleton
     @Provides
     fun provideGithubService(gson: Gson): GithubService {
@@ -51,6 +69,10 @@ class AppModule {
             .build().create(GithubService::class.java)
     }
 
+    /**
+     * Prove uma instância do GithubDatabase, gerenciador de banco de dados.
+     * Provide an instance of GithubDatabase, database manager
+     */
     @Singleton
     @Provides
     fun provideDb(app: Application): GithubDatabase = Room
@@ -58,10 +80,16 @@ class AppModule {
         .fallbackToDestructiveMigration()
         .build()
 
+    /**
+     * Provide an instance of UserDAO.
+     */
     @Singleton
     @Provides
     fun provideUserDao(db: GithubDatabase) = db.userDao()
 
+    /**
+     * Provide an instance of UserRepoDAO.
+     */
     @Singleton
     @Provides
     fun provideRepoDao(db: GithubDatabase) = db.userRepoDao()

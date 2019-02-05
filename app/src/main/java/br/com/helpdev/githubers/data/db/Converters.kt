@@ -33,7 +33,8 @@ class Converters {
      * - Case your object contains a calendar, it passes to a long. So it allows persistence
      *
      */
-    @TypeConverter fun calendarToDatestamp(calendar: Calendar): Long = calendar.timeInMillis
+    @TypeConverter
+    fun calendarToDatestamp(calendar: Calendar): Long = calendar.timeInMillis
 
     /**
      * Realiza a conversão de um long para um Calendar.
@@ -43,6 +44,7 @@ class Converters {
      * - Case your object contains a Calendar and in database it's a long, it inflates in a Calendar
      *
      */
-    @TypeConverter fun datestampToCalendar(value: Long): Calendar =
-            Calendar.getInstance().apply { timeInMillis = value }
+    @TypeConverter
+    fun datestampToCalendar(value: Long): Calendar =
+        Calendar.getInstance().apply { timeInMillis = value }
 }

@@ -34,6 +34,7 @@ import javax.inject.Singleton
         AndroidInjectionModule::class,
         AppModule::class,
         GithubersActivityModule::class
+        /* ADD YOUR MODULES HERE */
     ]
 )
 interface AppComponent {

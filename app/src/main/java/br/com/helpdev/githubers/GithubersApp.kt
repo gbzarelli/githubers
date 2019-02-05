@@ -8,11 +8,23 @@ import dagger.android.HasActivityInjector
 import javax.inject.Inject
 
 /**
- * TODO - documentar
+ * Classe Application do projeto. / Class Project application
+ *
+ * A implementação HasActivityInjector é utilizada para injetar dependências mapeadas
+ * de forma automatica nas activities.
+ *
+ * The HasActivityInjector implementation is used to dependency injection mapped
+ * automatically into the activities.
+ *
  */
 class GithubersApp : Application(), HasActivityInjector {
+
     /**
-     * TODO - documentar
+     * Cria uma instancia para de AndroidInjector.
+     * Responsável em injetar as dependencias mapeadas de forma automatica nas activities.
+     *
+     * Creates an instance of AndroidInjector.
+     * Responsible for injecting dependencies mapped automatically into the activities.
      */
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
@@ -20,14 +32,11 @@ class GithubersApp : Application(), HasActivityInjector {
     override fun onCreate() {
         super.onCreate()
         /**
-         * TODO - documentar
+         * Inicia a DI.
          */
         AppInjector.init(this)
     }
 
-    /**
-     * TODO - documentar
-     */
     override fun activityInjector() = dispatchingAndroidInjector
 
 }
