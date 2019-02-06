@@ -1,6 +1,7 @@
 package br.com.helpdev.githubers.data.entity
 
 import androidx.room.*
+import com.google.gson.annotations.Expose
 import java.util.*
 
 /**
@@ -68,7 +69,14 @@ data class UserDetail(
     val created_at: Calendar? = null,
     val updated_at: Calendar? = null
 ) {
+    @ColumnInfo(name = "register_datetime")
+    @Expose(deserialize = false)
+    var registerDateTime: Calendar? = GregorianCalendar.getInstance()
+        get() = field ?: GregorianCalendar.getInstance().also { field = it }
+
+
     override fun toString(): String {
-        return "UserDetail(id=$id, name='$name', company='$company', blog='$blog', location='$location', email='$email', hireable='$hireable', bio='$bio', public_repos=$public_repos, public_gists=$public_gists, followers=$followers, following=$following, created_at=$created_at, updated_at=$updated_at)"
+        return "UserDetail(registerDateTime=${registerDateTime?.time
+            ?: "null"}, id=$id, name='$name', company='$company', blog='$blog', location='$location', email='$email', hireable='$hireable', bio='$bio', public_repos=$public_repos, public_gists=$public_gists, followers=$followers, following=$following, created_at=$created_at, updated_at=$updated_at)"
     }
 }

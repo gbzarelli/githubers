@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="nav_item_title_user">Usuário</string>
+    <string name="nav_item_title_repo_list">Lista de repositórios</string>
+    <string name="nav_item_title_repo">Repositório</string>
+
+    <string name="nav_item_title_users_list">Lista de usuários</string>
+    <string name="nav_item_title_favorites_users">Usuários favoritos</string>
+    <string name="nav_item_title_favorites_repos">Repositórios favoritos</string>
+    <string name="nav_item_title_favorites_gists">Gists favoritos</string>
+
+    <string name="nav_header_icon_content_description">Icone do logo</string>
+
+    <string name="no_items_favorites">Nenhum elemento adicionado como favorito</string>
+    <string name="contentDescriptionImageItemUser">Imagem do usuário</string>
+    <string name="contentDescriptionSiteAdmin">Usuário site administrador</string>
+</resources>

@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import br.com.helpdev.githubers.di.Injectable
 import br.com.helpdev.githubers.di.util.ViewModelInjectFactory
-import br.com.helpdev.githubers.ui.favusers.FavoritesUsersFragment
+import br.com.helpdev.githubers.ui.frags.favusers.FavoritesUsersFragment
 import javax.inject.Inject
 
 /**

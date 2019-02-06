@@ -1,4 +1,4 @@
-package br.com.helpdev.githubers.ui.userslist
+package br.com.helpdev.githubers.ui.frags.userslist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

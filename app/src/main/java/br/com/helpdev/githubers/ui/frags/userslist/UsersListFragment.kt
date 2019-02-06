@@ -1,4 +1,4 @@
-package br.com.helpdev.githubers.ui.userslist
+package br.com.helpdev.githubers.ui.frags.userslist
 
 import android.os.Bundle
 import android.util.Log
@@ -12,7 +12,8 @@ import br.com.helpdev.githubers.ui.InjectableBindingFragment
  * A placeholder fragment containing a simple view.
  */
 class UsersListFragment :
-    InjectableBindingFragment<FragmentUsersListBinding, UsersListViewModel>(UsersListViewModel::class.java) {
+    InjectableBindingFragment<FragmentUsersListBinding, UsersListViewModel>(
+        UsersListViewModel::class.java) {
 
     override fun binding(
         inflater: LayoutInflater,

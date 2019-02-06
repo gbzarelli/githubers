@@ -1,4 +1,4 @@
-package br.com.helpdev.githubers.ui.favusers
+package br.com.helpdev.githubers.ui.frags.favusers
 
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import br.com.helpdev.githubers.databinding.FragmentFavoritesUsersBinding
 import br.com.helpdev.githubers.ui.InjectableBindingFragment
+import br.com.helpdev.githubers.ui.adapter.UserAdapter
 
 /**
  * A placeholder fragment containing a simple view.
@@ -25,13 +26,24 @@ class FavoritesUsersFragment : InjectableBindingFragment<FragmentFavoritesUsersB
         binding: FragmentFavoritesUsersBinding,
         savedInstanceState: Bundle?
     ) {
+        val adapter = UserAdapter { view, user ->
+            view.findNavController().navigate(
+                FavoritesUsersFragmentDirections.actionFavoritesUsersFragmentToUser(user.id)
+            )
+        }
 
-        viewModel.getFavoriteUsersList().observe(this, Observer {
-            Log.d(TAG, "OBSERVER getFavoriteUsersList: {$it}")
+        binding.recyclerView.adapter = adapter
+
+        viewModel.getFavoriteUsersList().observe(this, Observer { list ->
+            //Verifica se contém itens para adicionar a variavel de layout.
+            //Verify if has items to add the layout variable
+            binding.hasItems = list?.isNotEmpty() ?: false
+
+            //Atualiza o adapter se conter elementos
+            //Update adapter if has items
+            list?.isNotEmpty().run { adapter.submitList(list) }
         })
 
-
-        //TODO - load de favorite list with the viewModel
 
         /**
          * Ao clicar no FAB realiza a navegação para a UsersListFragment
@@ -39,7 +51,7 @@ class FavoritesUsersFragment : InjectableBindingFragment<FragmentFavoritesUsersB
          */
         binding.fab.setOnClickListener {
             it.findNavController()
-                .navigate(FavoritesUsersFragmentDirections.actionFavoritesUsersFragmentToUsersListFragment())
+                .navigate(FavoritesUsersFragmentDirections.actionFavoritesUsersFragmentToUsersList())
         }
     }
 }

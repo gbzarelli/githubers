@@ -8,7 +8,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:showIn="@layout/activity_githubers"
-            tools:context=".ui.repo.RepoFragment">
+            tools:context=".ui.frags.repo.RepoFragment">
         <ProgressBar
                 style="?android:attr/progressBarStyle"
                 android:layout_width="48dp"

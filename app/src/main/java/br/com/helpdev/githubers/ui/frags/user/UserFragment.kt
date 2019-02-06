@@ -1,4 +1,4 @@
-package br.com.helpdev.githubers.ui.user
+package br.com.helpdev.githubers.ui.frags.user
 
 import android.os.Bundle
 import android.view.LayoutInflater

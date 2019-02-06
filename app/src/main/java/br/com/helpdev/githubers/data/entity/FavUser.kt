@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
+import java.util.*
 
 @Entity(
     tableName = "fav_user",
@@ -18,4 +19,7 @@ import androidx.room.Index
             childColumns = ["user_id"]
         )]
 )
-data class FavUser(@ColumnInfo(name = "user_id") val id: Int)
+data class FavUser(
+    @ColumnInfo(name = "user_id") val id: Int,
+    @ColumnInfo(name = "register_datetime") val registerDateTime: Calendar = GregorianCalendar.getInstance()
+)

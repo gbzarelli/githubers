@@ -1,4 +1,4 @@
-package br.com.helpdev.githubers.ui.favrepos
+package br.com.helpdev.githubers.ui.frags.favrepos
 
 import android.os.Bundle
 import android.view.LayoutInflater

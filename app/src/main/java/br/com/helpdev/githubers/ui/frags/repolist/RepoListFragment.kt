@@ -1,4 +1,4 @@
-package br.com.helpdev.githubers.ui.repolist
+package br.com.helpdev.githubers.ui.frags.repolist
 
 import android.os.Bundle
 import android.view.LayoutInflater

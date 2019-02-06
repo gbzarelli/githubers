@@ -67,6 +67,8 @@ dependencies {
     //-- -- https://android.jlelse.eu/kotlin-coroutines-and-retrofit-e0702d0b8e8f
     //-- -- https://github.com/JakeWharton/retrofit2-kotlin-coroutines-adapter
     implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$rootProject.retrofitCoroutinesVersion"
+    // -->
+    implementation "de.hdodenhof:circleimageview:$rootProject.circleImageViewVersion"
 
     /** COROUTINES */
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion"

@@ -1,4 +1,4 @@
-package br.com.helpdev.githubers.ui.favusers
+package br.com.helpdev.githubers.ui.frags.favusers
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

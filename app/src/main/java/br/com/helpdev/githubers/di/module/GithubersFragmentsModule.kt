@@ -17,12 +17,12 @@
 
 package br.com.helpdev.githubers.di.module
 
-import br.com.helpdev.githubers.ui.favrepos.FavoritesReposFragment
-import br.com.helpdev.githubers.ui.favusers.FavoritesUsersFragment
-import br.com.helpdev.githubers.ui.repo.RepoFragment
-import br.com.helpdev.githubers.ui.repolist.RepoListFragment
-import br.com.helpdev.githubers.ui.user.UserFragment
-import br.com.helpdev.githubers.ui.userslist.UsersListFragment
+import br.com.helpdev.githubers.ui.frags.favrepos.FavoritesReposFragment
+import br.com.helpdev.githubers.ui.frags.favusers.FavoritesUsersFragment
+import br.com.helpdev.githubers.ui.frags.repo.RepoFragment
+import br.com.helpdev.githubers.ui.frags.repolist.RepoListFragment
+import br.com.helpdev.githubers.ui.frags.user.UserFragment
+import br.com.helpdev.githubers.ui.frags.userslist.UsersListFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

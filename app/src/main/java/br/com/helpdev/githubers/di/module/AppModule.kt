@@ -34,6 +34,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 import javax.inject.Singleton
+import com.google.gson.FieldAttributes
+import com.google.gson.ExclusionStrategy
+import java.lang.reflect.Modifier
+
 
 /**
  * DI Modules

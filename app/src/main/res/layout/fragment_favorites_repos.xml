@@ -8,7 +8,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:showIn="@layout/activity_githubers"
-            tools:context=".ui.favrepos.FavoritesReposFragment">
+            tools:context=".ui.frags.favrepos.FavoritesReposFragment">
 
         <ProgressBar
                 style="?android:attr/progressBarStyle"
