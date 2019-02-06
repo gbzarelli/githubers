@@ -21,8 +21,12 @@ class GithubUserRepository @Inject constructor(var userDao: UserDao, var githubS
     }
 
     fun getUserList(coroutineScope: CoroutineScope?): LiveData<List<User>> {
-        coroutineScope?.launch { loadFromService(LOAD_SERVICE_USERS) }
+        coroutineScope?.let { loadUserListRemoteRepo(it) }
         return userDao.load()
+    }
+
+    fun loadUserListRemoteRepo(coroutineScope: CoroutineScope) {
+        coroutineScope.launch { loadFromService(LOAD_SERVICE_USERS) }
     }
 
     fun getFavUsers(): LiveData<List<User>> = userDao.loadFavorites()

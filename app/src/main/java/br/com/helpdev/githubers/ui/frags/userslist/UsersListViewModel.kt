@@ -7,6 +7,7 @@ import br.com.helpdev.githubers.data.repository.GithubUserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class UsersListViewModel @Inject constructor(private val githubUserRepository: GithubUserRepository) : ViewModel() {
@@ -18,6 +19,16 @@ class UsersListViewModel @Inject constructor(private val githubUserRepository: G
 
     fun getUserList(): LiveData<List<User>> {
         return userList ?: githubUserRepository.getUserList(coroutineScope).also { userList = it }
+    }
+
+    fun loadUserListRemoteRepo() {
+        githubUserRepository.loadUserListRemoteRepo(coroutineScope)
+    }
+
+    fun addToFavorite(id: Int) {
+        coroutineScope.launch {
+            githubUserRepository.addToFavorite(id)
+        }
     }
 
     fun clearUserCache() {

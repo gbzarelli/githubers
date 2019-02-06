@@ -15,4 +15,8 @@
     <string name="no_items_favorites">Nenhum elemento adicionado como favorito</string>
     <string name="contentDescriptionImageItemUser">Imagem do usuário</string>
     <string name="contentDescriptionSiteAdmin">Usuário site administrador</string>
+    <string name="loading">Carregando&#8230;</string>
+    <string name="verify_conection">VERIFIQUE SUA CONEXÃO</string>
+    <string name="update">ATUALIZAR</string>
+    <string name="dismiss">CANCELAR</string>
 </resources>

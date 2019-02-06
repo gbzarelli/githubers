@@ -15,4 +15,8 @@
     <string name="no_items_favorites">No items added to favorites</string>
     <string name="contentDescriptionImageItemUser">User Image</string>
     <string name="contentDescriptionSiteAdmin">User site admin</string>
+    <string name="loading">Loading&#8230;</string>
+    <string name="verify_conection">CHECK YOUR CONNECTION</string>
+    <string name="update">UPDATE</string>
+    <string name="dismiss">DISMISS</string>
 </resources>
