@@ -14,8 +14,8 @@ abstract class AbstractServiceRepository {
     }
 
     fun getNetworkServiceStatus(id: Int): MutableLiveData<NetworkServiceStatus> = networkServiceStatus.getOrPut(id) {
-        MutableLiveData<NetworkServiceStatus>().apply { value = NetworkServiceStatus(NetworkServiceStatus.STATUS_NULL) }
-    }
+        MutableLiveData()
+    }//.apply { value = NetworkServiceStatus(NetworkServiceStatus.STATUS_NULL) }
 
 
     suspend fun loadFromService(id: Int) {

@@ -1,4 +1,4 @@
-package br.com.helpdev.githubers.di
+package br.com.helpdev.githubers.di.viewmodel
 
 /*
  * Copyright (C) 2018 The Android Open Source Project

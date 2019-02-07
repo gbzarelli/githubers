@@ -10,7 +10,7 @@ buildscript {
         // App dependencies
         constraintLayoutVersion = '2.0.0-alpha3'
         espressoVersion = '3.1.0-alpha4'
-        navigationVersion = '1.0.0-alpha11'
+        navigationVersion = '1.0.0-beta01'
         roomVersion = '2.1.0-alpha04'
         uiAutomatorVersion = '2.2.0-alpha4'
         workVersion = '1.0.0-beta04'

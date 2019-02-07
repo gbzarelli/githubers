@@ -24,7 +24,7 @@ import dagger.android.ContributesAndroidInjector
 
 @Suppress("unused")
 @Module
-abstract class GithubersActivityModule {
+abstract class ActivitiesModule {
 
     /**********************************************
      * ADICIONAR AS ACTIVITIES AQUI!

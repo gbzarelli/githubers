@@ -12,8 +12,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.work.*
 import br.com.helpdev.githubers.R
 import br.com.helpdev.githubers.databinding.ActivityGithubersBinding
+import br.com.helpdev.githubers.worker.GithubUsersWorker
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector

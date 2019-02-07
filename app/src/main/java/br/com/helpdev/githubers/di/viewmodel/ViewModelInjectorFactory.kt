@@ -16,7 +16,7 @@
  * Source: https://github.com/googlesamples/android-architecture-components/blob/master/GithubBrowserSample/app/src/main/java/com/android/example/github/viewmodel/GithubViewModelFactory.kt
  */
 
-package br.com.helpdev.githubers.di.util
+package br.com.helpdev.githubers.di.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -52,7 +52,7 @@ import javax.inject.Singleton
  * Source: https://github.com/googlesamples/android-architecture-components/blob/master/GithubBrowserSample/app/src/main/java/com/android/example/github/viewmodel/GithubViewModelFactory.kt
  */
 @Singleton
-class ViewModelInjectFactory @Inject constructor(
+class ViewModelInjectorFactory @Inject constructor(
     private val creators: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>
 ) : ViewModelProvider.Factory {
 

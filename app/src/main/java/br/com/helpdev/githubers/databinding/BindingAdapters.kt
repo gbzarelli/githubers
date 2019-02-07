@@ -44,6 +44,15 @@ fun bindIsGone(view: View, isGone: Boolean) {
     }
 }
 
+@BindingAdapter("isVisible")
+fun bindIsVisible(view: View, isVisible: Boolean) {
+    view.visibility = if (isVisible) {
+        View.VISIBLE
+    } else {
+        View.GONE
+    }
+}
+
 @BindingAdapter("imageFromUrl")
 fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
     if (!imageUrl.isNullOrEmpty()) {

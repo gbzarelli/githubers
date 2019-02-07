@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import br.com.helpdev.githubers.data.entity.User
 import br.com.helpdev.githubers.data.repository.GithubUserRepository
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -29,10 +30,6 @@ class UsersListViewModel @Inject constructor(private val githubUserRepository: G
         coroutineScope.launch {
             githubUserRepository.addToFavorite(id)
         }
-    }
-
-    fun clearUserCache() {
-        userList = null
     }
 
     fun getNetworkServiceStatus() =

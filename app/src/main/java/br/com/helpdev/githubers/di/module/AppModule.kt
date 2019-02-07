@@ -19,6 +19,7 @@
 package br.com.helpdev.githubers.di.module
 
 import android.app.Application
+import android.content.Context
 import androidx.room.Room
 import br.com.helpdev.githubers.data.api.github.GithubService
 import br.com.helpdev.githubers.data.db.GithubDatabase
@@ -34,9 +35,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 import javax.inject.Singleton
-import com.google.gson.FieldAttributes
-import com.google.gson.ExclusionStrategy
-import java.lang.reflect.Modifier
 
 
 /**
@@ -44,7 +42,13 @@ import java.lang.reflect.Modifier
  */
 @Suppress("unused")
 @Module(includes = [ViewModelsModule::class])
-class AppModule {
+class AppModule{
+
+
+    @Provides
+    fun provideContext(app: Application): Context {
+        return app.applicationContext
+    }
 
     /**
      * Prove uma instância do Gson para serialização de json.

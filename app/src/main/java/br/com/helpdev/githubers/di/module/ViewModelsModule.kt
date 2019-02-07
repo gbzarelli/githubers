@@ -21,14 +21,14 @@ package br.com.helpdev.githubers.di.module
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import br.com.helpdev.githubers.di.ViewModelKey
+import br.com.helpdev.githubers.di.viewmodel.ViewModelKey
 import br.com.helpdev.githubers.ui.frags.favrepos.FavoritesReposViewModel
 import br.com.helpdev.githubers.ui.frags.favusers.FavoritesUsersViewModel
 import br.com.helpdev.githubers.ui.frags.repo.RepoViewModel
 import br.com.helpdev.githubers.ui.frags.repolist.RepoListViewModel
 import br.com.helpdev.githubers.ui.frags.user.UserViewModel
 import br.com.helpdev.githubers.ui.frags.userslist.UsersListViewModel
-import br.com.helpdev.githubers.di.util.ViewModelInjectFactory
+import br.com.helpdev.githubers.di.viewmodel.ViewModelInjectorFactory
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -74,5 +74,5 @@ abstract class ViewModelsModule {
     // ******************
 
     @Binds
-    abstract fun bindViewModelFactory(factory: ViewModelInjectFactory): ViewModelProvider.Factory
+    abstract fun bindViewModelFactory(factory: ViewModelInjectorFactory): ViewModelProvider.Factory
 }

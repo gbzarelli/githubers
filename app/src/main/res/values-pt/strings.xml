@@ -19,4 +19,5 @@
     <string name="verify_conection">VERIFIQUE SUA CONEXÃO</string>
     <string name="update">ATUALIZAR</string>
     <string name="dismiss">CANCELAR</string>
+    <string name="no_data_not_loading">Sem registros - Verifique sua conexão</string>
 </resources>

@@ -38,6 +38,7 @@ object AppInjector {
     fun init(githubApp: GithubersApp) {
         DaggerAppComponent.builder().application(githubApp)
             .build().inject(githubApp)
+
         githubApp.registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
                 handleActivity(activity)

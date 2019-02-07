@@ -1,18 +1,35 @@
 package br.com.helpdev.githubers.worker
 
 import android.content.Context
+import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
+import br.com.helpdev.githubers.data.repository.GithubUserRepository
+import br.com.helpdev.githubers.di.worker.IWorkerFactory
+import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import javax.inject.Inject
+import javax.inject.Provider
 
-internal class GithubUsersWorker(
-    context: Context,
-    workerParams: WorkerParameters
+class GithubUsersWorker(
+    context: Context, workerParams: WorkerParameters,
+    private val userRepository: GithubUserRepository
 ) : Worker(context, workerParams) {
 
-    private val TAG by lazy { GithubUsersWorker::class.java.simpleName }
-
     override fun doWork(): Result {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        userRepository.loadUserListRemoteRepo(CoroutineScope(Dispatchers.Main))
+        return Result.success()
+    }
+
+    class Factory @Inject constructor(
+        private val context: Provider<Context>, // provide from AppModule
+        private val userRepository: Provider<GithubUserRepository> // provide from Gson
+    ) : IWorkerFactory<GithubUsersWorker> {
+        override fun create(params: WorkerParameters): GithubUsersWorker {
+            return GithubUsersWorker(context.get(), params, userRepository.get())
+        }
     }
 
 }

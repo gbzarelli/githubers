@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import br.com.helpdev.githubers.di.Injectable
-import br.com.helpdev.githubers.di.util.ViewModelInjectFactory
+import br.com.helpdev.githubers.di.viewmodel.ViewModelInjectorFactory
 import br.com.helpdev.githubers.ui.frags.favusers.FavoritesUsersFragment
 import javax.inject.Inject
 
@@ -28,14 +28,14 @@ abstract class InjectableBindingFragment<T : ViewDataBinding, Z : ViewModel>
     }
 
     @Inject
-    lateinit var viewModelInjectFactory: ViewModelInjectFactory
+    lateinit var viewModelInjectorFactory: ViewModelInjectorFactory
 
     lateinit var binding: T
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = binding(inflater, container, savedInstanceState)
         /** Load ViewModel and call subscribeUI */
-        ViewModelProviders.of(this, viewModelInjectFactory).get(viewModelClass).also {
+        ViewModelProviders.of(this, viewModelInjectorFactory).get(viewModelClass).also {
             @Suppress("UNCHECKED_CAST") subscribeUI(it as Z, binding, savedInstanceState)
         }
         return binding.root

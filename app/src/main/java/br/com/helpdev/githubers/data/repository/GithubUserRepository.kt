@@ -1,14 +1,12 @@
 package br.com.helpdev.githubers.data.repository
 
 import androidx.lifecycle.LiveData
+import br.com.helpdev.githubers.BuildConfig
 import br.com.helpdev.githubers.data.api.github.GithubService
 import br.com.helpdev.githubers.data.db.dao.UserDao
 import br.com.helpdev.githubers.data.entity.FavUser
 import br.com.helpdev.githubers.data.entity.User
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
