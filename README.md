@@ -13,7 +13,7 @@
     - JetPack, Navigation, Room, Glide, Coroutines, Retrofit, Data Binding, LiveData, ViewModel, Dagger2, 
     Worker, Gson, etc.
     
-    Veja as dependências utilizadas: [build.gradle](./app/build.gradle)
+    Veja as dependências utilizadas: [build.gradle](/app/build.gradle)
 
 ## Funcionalidades:
 
@@ -29,8 +29,8 @@
 ## Links:
 
 ### Android guides / architecture
-    - https://developer.android.com/jetpack/docs/guide
-    - https://developer.android.com/guide/
+    - [teste](https://developer.android.com/jetpack/docs/guide)
+    - [](https://developer.android.com/guide/)
     - https://github.com/googlesamples/android-architecture-components
     - https://github.com/googlesamples/android-sunflower
 
