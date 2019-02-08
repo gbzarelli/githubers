@@ -20,10 +20,9 @@ import com.google.android.material.snackbar.Snackbar
 /**
  * A placeholder fragment containing a simple view.
  */
-class UsersListFragment :
-    InjectableBindingFragment<FragmentUsersListBinding, UsersListViewModel>(
-        UsersListViewModel::class.java
-    ) {
+class UsersListFragment : InjectableBindingFragment<FragmentUsersListBinding, UsersListViewModel>(
+    UsersListViewModel::class.java
+) {
 
     override fun binding(
         inflater: LayoutInflater,
@@ -36,13 +35,7 @@ class UsersListFragment :
         binding: FragmentUsersListBinding,
         savedInstanceState: Bundle?
     ) {
-        val adapter = UserAdapter { view, user ->
-            viewModel.addToFavorite(user.id)//TODO - remove - only for test!
-            view.findNavController().navigate(
-                UsersListFragmentDirections.actionUsersListFragmentToUser(user.id)
-            )
-        }
-        binding.recyclerView.adapter = adapter
+        val adapter = configureAdapter(viewModel).also { binding.recyclerView.adapter = it }
 
         viewModel.getNetworkServiceStatus().observe(this, Observer {
             binding.isLoading = it.status == NetworkServiceStatus.STATUS_FETCHING
@@ -73,6 +66,15 @@ class UsersListFragment :
         }
     }
 
+    private fun configureAdapter(viewModel: UsersListViewModel): UserAdapter {
+        return UserAdapter { view, user ->
+            viewModel.addToFavorite(user.id)//TODO - remove - only for test!
+            view.findNavController().navigate(
+                UsersListFragmentDirections.actionUsersListFragmentToUser(user.id)
+            )
+        }
+    }
+
     private fun showSnackNetworkError(view: View) {
         Snackbar.make(
             view, getString(R.string.verify_conection),
@@ -81,13 +83,24 @@ class UsersListFragment :
             .setAction(R.string.dismiss) { }.show()
     }
 
+    /**
+     * Enfileira um {@link GithubUsersWorker} para ser executado somente uma vez
+     * quando houver conexão de rede.
+     *
+     * Enqueue a {@link GithubUsersWorker} for execute only one time
+     * when has network connection
+     */
     private fun dispatchWorker() {
-        val request = OneTimeWorkRequestBuilder<GithubUsersWorker>()
-            .setConstraints(
-                Constraints.Builder()
-                    .setRequiredNetworkType(NetworkType.CONNECTED)
-                    .build()
-            ).build()
-        WorkManager.getInstance().enqueueUniqueWork("GithubUsersWorker", ExistingWorkPolicy.KEEP, request)
+        WorkManager.getInstance()
+            .enqueueUniqueWork(
+                GithubUsersWorker::class.java.simpleName,
+                ExistingWorkPolicy.KEEP,
+                OneTimeWorkRequestBuilder<GithubUsersWorker>()
+                    .setConstraints(
+                        Constraints.Builder()
+                            .setRequiredNetworkType(NetworkType.CONNECTED)
+                            .build()
+                    ).build()
+            )
     }
 }

@@ -101,4 +101,11 @@ class AppModule{
     @Singleton
     @Provides
     fun provideRepoDao(db: GithubDatabase) = db.userRepoDao()
+
+    /**
+     * Provide an instance of FavoritesDAO.
+     */
+    @Singleton
+    @Provides
+    fun provideFavoritesDao(db: GithubDatabase) = db.favoriteDao()
 }

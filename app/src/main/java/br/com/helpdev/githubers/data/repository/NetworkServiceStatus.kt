@@ -1,6 +1,10 @@
 package br.com.helpdev.githubers.data.repository
 
-class NetworkServiceStatus(var status: Int = STATUS_FETCHING, var exception: Throwable? = null) {
+/**
+ * Classe para controle do status de rede
+ * Class for network status control
+ */
+class NetworkServiceStatus(var status: Int = STATUS_NULL, var exception: Throwable? = null) {
     companion object {
         const val STATUS_NULL = 0
         const val STATUS_FETCHING = 1

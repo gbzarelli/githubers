@@ -3,11 +3,11 @@ package br.com.helpdev.githubers.ui.frags.favusers
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import br.com.helpdev.githubers.data.entity.User
-import br.com.helpdev.githubers.data.repository.GithubUserRepository
+import br.com.helpdev.githubers.data.repository.FavoriteRepository
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
-class FavoritesUsersViewModel @Inject constructor(private val githubUserRepository: GithubUserRepository) :
+class FavoritesUsersViewModel @Inject constructor(private val favoriteRepository: FavoriteRepository) :
     ViewModel() {
 
     private val job = Job()
@@ -16,7 +16,7 @@ class FavoritesUsersViewModel @Inject constructor(private val githubUserReposito
     private var userList: LiveData<List<User>>? = null
 
     fun getFavoriteUsersList(): LiveData<List<User>> {
-        return userList ?: githubUserRepository.getFavUsers().also { userList = it }
+        return userList ?: favoriteRepository.getFavUsers().also { userList = it }
     }
 
     override fun onCleared() {
@@ -26,13 +26,13 @@ class FavoritesUsersViewModel @Inject constructor(private val githubUserReposito
 
     fun addToFavorite(id: Int) {
         coroutineScope.launch {
-            githubUserRepository.addToFavorite(id)
+            favoriteRepository.addToFavorite(id)
         }
     }
 
     fun removeToFavorite(id: Int) {
         coroutineScope.launch {
-            githubUserRepository.removeToFavorite(id)
+            favoriteRepository.removeToFavorite(id)
         }
     }
 

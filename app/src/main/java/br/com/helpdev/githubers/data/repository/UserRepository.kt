@@ -11,7 +11,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class GithubUserRepository @Inject constructor(var userDao: UserDao, var githubService: GithubService) :
+class UserRepository @Inject constructor(var userDao: UserDao, var githubService: GithubService) :
     AbstractServiceRepository() {
 
     companion object {
@@ -27,8 +27,6 @@ class GithubUserRepository @Inject constructor(var userDao: UserDao, var githubS
         coroutineScope.launch { loadFromService(LOAD_SERVICE_USERS) }
     }
 
-    fun getFavUsers(): LiveData<List<User>> = userDao.loadFavorites()
-
     override suspend fun call(id: Int) {
         if (LOAD_SERVICE_USERS == id) {
             githubService.listUsers().await().apply {
@@ -41,16 +39,4 @@ class GithubUserRepository @Inject constructor(var userDao: UserDao, var githubS
         withContext(Dispatchers.IO) { userDao.save(user) }
     }
 
-
-    suspend fun addToFavorite(id: Int) {
-        withContext(Dispatchers.IO) {
-            userDao.insertFavorite(FavUser(id))
-        }
-    }
-
-    suspend fun removeToFavorite(id: Int) {
-        withContext(Dispatchers.IO) {
-            userDao.insertFavorite(FavUser(id))
-        }
-    }
 }

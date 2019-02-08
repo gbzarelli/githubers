@@ -42,21 +42,26 @@ class GithubersApp : Application(), HasActivityInjector {
     override fun onCreate() {
         super.onCreate()
         /**
-         * Inicia a DI para Activities e Fragments
+         * Init DI to the Activities and Fragments
          */
         AppInjector.init(this)
 
         configureWorkerWithDagger()
     }
 
-    private fun configureWorkerWithDagger() {
-
-        val config = Configuration.Builder()
+    /**
+     * Configura o WorkManager para utilizar um Factory com DI
+     * Configure the WorkManager to use a Factory with DI
+     */
+    private fun configureWorkerWithDagger() = WorkManager.initialize(
+        this, Configuration.Builder()
             .setWorkerFactory(workerInjectorFactory)
             .build()
-        WorkManager.initialize(this, config)
-    }
+    )
 
+    /**
+     * HasActivityInjector overrider; return the dispatching injector
+     */
     override fun activityInjector() = dispatchingAndroidInjector
 
 }

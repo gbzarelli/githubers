@@ -26,17 +26,4 @@ interface UserDao {
     @Query("SELECT * FROM user")
     fun load(): LiveData<List<User>>
 
-    /**
-     * TODO - extract to another DAO ->
-     */
-
-    @Query("SELECT * FROM fav_user f JOIN user u ON f.user_id = u.user_id")
-    fun loadFavorites(): LiveData<List<User>>
-
-    @Insert(onConflict = IGNORE)
-    fun insertFavorite(favorite: FavUser)
-
-    @Delete
-    fun removeFavorite(favorite: FavUser)
-
 }
