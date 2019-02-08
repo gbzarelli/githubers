@@ -26,6 +26,11 @@
             </intent-filter>
         </activity>
 
+
+        <!--
+        Incluir o provider para autorizar o WorkManager subistituir o Factory
+        Include the provider to authorize the WorkManager to replace Factory
+        -->
         <provider
                 android:name="androidx.work.impl.WorkManagerInitializer"
                 android:authorities="${applicationId}.workmanager-init"

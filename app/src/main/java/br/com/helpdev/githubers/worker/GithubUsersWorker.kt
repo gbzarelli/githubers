@@ -13,6 +13,7 @@ import kotlinx.coroutines.GlobalScope
 import javax.inject.Inject
 import javax.inject.Provider
 
+
 class GithubUsersWorker(
     context: Context, workerParams: WorkerParameters,
     private val userRepository: GithubUserRepository
@@ -24,11 +25,10 @@ class GithubUsersWorker(
     }
 
     class Factory @Inject constructor(
-        private val context: Provider<Context>, // provide from AppModule
         private val userRepository: Provider<GithubUserRepository> // provide from Gson
     ) : IWorkerFactory<GithubUsersWorker> {
-        override fun create(params: WorkerParameters): GithubUsersWorker {
-            return GithubUsersWorker(context.get(), params, userRepository.get())
+        override fun create(appContext: Context, params: WorkerParameters): GithubUsersWorker {
+            return GithubUsersWorker(appContext, params, userRepository.get())
         }
     }
 

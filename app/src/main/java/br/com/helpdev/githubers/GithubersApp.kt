@@ -4,9 +4,7 @@ import android.app.Activity
 import android.app.Application
 import androidx.work.Configuration
 import androidx.work.WorkManager
-import br.com.helpdev.githubers.di.AppComponent
 import br.com.helpdev.githubers.di.AppInjector
-import br.com.helpdev.githubers.di.DaggerAppComponent
 import br.com.helpdev.githubers.di.worker.WorkerInjectorFactory
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
@@ -34,6 +32,10 @@ class GithubersApp : Application(), HasActivityInjector {
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
 
+    /**
+     * Injeta o WorkerInjectorFactory para configurar o WorkManager
+     * Inject the WorkerInjectorFactory to configure WorkManager
+     */
     @Inject
     lateinit var workerInjectorFactory: WorkerInjectorFactory
 
