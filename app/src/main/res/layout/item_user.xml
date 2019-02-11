@@ -7,6 +7,8 @@
     <data>
         <variable name="clickListener"
                   type="android.view.View.OnClickListener"/>
+        <variable name="longClickListener"
+                  type="android.view.View.OnLongClickListener"/>
         <variable name="user"
                   type="br.com.helpdev.githubers.data.entity.User"/>
     </data>
@@ -17,6 +19,7 @@
             android:clickable="true"
             android:focusable="true"
             android:onClick="@{clickListener}"
+            android:onLongClick="@{longClickListener}"
             android:layout_height="wrap_content">
 
         <de.hdodenhof.circleimageview.CircleImageView

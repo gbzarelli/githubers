@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.work.*
 import br.com.helpdev.githubers.R
+import br.com.helpdev.githubers.data.entity.User
 import br.com.helpdev.githubers.data.repository.NetworkServiceStatus
 import br.com.helpdev.githubers.databinding.FragmentUsersListBinding
 import br.com.helpdev.githubers.ui.InjectableBindingFragment
@@ -35,7 +36,7 @@ class UsersListFragment : InjectableBindingFragment<FragmentUsersListBinding, Us
         binding: FragmentUsersListBinding,
         savedInstanceState: Bundle?
     ) {
-        val adapter = configureAdapter(viewModel).also { binding.recyclerView.adapter = it }
+        val adapter = configureAdapter().also { binding.recyclerView.adapter = it }
 
         viewModel.getNetworkServiceStatus().observe(this, Observer {
             binding.isLoading = it.status == NetworkServiceStatus.STATUS_FETCHING
@@ -62,13 +63,12 @@ class UsersListFragment : InjectableBindingFragment<FragmentUsersListBinding, Us
         })
 
         binding.fab.setOnClickListener {
-            //TODO
+            //TODO - Navigate to search user activity
         }
     }
 
-    private fun configureAdapter(viewModel: UsersListViewModel): UserAdapter {
+    private fun configureAdapter(): UserAdapter {
         return UserAdapter { view, user ->
-            viewModel.addToFavorite(user.id)//TODO - remove - only for test!
             view.findNavController().navigate(
                 UsersListFragmentDirections.actionUsersListFragmentToUser(user.id)
             )

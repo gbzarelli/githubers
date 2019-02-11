@@ -1,14 +1,15 @@
 package br.com.helpdev.githubers.ui.frags.favusers
 
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import br.com.helpdev.githubers.R
 import br.com.helpdev.githubers.databinding.FragmentFavoritesUsersBinding
 import br.com.helpdev.githubers.ui.InjectableBindingFragment
 import br.com.helpdev.githubers.ui.adapter.UserAdapter
+import kotlinx.android.synthetic.main.fragment_favorites_users.*
 
 /**
  * A placeholder fragment containing a simple view.
@@ -26,13 +27,16 @@ class FavoritesUsersFragment : InjectableBindingFragment<FragmentFavoritesUsersB
         binding: FragmentFavoritesUsersBinding,
         savedInstanceState: Bundle?
     ) {
-        val adapter = UserAdapter { view, user ->
+        val adapter = UserAdapter(R.menu.menu_adapter_favorites) { view, user ->
             view.findNavController().navigate(
                 FavoritesUsersFragmentDirections.actionFavoritesUsersFragmentToUser(user.id)
             )
         }
 
-        binding.recyclerView.adapter = adapter
+        with(binding.recyclerView) {
+            this.adapter = adapter
+            registerForContextMenu(this)
+        }
 
         viewModel.getFavoriteUsersList().observe(this, Observer { list ->
             //Verifica se contém itens para adicionar a variavel de layout.
@@ -54,6 +58,17 @@ class FavoritesUsersFragment : InjectableBindingFragment<FragmentFavoritesUsersB
                 .navigate(FavoritesUsersFragmentDirections.actionFavoritesUsersFragmentToUsersList())
         }
     }
+
+    /**
+     * TODO SAMPLE
+     */
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        val itemContext = (recyclerView.adapter as UserAdapter).itemContext
+        Toast.makeText(context, "PAH - ${itemContext!!.login}", Toast.LENGTH_SHORT).show()
+        return super.onContextItemSelected(item)
+
+    }
+
 }
 
 
