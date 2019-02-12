@@ -5,6 +5,7 @@ import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +15,7 @@ import br.com.helpdev.githubers.databinding.ItemUserBinding
 
 class UserWithFavAdapter(
     val onClick: (view: View, user: UserWithFav) -> Unit
-) : ListAdapter<UserWithFav, UserWithFavAdapter.ViewHolder>(UserDiffCallback()) {
+) : PagedListAdapter<UserWithFav, UserWithFavAdapter.ViewHolder>(UserDiffCallback()) {
 
     var itemContext: UserWithFav? = null
 
@@ -27,7 +28,7 @@ class UserWithFavAdapter(
         )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        getItem(position).let {
+        getItem(position)?.let {
             holder.bind(it, createOnClickListener(it), createOnLongClickListener(it))
         }
     }

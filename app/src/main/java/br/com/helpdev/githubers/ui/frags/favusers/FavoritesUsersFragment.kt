@@ -6,6 +6,7 @@ import android.view.MenuItem
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import br.com.helpdev.githubers.R
 import br.com.helpdev.githubers.databinding.FragmentFavoritesUsersBinding
 import br.com.helpdev.githubers.ui.InjectableBindingFragment

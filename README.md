@@ -11,14 +11,14 @@
 ## Tecnologias / Recursos:
 
    - JetPack, Navigation, Room, Glide, Coroutines, Retrofit, Data Binding, LiveData, ViewModel, Dagger2, 
-    Worker, Gson, etc.
+    Worker, Gson, Paging, etc.
     
    Veja as dependências utilizadas: [build.gradle](/app/build.gradle)
 
 ## Funcionalidades:
 
  - Lista de usuários favoritos;
- - Lista de usuários genérica retornada pela API;
+ - Lista de usuários genérica retornada pela API (Com paginação utilizando Paging Library);
  - Detalhes do usuário;
  - Lista de repositórios do usuário;
  - Detalhes do repositório;
@@ -33,6 +33,8 @@
  - https://developer.android.com/guide/
  - https://github.com/googlesamples/android-architecture-components
  - https://github.com/googlesamples/android-sunflower
+ - https://codelabs.developers.google.com/codelabs/android-paging
+ - https://developer.android.com/topic/libraries/architecture/paging/
 
 ### Docs
  - https://developer.github.com/v3/

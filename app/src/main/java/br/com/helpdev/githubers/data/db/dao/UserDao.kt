@@ -1,6 +1,7 @@
 package br.com.helpdev.githubers.data.db.dao
 
 import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
@@ -22,8 +23,8 @@ interface UserDao {
     fun load(userId: Int): LiveData<User>
 
     @Query("SELECT * FROM user")
-    fun load(): LiveData<List<User>>
+    fun load(): DataSource.Factory<Int, User>
 
-    @Query("SELECT u_.*, f_.user_id f_user_id FROM user u_ left join fav_user f_ ON u_.user_id = f_.user_id")
-    fun loadWithFav(): LiveData<List<UserWithFav>>
+    @Query("SELECT u_.*, f_.user_id f_user_id FROM user u_ left join fav_user f_ ON u_.user_id = f_.user_id ORDER BY u_.user_id")
+    fun loadWithFav(): DataSource.Factory<Int, UserWithFav>
 }

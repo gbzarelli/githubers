@@ -13,7 +13,8 @@ buildscript {
         navigationVersion = '1.0.0-beta01'
         roomVersion = '2.1.0-alpha04'
         uiAutomatorVersion = '2.2.0-alpha4'
-        workVersion = '1.0.0-beta04'
+        workVersion = '1.0.0-beta05'
+        pagingVersion = '1.0.0'
         materialVersion = '1.1.0-alpha03'
         recyclerViewVersion = '1.1.0-alpha02'
 

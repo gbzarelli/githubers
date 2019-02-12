@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import androidx.work.*
 import br.com.helpdev.githubers.R
 import br.com.helpdev.githubers.data.repository.NetworkServiceStatus
@@ -17,6 +18,8 @@ import br.com.helpdev.githubers.ui.adapter.UserWithFavAdapter
 import br.com.helpdev.githubers.worker.GithubUsersWorker
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_favorites_users.*
+import retrofit2.HttpException
+import java.io.IOException
 
 
 /**
@@ -31,7 +34,6 @@ class UsersListFragment : InjectableBindingFragment<FragmentUsersListBinding, Us
         container: ViewGroup?, savedInstanceState: Bundle?
     ) = FragmentUsersListBinding.inflate(inflater, container, false)
 
-
     override fun subscribeUI(
         viewModel: UsersListViewModel,
         binding: FragmentUsersListBinding,
@@ -39,11 +41,8 @@ class UsersListFragment : InjectableBindingFragment<FragmentUsersListBinding, Us
     ) {
         val adapter = configureAdapter()
 
-        with(binding.recyclerView) {
-            this.adapter = adapter
-            //Register Recycler context in Fragment (listen click in override onContextItemSelected)->
-            registerForContextMenu(this)
-        }
+        binding.recyclerView.configure(adapter)
+
 
         viewModel.getNetworkServiceStatus().observe(this, Observer {
             binding.isLoading = it.status == NetworkServiceStatus.STATUS_FETCHING
@@ -54,8 +53,11 @@ class UsersListFragment : InjectableBindingFragment<FragmentUsersListBinding, Us
 
             when (it.status) {
                 NetworkServiceStatus.STATUS_ERROR -> {
-                    showSnackNetworkError(binding.recyclerView)
-                    dispatchWorker()
+                    if (it.exception is IOException) {
+                        showSnackNetworkError(binding.recyclerView)
+                    } else {
+                        showSnackError(binding.recyclerView, it.exception.toString())
+                    }
                 }
             }
         })
@@ -63,7 +65,7 @@ class UsersListFragment : InjectableBindingFragment<FragmentUsersListBinding, Us
         viewModel.getUserWithFavList().observe(this, Observer { list ->
             //Atualiza o adapter se conter elementos
             //Update adapter if has items
-            list?.isNotEmpty().run {
+            list.isNotEmpty().run {
                 if (binding.noDataAndDoNotLoading) binding.noDataAndDoNotLoading = false
                 adapter.submitList(list)
             }
@@ -72,6 +74,12 @@ class UsersListFragment : InjectableBindingFragment<FragmentUsersListBinding, Us
         binding.fab.setOnClickListener {
             //TODO - Navigate to search user activity
         }
+    }
+
+    private fun RecyclerView.configure(adapter: UserWithFavAdapter) {
+        this.adapter = adapter
+        //Register Recycler context in Fragment (listen click in override onContextItemSelected)->
+        registerForContextMenu(this)
     }
 
     private fun configureAdapter() = UserWithFavAdapter { view, user ->
@@ -88,25 +96,12 @@ class UsersListFragment : InjectableBindingFragment<FragmentUsersListBinding, Us
             .setAction(R.string.dismiss) { }.show()
     }
 
-    /**
-     * Enfileira um {@link GithubUsersWorker} para ser executado somente uma vez
-     * quando houver conexão de rede.
-     *
-     * Enqueue a {@link GithubUsersWorker} for execute only one time
-     * when has network connection
-     */
-    private fun dispatchWorker() {
-        WorkManager.getInstance()
-            .enqueueUniqueWork(
-                GithubUsersWorker::class.java.simpleName,
-                ExistingWorkPolicy.KEEP,
-                OneTimeWorkRequestBuilder<GithubUsersWorker>()
-                    .setConstraints(
-                        Constraints.Builder()
-                            .setRequiredNetworkType(NetworkType.CONNECTED)
-                            .build()
-                    ).build()
-            )
+    private fun showSnackError(view: View, message: String) {
+        Snackbar.make(
+            view, message,
+            Snackbar.LENGTH_LONG
+        ).setActionTextColor(Color.GRAY)
+            .setAction(R.string.dismiss) { }.show()
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {

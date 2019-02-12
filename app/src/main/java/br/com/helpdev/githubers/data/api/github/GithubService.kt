@@ -7,6 +7,7 @@ import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 /**
  * Interface utilizada pelo Retrofit; Aqui mapeamos as chamadas da API
@@ -20,7 +21,7 @@ import retrofit2.http.Path
 interface GithubService {
 
     @GET("users")
-    fun listUsers(): Deferred<Response<List<User>>>
+    fun listUsers(@Query("since") since: Int? = 0): Deferred<Response<List<User>>>
 
     @GET("users/{user}")
     fun getUser(@Path("user") user: String): Deferred<Response<User>>

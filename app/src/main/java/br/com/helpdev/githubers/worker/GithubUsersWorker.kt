@@ -17,9 +17,15 @@ class GithubUsersWorker(
     context: Context, workerParams: WorkerParameters,
     private val userRepository: UserRepository
 ) : Worker(context, workerParams) {
+    companion object {
+        const val DATA_INT_LAST_ID = "last_id"
+    }
 
     override fun doWork(): Result {
-        userRepository.loadUserListRemoteRepo(CoroutineScope(Dispatchers.Main))
+        userRepository.loadUserListRemoteRepo(
+            CoroutineScope(Dispatchers.Main),
+            inputData.getInt(DATA_INT_LAST_ID, 0)
+        )
         return Result.success()
     }
 

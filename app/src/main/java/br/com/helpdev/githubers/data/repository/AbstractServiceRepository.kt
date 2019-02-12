@@ -1,5 +1,6 @@
 package br.com.helpdev.githubers.data.repository
 
+import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import retrofit2.HttpException
@@ -38,10 +39,10 @@ abstract class AbstractServiceRepository {
      *
      * Method for calling services. Always use it for NetworkServiceStatus to be monitored.
      */
-    internal suspend fun loadFromService(id: Int) {
+    internal suspend fun loadFromService(id: Int, params: Bundle? = null) {
         getNetworkServiceStatus(id).value = NetworkServiceStatus(NetworkServiceStatus.STATUS_FETCHING)
         try {
-            call(id)
+            call(id, params)
             getNetworkServiceStatus(id).value = NetworkServiceStatus(NetworkServiceStatus.STATUS_SUCCESS)
         } catch (e: HttpException) {
             getNetworkServiceStatus(id).value = NetworkServiceStatus(NetworkServiceStatus.STATUS_ERROR, e)
@@ -53,5 +54,5 @@ abstract class AbstractServiceRepository {
     }
 
     @Throws(HttpException::class, Throwable::class)
-    abstract suspend fun call(id: Int)
+    abstract suspend fun call(id: Int, params: Bundle?=null)
 }

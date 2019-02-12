@@ -1,6 +1,8 @@
 package br.com.helpdev.githubers.data.repository
 
 import androidx.lifecycle.LiveData
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import br.com.helpdev.githubers.data.db.dao.FavoriteDao
 import br.com.helpdev.githubers.data.entity.FavUser
 import br.com.helpdev.githubers.data.entity.UserWithFav
@@ -12,7 +14,7 @@ import javax.inject.Singleton
 @Singleton
 class FavoriteRepository @Inject constructor(var userDao: FavoriteDao) {
 
-    fun getFavUsers(): LiveData<List<UserWithFav>> = userDao.loadFavorites()
+    fun getFavUsers(): LiveData<PagedList<UserWithFav>> = LivePagedListBuilder(userDao.loadFavorites(), 10).build()
 
     suspend fun addToFavorite(id: Int) {
         withContext(Dispatchers.IO) {
