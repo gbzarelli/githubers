@@ -2,13 +2,11 @@ package br.com.helpdev.githubers.data.db.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
-import androidx.room.OnConflictStrategy.IGNORE
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
-import br.com.helpdev.githubers.data.entity.FavUser
 import br.com.helpdev.githubers.data.entity.User
+import br.com.helpdev.githubers.data.entity.UserWithFav
 
 
 @Dao
@@ -26,4 +24,6 @@ interface UserDao {
     @Query("SELECT * FROM user")
     fun load(): LiveData<List<User>>
 
+    @Query("SELECT u_.*, f_.user_id f_user_id FROM user u_ left join fav_user f_ ON u_.user_id = f_.user_id")
+    fun loadWithFav(): LiveData<List<UserWithFav>>
 }

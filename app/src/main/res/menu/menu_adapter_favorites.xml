@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/x1" android:title="XX1"/>
-    <item android:id="@+id/x2" android:title="XX2"/>
+    <item android:id="@+id/remove_favorite" android:title="@string/remove_favorite"/>
+    <item android:id="@+id/add_favorite" android:title="@string/add_favorite"/>
 </menu>

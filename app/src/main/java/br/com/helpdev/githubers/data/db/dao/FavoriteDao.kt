@@ -2,15 +2,14 @@ package br.com.helpdev.githubers.data.db.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import androidx.room.Dao
 import br.com.helpdev.githubers.data.entity.FavUser
-import br.com.helpdev.githubers.data.entity.User
+import br.com.helpdev.githubers.data.entity.UserWithFav
 
 @Dao
-interface FavoriteDao{
+interface FavoriteDao {
 
-    @Query("SELECT * FROM fav_user f JOIN user u ON f.user_id = u.user_id")
-    fun loadFavorites(): LiveData<List<User>>
+    @Query("SELECT u.*,f.user_id f_user_id FROM fav_user f JOIN user u ON f.user_id = u.user_id")
+    fun loadFavorites(): LiveData<List<UserWithFav>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertFavorite(favorite: FavUser)

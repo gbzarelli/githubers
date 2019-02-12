@@ -20,4 +20,6 @@
     <string name="update">UPDATE</string>
     <string name="dismiss">DISMISS</string>
     <string name="no_data_not_loading">No data - Verify your connection</string>
+    <string name="remove_favorite">Remove favorite</string>
+    <string name="add_favorite">Add favorite</string>
 </resources>

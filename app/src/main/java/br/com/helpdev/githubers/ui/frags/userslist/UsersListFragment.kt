@@ -3,19 +3,20 @@ package br.com.helpdev.githubers.ui.frags.userslist
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.work.*
 import br.com.helpdev.githubers.R
-import br.com.helpdev.githubers.data.entity.User
 import br.com.helpdev.githubers.data.repository.NetworkServiceStatus
 import br.com.helpdev.githubers.databinding.FragmentUsersListBinding
 import br.com.helpdev.githubers.ui.InjectableBindingFragment
-import br.com.helpdev.githubers.ui.adapter.UserAdapter
+import br.com.helpdev.githubers.ui.adapter.UserWithFavAdapter
 import br.com.helpdev.githubers.worker.GithubUsersWorker
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_favorites_users.*
 
 
 /**
@@ -36,7 +37,13 @@ class UsersListFragment : InjectableBindingFragment<FragmentUsersListBinding, Us
         binding: FragmentUsersListBinding,
         savedInstanceState: Bundle?
     ) {
-        val adapter = configureAdapter().also { binding.recyclerView.adapter = it }
+        val adapter = configureAdapter()
+
+        with(binding.recyclerView) {
+            this.adapter = adapter
+            //Register Recycler context in Fragment (listen click in override onContextItemSelected)->
+            registerForContextMenu(this)
+        }
 
         viewModel.getNetworkServiceStatus().observe(this, Observer {
             binding.isLoading = it.status == NetworkServiceStatus.STATUS_FETCHING
@@ -53,7 +60,7 @@ class UsersListFragment : InjectableBindingFragment<FragmentUsersListBinding, Us
             }
         })
 
-        viewModel.getUserList().observe(this, Observer { list ->
+        viewModel.getUserWithFavList().observe(this, Observer { list ->
             //Atualiza o adapter se conter elementos
             //Update adapter if has items
             list?.isNotEmpty().run {
@@ -67,12 +74,10 @@ class UsersListFragment : InjectableBindingFragment<FragmentUsersListBinding, Us
         }
     }
 
-    private fun configureAdapter(): UserAdapter {
-        return UserAdapter { view, user ->
-            view.findNavController().navigate(
-                UsersListFragmentDirections.actionUsersListFragmentToUser(user.id)
-            )
-        }
+    private fun configureAdapter() = UserWithFavAdapter { view, user ->
+        view.findNavController().navigate(
+            UsersListFragmentDirections.actionUsersListFragmentToUser(user.user.id)
+        )
     }
 
     private fun showSnackNetworkError(view: View) {
@@ -102,5 +107,13 @@ class UsersListFragment : InjectableBindingFragment<FragmentUsersListBinding, Us
                             .build()
                     ).build()
             )
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        val itemContext = (recyclerView.adapter as UserWithFavAdapter).itemContext
+        when (item.itemId) {
+            R.id.add_favorite -> viewModel.addToFavorite(itemContext!!.user.id)
+        }
+        return super.onContextItemSelected(item)
     }
 }

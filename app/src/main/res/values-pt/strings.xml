@@ -20,4 +20,6 @@
     <string name="update">ATUALIZAR</string>
     <string name="dismiss">CANCELAR</string>
     <string name="no_data_not_loading">Sem registros - Verifique sua conexão</string>
+    <string name="remove_favorite">Remover favorito</string>
+    <string name="add_favorite">Adicionar favorito</string>
 </resources>

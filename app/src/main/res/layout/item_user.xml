@@ -9,8 +9,8 @@
                   type="android.view.View.OnClickListener"/>
         <variable name="longClickListener"
                   type="android.view.View.OnLongClickListener"/>
-        <variable name="user"
-                  type="br.com.helpdev.githubers.data.entity.User"/>
+      <variable name="userFav"
+                  type="br.com.helpdev.githubers.data.entity.UserWithFav"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,7 +34,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:src="@sample/users.json/users/avatar_url"
                 app:layout_constraintStart_toStartOf="parent"
-                app:imageFromUrl="@{user.avatar_url}"
+                app:imageFromUrl="@{userFav.user.avatar_url}"
                 android:contentDescription="@string/contentDescriptionImageItemUser"/>
 
         <TextView
@@ -49,7 +49,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:background="#CC000000"
-                android:text="@{user.login}"
+                android:text="@{userFav.user.login}"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp"
@@ -63,13 +63,27 @@
                 android:id="@+id/imageViewSiteAdmin"
                 android:layout_width="wrap_content"
                 android:src="@drawable/site_admin"
-                app:isGone="@{!user.site_admin}"
+                app:isGone="@{!userFav.user.site_admin}"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="@id/textViewUserLogin"
                 app:layout_constraintBottom_toTopOf="@id/textViewUserLogin"
                 app:layout_constraintStart_toStartOf="@id/textViewUserLogin"
                 android:contentDescription="@string/contentDescriptionSiteAdmin"
                 app:layout_constraintEnd_toEndOf="@+id/textViewUserLogin"/>
+
+        <ImageView
+                android:id="@+id/imageViewStar"
+                android:layout_width="wrap_content"
+                android:src="@android:drawable/btn_star_big_on"
+                android:layout_height="wrap_content"
+                app:isGone="@{!userFav.isFavorite()}"
+                android:contentDescription="@string/contentDescriptionSiteAdmin"
+                app:layout_constraintStart_toStartOf="@+id/imageViewUserAvatar"
+                app:layout_constraintEnd_toEndOf="@+id/imageViewUserAvatar"
+                app:layout_constraintTop_toTopOf="@+id/imageViewUserAvatar"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewUserAvatar"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

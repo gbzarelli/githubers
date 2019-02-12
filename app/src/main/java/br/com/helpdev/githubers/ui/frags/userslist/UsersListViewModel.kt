@@ -3,6 +3,7 @@ package br.com.helpdev.githubers.ui.frags.userslist
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import br.com.helpdev.githubers.data.entity.User
+import br.com.helpdev.githubers.data.entity.UserWithFav
 import br.com.helpdev.githubers.data.repository.FavoriteRepository
 import br.com.helpdev.githubers.data.repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
@@ -19,10 +20,10 @@ class UsersListViewModel @Inject constructor(
     private val job = Job()
     private val coroutineScope = CoroutineScope(Dispatchers.Main + job)
 
-    private var userList: LiveData<List<User>>? = null
+    private var userList: LiveData<List<UserWithFav>>? = null
 
-    fun getUserList(): LiveData<List<User>> {
-        return userList ?: userRepository.getUserList(coroutineScope).also { userList = it }
+    fun getUserWithFavList(): LiveData<List<UserWithFav>> {
+        return userList ?: userRepository.getUserWithFavList(coroutineScope).also { userList = it }
     }
 
     fun addToFavorite(id: Int) {

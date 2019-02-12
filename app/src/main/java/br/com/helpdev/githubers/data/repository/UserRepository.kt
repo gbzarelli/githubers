@@ -6,6 +6,7 @@ import br.com.helpdev.githubers.data.api.github.GithubService
 import br.com.helpdev.githubers.data.db.dao.UserDao
 import br.com.helpdev.githubers.data.entity.FavUser
 import br.com.helpdev.githubers.data.entity.User
+import br.com.helpdev.githubers.data.entity.UserWithFav
 import kotlinx.coroutines.*
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -18,9 +19,9 @@ class UserRepository @Inject constructor(var userDao: UserDao, var githubService
         const val LOAD_SERVICE_USERS = 1
     }
 
-    fun getUserList(coroutineScope: CoroutineScope?): LiveData<List<User>> {
+    fun getUserWithFavList(coroutineScope: CoroutineScope?): LiveData<List<UserWithFav>> {
         coroutineScope?.let { loadUserListRemoteRepo(it) }
-        return userDao.load()
+        return userDao.loadWithFav()
     }
 
     fun loadUserListRemoteRepo(coroutineScope: CoroutineScope) {

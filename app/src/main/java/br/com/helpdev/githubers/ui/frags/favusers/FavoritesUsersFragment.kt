@@ -1,14 +1,15 @@
 package br.com.helpdev.githubers.ui.frags.favusers
 
 import android.os.Bundle
-import android.view.*
-import android.widget.Toast
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import br.com.helpdev.githubers.R
 import br.com.helpdev.githubers.databinding.FragmentFavoritesUsersBinding
 import br.com.helpdev.githubers.ui.InjectableBindingFragment
-import br.com.helpdev.githubers.ui.adapter.UserAdapter
+import br.com.helpdev.githubers.ui.adapter.UserWithFavAdapter
 import kotlinx.android.synthetic.main.fragment_favorites_users.*
 
 /**
@@ -27,14 +28,11 @@ class FavoritesUsersFragment : InjectableBindingFragment<FragmentFavoritesUsersB
         binding: FragmentFavoritesUsersBinding,
         savedInstanceState: Bundle?
     ) {
-        val adapter = UserAdapter(R.menu.menu_adapter_favorites) { view, user ->
-            view.findNavController().navigate(
-                FavoritesUsersFragmentDirections.actionFavoritesUsersFragmentToUser(user.id)
-            )
-        }
+        val adapter = configureAdapter()
 
         with(binding.recyclerView) {
             this.adapter = adapter
+            //Register Recycler context in Fragment (listen click in override onContextItemSelected)->
             registerForContextMenu(this)
         }
 
@@ -59,14 +57,18 @@ class FavoritesUsersFragment : InjectableBindingFragment<FragmentFavoritesUsersB
         }
     }
 
-    /**
-     * TODO SAMPLE
-     */
-    override fun onContextItemSelected(item: MenuItem): Boolean {
-        val itemContext = (recyclerView.adapter as UserAdapter).itemContext
-        Toast.makeText(context, "PAH - ${itemContext!!.login}", Toast.LENGTH_SHORT).show()
-        return super.onContextItemSelected(item)
+    private fun configureAdapter() = UserWithFavAdapter { view, user ->
+        view.findNavController().navigate(
+            FavoritesUsersFragmentDirections.actionFavoritesUsersFragmentToUser(user.user.id)
+        )
+    }
 
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        val itemContext = (recyclerView.adapter as UserWithFavAdapter).itemContext
+        when (item.itemId) {
+            R.id.remove_favorite -> viewModel.removeFromFavorite(itemContext!!.user.id)
+        }
+        return super.onContextItemSelected(item)
     }
 
 }

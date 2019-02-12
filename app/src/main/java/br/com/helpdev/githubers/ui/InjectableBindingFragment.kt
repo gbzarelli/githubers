@@ -31,13 +31,19 @@ abstract class InjectableBindingFragment<T : ViewDataBinding, Z : ViewModel>
     lateinit var viewModelInjectorFactory: ViewModelInjectorFactory
 
     lateinit var binding: T
+    lateinit var viewModel: Z
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = binding(inflater, container, savedInstanceState)
         /** Load ViewModel and call subscribeUI */
-        ViewModelProviders.of(this, viewModelInjectorFactory).get(viewModelClass).also {
-            @Suppress("UNCHECKED_CAST") subscribeUI(it as Z, binding, savedInstanceState)
-        }
+        ViewModelProviders.of(this, viewModelInjectorFactory).get(viewModelClass)
+            .also {
+                @Suppress("UNCHECKED_CAST") with(it as Z) {
+                    subscribeUI(this, binding, savedInstanceState)
+                    viewModel = this
+                }
+            }
         return binding.root
     }
 
