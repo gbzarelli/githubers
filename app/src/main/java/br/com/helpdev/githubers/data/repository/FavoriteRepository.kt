@@ -20,7 +20,7 @@ class FavoriteRepository @Inject constructor(var userDao: FavoriteDao) {
         }
     }
 
-    suspend fun removeToFavorite(id: Int) {
+    suspend fun removeFavorite(id: Int) {
         withContext(Dispatchers.IO) {
             userDao.removeFavorite(FavUser(id))
         }

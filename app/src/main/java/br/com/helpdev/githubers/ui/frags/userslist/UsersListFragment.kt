@@ -113,6 +113,7 @@ class UsersListFragment : InjectableBindingFragment<FragmentUsersListBinding, Us
         val itemContext = (recyclerView.adapter as UserWithFavAdapter).itemContext
         when (item.itemId) {
             R.id.add_favorite -> viewModel.addToFavorite(itemContext!!.user.id)
+            R.id.remove_favorite -> viewModel.removeFavorite(itemContext!!.user.id)
         }
         return super.onContextItemSelected(item)
     }

@@ -2,8 +2,6 @@ package br.com.helpdev.githubers.ui.frags.favusers
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import br.com.helpdev.githubers.data.entity.User
-import br.com.helpdev.githubers.data.entity.UserRepo
 import br.com.helpdev.githubers.data.entity.UserWithFav
 import br.com.helpdev.githubers.data.repository.FavoriteRepository
 import br.com.helpdev.githubers.data.repository.UserRepository
@@ -38,7 +36,7 @@ class FavoritesUsersViewModel @Inject constructor(
 
     fun removeFromFavorite(id: Int) {
         coroutineScope.launch {
-            favoriteRepository.removeToFavorite(id)
+            favoriteRepository.removeFavorite(id)
         }
     }
 
