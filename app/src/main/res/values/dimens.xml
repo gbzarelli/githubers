@@ -2,4 +2,5 @@
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="pictureUserSizeW">120dp</dimen>
     <dimen name="pictureUserSizeH">120dp</dimen>
+    <dimen name="app_bar_height">200dp</dimen>
 </resources>

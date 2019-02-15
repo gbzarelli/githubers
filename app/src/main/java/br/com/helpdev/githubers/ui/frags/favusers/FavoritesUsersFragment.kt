@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_favorites_users.*
 class FavoritesUsersFragment : InjectableBindingFragment<FragmentFavoritesUsersBinding, FavoritesUsersViewModel>
     (FavoritesUsersViewModel::class.java) {
 
-    override fun binding(
+    override fun onCreateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?, savedInstanceState: Bundle?
     ) = FragmentFavoritesUsersBinding.inflate(inflater, container, false)
@@ -60,7 +60,7 @@ class FavoritesUsersFragment : InjectableBindingFragment<FragmentFavoritesUsersB
 
     private fun configureAdapter() = UserWithFavAdapter { view, user ->
         view.findNavController().navigate(
-            FavoritesUsersFragmentDirections.actionFavoritesUsersFragmentToUser(user.user.id)
+            FavoritesUsersFragmentDirections.actionFavoritesUsersFragmentToUser(user.user.login)
         )
     }
 

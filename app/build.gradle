@@ -7,7 +7,7 @@ apply plugin: 'androidx.navigation.safeargs'
 android {
     compileSdkVersion rootProject.compileSdkVersion
 
-    /** Enable auto-generate data binding */
+    /** Enable auto-generate data onCreateBinding */
     dataBinding {
         enabled = true
     }
@@ -19,6 +19,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary true
     }
     buildTypes {
         release {

@@ -12,7 +12,7 @@ import br.com.helpdev.githubers.ui.InjectableBindingFragment
 class FavoritesReposFragment : InjectableBindingFragment<FragmentFavoritesReposBinding, FavoritesReposViewModel>
     (FavoritesReposViewModel::class.java) {
 
-    override fun binding(
+    override fun onCreateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?, savedInstanceState: Bundle?
     ) = FragmentFavoritesReposBinding.inflate(inflater, container, false)

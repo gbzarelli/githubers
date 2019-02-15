@@ -2,7 +2,7 @@
     <string name="app_name" translatable="false">GitHubers</string>
     <string name="title_activity_githubers" translatable="false">GitHubers</string>
 
-    <string name="nav_item_title_user">User</string>
+    <string name="nav_item_title_user">User data</string>
     <string name="nav_item_title_repo_list">Repo list</string>
     <string name="nav_item_title_repo">Repo</string>
 
@@ -22,4 +22,5 @@
     <string name="no_data_not_loading">No data - Verify your connection</string>
     <string name="remove_favorite">Remove favorite</string>
     <string name="add_favorite">Add favorite</string>
+    <string name="user_add">User added to favorite</string>
 </resources>

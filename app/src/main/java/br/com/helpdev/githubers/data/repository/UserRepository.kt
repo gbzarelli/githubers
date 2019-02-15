@@ -11,7 +11,10 @@ import br.com.helpdev.githubers.data.entity.User
 import br.com.helpdev.githubers.data.entity.UserWithFav
 import br.com.helpdev.githubers.data.repository.boundary.UserBoundaryCallback
 import br.com.helpdev.githubers.worker.GithubUsersWorker
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -22,6 +25,7 @@ class UserRepository @Inject constructor(var userDao: UserDao, var githubService
 
     companion object {
         const val LOAD_SERVICE_USERS = 1
+        const val LOAD_SERVICE_USER = 2
         const val DATABASE_PAGE_SIZE = 20
     }
 
@@ -31,10 +35,12 @@ class UserRepository @Inject constructor(var userDao: UserDao, var githubService
             .build()
     }
 
-    fun loadUserListRemoteRepo(coroutineScope: CoroutineScope, lastId: Int = 0) {
-        coroutineScope.launch {
-            loadFromService(LOAD_SERVICE_USERS, Bundle().apply { putInt("lastId", lastId) })
-        }
+    suspend fun loadUserListRemoteRepo(lastId: Int = 0) {
+        loadFromService(LOAD_SERVICE_USERS, Bundle().apply { putInt("lastId", lastId) })
+    }
+
+    suspend fun loadUserRemoteRepo(login: String) {
+        loadFromService(LOAD_SERVICE_USER, Bundle().apply { putString("login", login) })
     }
 
     override suspend fun call(id: Int, params: Bundle?) {
@@ -50,6 +56,20 @@ class UserRepository @Inject constructor(var userDao: UserDao, var githubService
                     }
             } catch (ex: IOException) {// <-- Network Exception?! timeout/unknown hostname/etc
                 dispatchUsersWorker(lastId)
+                throw ex
+            }
+        } else if (LOAD_SERVICE_USER == id) {
+            val login = params?.getString("login") ?: ""
+            try {
+                githubService.getUser(login)
+                    .await()
+                    .apply {
+                        if (isSuccessful) body()?.let {
+                            saveUser(it)
+                        }
+                    }
+            } catch (ex: IOException) {// <-- Network Exception?! timeout/unknown hostname/etc
+//                dispatchUsersWorker(lastId) TODO
                 throw ex
             }
         }
@@ -82,6 +102,15 @@ class UserRepository @Inject constructor(var userDao: UserDao, var githubService
 
     private suspend fun saveUsers(user: List<User>) {
         withContext(Dispatchers.IO) { userDao.save(user) }
+    }
+
+    private suspend fun saveUser(user: User) {
+        withContext(Dispatchers.IO) { userDao.save(user) }
+    }
+
+    fun getUserWithFav(coroutineScope: CoroutineScope, login: String): LiveData<UserWithFav> {
+        coroutineScope.launch { loadUserRemoteRepo(login) }
+        return userDao.loadWithFav(login)
     }
 
 }

@@ -70,10 +70,11 @@
             android:id="@+id/user_fragment"
             android:name="br.com.helpdev.githubers.ui.frags.user.UserFragment"
             android:label="@string/nav_item_title_user"
-            tools:layout="@layout/fragment_user">
+            tools:layout="@layout/fragment_user_details">
         <argument
-                android:name="userId"
-                app:argType="integer" />
+                android:name="login"
+                app:argType="string"/>
+
         <action android:id="@+id/action_repo_user_to_repo_list" app:destination="@id/repo_list_fragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:exitAnim="@anim/nav_default_exit_anim"

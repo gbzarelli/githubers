@@ -14,10 +14,10 @@ import br.com.helpdev.githubers.ui.frags.favusers.FavoritesUsersFragment
 import javax.inject.Inject
 
 /**
- * Fragment abstrato que realiza o auto-binding com a view e já com suporte a DI.
+ * Fragment abstrato que realiza o auto-onCreateBinding com a view e já com suporte a DI.
  * Também abstrai o carregamento do ViewModel.
  *
- * Abstract fragment that performs auto-binding with the view and already with DI support.
+ * Abstract fragment that performs auto-onCreateBinding with the view and already with DI support.
  * Also abstracts the loading of the ViewModel.
  */
 abstract class InjectableBindingFragment<T : ViewDataBinding, Z : ViewModel>
@@ -35,19 +35,22 @@ abstract class InjectableBindingFragment<T : ViewDataBinding, Z : ViewModel>
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = binding(inflater, container, savedInstanceState)
-        /** Load ViewModel and call subscribeUI */
-        ViewModelProviders.of(this, viewModelInjectorFactory).get(viewModelClass)
-            .also {
-                @Suppress("UNCHECKED_CAST") with(it as Z) {
-                    subscribeUI(this, binding, savedInstanceState)
-                    viewModel = this
-                }
-            }
-        return binding.root
+        @Suppress("UNCHECKED_CAST")
+        with(ViewModelProviders.of(this, viewModelInjectorFactory).get(viewModelClass) as Z) {
+            viewModel = this
+            onViewModelCreated(this, savedInstanceState)
+        }
+
+        return onCreateBinding(inflater, container, savedInstanceState).apply {
+            binding = this
+            subscribeUI(viewModel, this, savedInstanceState)
+        }.root
     }
 
-    abstract fun binding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): T
+    open fun onViewModelCreated(viewModel: Z, savedInstanceState: Bundle?) {}
+
+    abstract fun onCreateBinding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): T
 
     abstract fun subscribeUI(viewModel: Z, binding: T, savedInstanceState: Bundle?)
+
 }

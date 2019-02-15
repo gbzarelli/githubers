@@ -37,7 +37,7 @@ import java.util.*
     primaryKeys = ["user_id"]
 )
 data class User(
-    val login: String?,
+    val login: String,
     @ColumnInfo(name = "user_id") val id: Int,
     val node_id: String?,
     val avatar_url: String?,
@@ -54,7 +54,21 @@ data class User(
     val events_url: String?,
     val received_events_url: String?,
     val type: String?,
-    val site_admin: Boolean
+    val site_admin: Boolean,
+    //->Details:
+    val name: String?,
+    val company: String?,
+    val blog: String?,
+    val location: String?,
+    val email: String?,
+    val hireable: String?,
+    val bio: String?,
+    val public_repos: Int,
+    val public_gists: Int,
+    val followers: Int,
+    val following: Int,
+    val created_at: Calendar? = null,
+    val updated_at: Calendar? = null
 ) {
     @ColumnInfo(name = "register_datetime")
     @Expose(deserialize = false)
@@ -62,8 +76,9 @@ data class User(
         get() = field ?: GregorianCalendar.getInstance().also { field = it }
 
     override fun toString(): String {
-        return "User(registerDateTime=${registerDateTime?.time
-            ?: "null"}, login=$login, id=$id, node_id=$node_id, avatar_url=$avatar_url, gravatar_id=$gravatar_id, url=$url, html_url=$html_url, followers_url=$followers_url, following_url=$following_url, gists_url=$gists_url, starred_url=$starred_url, subscriptions_url=$subscriptions_url, organizations_url=$organizations_url, repos_url=$repos_url, events_url=$events_url, received_events_url=$received_events_url, type=$type, site_admin=$site_admin)"
+        return "User(login=$login, id=$id, node_id=$node_id, avatar_url=$avatar_url, gravatar_id=$gravatar_id, url=$url, html_url=$html_url, followers_url=$followers_url, following_url=$following_url, gists_url=$gists_url, starred_url=$starred_url, subscriptions_url=$subscriptions_url, organizations_url=$organizations_url, repos_url=$repos_url, events_url=$events_url, received_events_url=$received_events_url, type=$type, site_admin=$site_admin, name=$name, company=$company, blog=$blog, location=$location, email=$email, hireable=$hireable, bio=$bio, public_repos=$public_repos, public_gists=$public_gists, followers=$followers, following=$following, created_at=$created_at, updated_at=$updated_at)"
     }
+
+
 }
 

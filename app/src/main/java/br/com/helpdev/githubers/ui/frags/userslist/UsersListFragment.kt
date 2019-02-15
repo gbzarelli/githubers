@@ -9,16 +9,13 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import androidx.work.*
 import br.com.helpdev.githubers.R
 import br.com.helpdev.githubers.data.repository.NetworkServiceStatus
 import br.com.helpdev.githubers.databinding.FragmentUsersListBinding
 import br.com.helpdev.githubers.ui.InjectableBindingFragment
 import br.com.helpdev.githubers.ui.adapter.UserWithFavAdapter
-import br.com.helpdev.githubers.worker.GithubUsersWorker
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_favorites_users.*
-import retrofit2.HttpException
 import java.io.IOException
 
 
@@ -29,7 +26,7 @@ class UsersListFragment : InjectableBindingFragment<FragmentUsersListBinding, Us
     UsersListViewModel::class.java
 ) {
 
-    override fun binding(
+    override fun onCreateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?, savedInstanceState: Bundle?
     ) = FragmentUsersListBinding.inflate(inflater, container, false)
@@ -84,7 +81,7 @@ class UsersListFragment : InjectableBindingFragment<FragmentUsersListBinding, Us
 
     private fun configureAdapter() = UserWithFavAdapter { view, user ->
         view.findNavController().navigate(
-            UsersListFragmentDirections.actionUsersListFragmentToUser(user.user.id)
+            UsersListFragmentDirections.actionUsersListFragmentToUser(user.user.login)
         )
     }
 

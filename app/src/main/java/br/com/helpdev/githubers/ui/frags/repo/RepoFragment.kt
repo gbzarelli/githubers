@@ -12,7 +12,7 @@ import br.com.helpdev.githubers.ui.InjectableBindingFragment
 class RepoFragment : InjectableBindingFragment<FragmentRepoBinding, RepoViewModel>(
     RepoViewModel::class.java) {
 
-    override fun binding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
+    override fun onCreateBinding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
         FragmentRepoBinding.inflate(inflater, container, false)
 
 

@@ -27,7 +27,7 @@ interface GithubService {
     fun getUser(@Path("user") user: String): Deferred<Response<User>>
 
     @GET("users/{user}/repos")
-    fun getRepos(@Path("user") user: String): Deferred<Response<List<UserRepo>>>
+    fun getRepos(@Path("user") user: String, @Query("page") page: Int? = 0): Deferred<Response<List<UserRepo>>>
 
     /**
      *

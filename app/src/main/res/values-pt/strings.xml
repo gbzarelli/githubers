@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="nav_item_title_user">Usuário</string>
+    <string name="nav_item_title_user">Dados do usuário</string>
     <string name="nav_item_title_repo_list">Lista de repositórios</string>
     <string name="nav_item_title_repo">Repositório</string>
 
@@ -22,4 +22,5 @@
     <string name="no_data_not_loading">Sem registros - Verifique sua conexão</string>
     <string name="remove_favorite">Remover favorito</string>
     <string name="add_favorite">Adicionar favorito</string>
+    <string name="user_add">Usuário adicionado aos favoritos</string>
 </resources>

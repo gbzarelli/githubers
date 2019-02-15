@@ -7,6 +7,8 @@ import br.com.helpdev.githubers.data.repository.UserRepository
 import br.com.helpdev.githubers.di.worker.IWorkerFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -22,10 +24,11 @@ class GithubUsersWorker(
     }
 
     override fun doWork(): Result {
-        userRepository.loadUserListRemoteRepo(
-            CoroutineScope(Dispatchers.Main),
-            inputData.getInt(DATA_INT_LAST_ID, 0)
-        )
+        CoroutineScope(Dispatchers.Main).launch {
+            userRepository.loadUserListRemoteRepo(
+                inputData.getInt(DATA_INT_LAST_ID, 0)
+            )
+        }
         return Result.success()
     }
 

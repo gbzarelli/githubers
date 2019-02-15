@@ -5,6 +5,7 @@ import br.com.helpdev.githubers.data.entity.UserWithFav
 import br.com.helpdev.githubers.data.repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class UserBoundaryCallback(
     private val userRepo: UserRepository
@@ -12,11 +13,15 @@ class UserBoundaryCallback(
 
     override fun onZeroItemsLoaded() {
         super.onZeroItemsLoaded()
-        userRepo.loadUserListRemoteRepo(CoroutineScope(Dispatchers.Main))
+        CoroutineScope(Dispatchers.Main).launch {
+            userRepo.loadUserListRemoteRepo()
+        }
     }
 
     override fun onItemAtEndLoaded(itemAtEnd: UserWithFav) {
         super.onItemAtEndLoaded(itemAtEnd)
-        userRepo.loadUserListRemoteRepo(CoroutineScope(Dispatchers.Main), itemAtEnd.user.id)
+        CoroutineScope(Dispatchers.Main).launch {
+            userRepo.loadUserListRemoteRepo(itemAtEnd.user.id)
+        }
     }
 }

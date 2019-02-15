@@ -10,7 +10,6 @@ import kotlinx.coroutines.*
 import javax.inject.Inject
 
 class FavoritesUsersViewModel @Inject constructor(
-    private val ur: UserRepository,
     private val favoriteRepository: FavoriteRepository
 ) :
     ViewModel() {
@@ -29,17 +28,10 @@ class FavoritesUsersViewModel @Inject constructor(
         job.cancel()
     }
 
-    fun addToFavorite(id: Int) {
-        coroutineScope.launch {
-            favoriteRepository.addToFavorite(id)
-        }
-    }
-
     fun removeFromFavorite(id: Int) {
         coroutineScope.launch {
             favoriteRepository.removeFavorite(id)
         }
     }
-
 
 }

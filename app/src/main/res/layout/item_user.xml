@@ -9,7 +9,7 @@
                   type="android.view.View.OnClickListener"/>
         <variable name="longClickListener"
                   type="android.view.View.OnLongClickListener"/>
-      <variable name="userFav"
+        <variable name="userFav"
                   type="br.com.helpdev.githubers.data.entity.UserWithFav"/>
     </data>
 
