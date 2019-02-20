@@ -6,10 +6,7 @@ import androidx.paging.PagedList
 import br.com.helpdev.githubers.data.entity.UserWithFav
 import br.com.helpdev.githubers.data.repository.FavoriteRepository
 import br.com.helpdev.githubers.data.repository.UserRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 class UsersListViewModel @Inject constructor(
@@ -23,7 +20,7 @@ class UsersListViewModel @Inject constructor(
     private var userList: LiveData<PagedList<UserWithFav>>? = null
 
     fun getUserWithFavList(): LiveData<PagedList<UserWithFav>> {
-        return userList ?: userRepository.getUserWithFavList().also { userList = it }
+        return userList ?: userRepository.getUserWithFavList(coroutineScope).also { userList = it }
     }
 
     fun addToFavorite(id: Int) {

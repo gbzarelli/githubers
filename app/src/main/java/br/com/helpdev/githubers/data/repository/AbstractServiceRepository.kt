@@ -44,15 +44,12 @@ abstract class AbstractServiceRepository {
         try {
             call(id, params)
             getNetworkServiceStatus(id).value = NetworkServiceStatus(NetworkServiceStatus.STATUS_SUCCESS)
-        } catch (e: HttpException) {
-            getNetworkServiceStatus(id).value = NetworkServiceStatus(NetworkServiceStatus.STATUS_ERROR, e)
-            Log.e(TAG, "loadFromService-HttpException", e)
         } catch (e: Throwable) {
             getNetworkServiceStatus(id).value = NetworkServiceStatus(NetworkServiceStatus.STATUS_ERROR, e)
             Log.e(TAG, "loadFromService-Throwable", e)
         }
     }
 
-    @Throws(HttpException::class, Throwable::class)
-    abstract suspend fun call(id: Int, params: Bundle?=null)
+    @Throws(Throwable::class)
+    abstract suspend fun call(id: Int, params: Bundle? = null)
 }

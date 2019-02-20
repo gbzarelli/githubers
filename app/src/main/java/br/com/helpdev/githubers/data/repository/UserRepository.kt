@@ -27,56 +27,59 @@ class UserRepository @Inject constructor(var userDao: UserDao, var githubService
         const val LOAD_SERVICE_USERS = 1
         const val LOAD_SERVICE_USER = 2
         const val DATABASE_PAGE_SIZE = 20
+
+        private const val CALL_PARAM_LOGIN = "login"
+        private const val CALL_PARAM_LAST_ID = "lastId"
+        private const val CALL_PARAM_REDISPATCH = "redispatch"
     }
 
-    fun getUserWithFavList(): LiveData<PagedList<UserWithFav>> {
+    fun getUserWithFavList(coroutineScope: CoroutineScope): LiveData<PagedList<UserWithFav>> {
         return LivePagedListBuilder(userDao.loadWithFav(), DATABASE_PAGE_SIZE)
-            .setBoundaryCallback(UserBoundaryCallback(this))
+            .setBoundaryCallback(UserBoundaryCallback(coroutineScope, this))
             .build()
     }
 
-    suspend fun loadUserListRemoteRepo(lastId: Int = 0) {
-        loadFromService(LOAD_SERVICE_USERS, Bundle().apply { putInt("lastId", lastId) })
+    suspend fun loadUserListRemoteRepo(lastId: Int = 0, redispatch: Boolean = true) {
+        loadFromService(LOAD_SERVICE_USERS, Bundle().apply {
+            putInt(CALL_PARAM_LAST_ID, lastId)
+            putBoolean(CALL_PARAM_REDISPATCH, redispatch)
+        })
     }
 
-    suspend fun loadUserRemoteRepo(login: String) {
-        loadFromService(LOAD_SERVICE_USER, Bundle().apply { putString("login", login) })
+    suspend fun loadUserRemoteRepo(login: String, redispatch: Boolean = true) {
+        loadFromService(LOAD_SERVICE_USER, Bundle().apply {
+            putString(CALL_PARAM_LOGIN, login)
+            putBoolean(CALL_PARAM_REDISPATCH, redispatch)
+        })
     }
 
     override suspend fun call(id: Int, params: Bundle?) {
         if (LOAD_SERVICE_USERS == id) {
-            val lastId = params?.getInt("lastId") ?: 0
+            val lastId = params?.getInt(CALL_PARAM_LAST_ID) ?: 0
             try {
-                githubService.listUsers(lastId).await()
-                    .apply {
-                        if (isSuccessful) body()?.let {
-                            saveUsers(it)
-                        }
-                    }
-            } catch (ex: IOException) {// <-- Network Exception?! timeout/unknown hostname/etc
-                dispatchListUsersWorker(lastId)
+                val await = githubService.listUsers(lastId).await()
+                if (await.isSuccessful) await.body()?.let {
+                    saveUsers(it)
+                }
+            } catch (ex: Throwable) {
+                if (ex is IOException && params?.getBoolean(CALL_PARAM_REDISPATCH) == true) dispatchListUsersWorker(
+                    lastId
+                )
                 throw ex
-            } catch (th: Throwable) {
-                th.printStackTrace()
             }
         } else if (LOAD_SERVICE_USER == id) {
-            val login = params?.getString("login") ?: ""
+            val login = params?.getString(CALL_PARAM_LOGIN) ?: ""
             try {
-                githubService.getUser(login).await()
-                    .apply {
-                        if (isSuccessful) body()?.let {
-                            saveUser(it)
-                        }
-                    }
-            } catch (ex: IOException) {// <-- Network Exception?! timeout/unknown hostname/etc
-                dispatchUserWorker(login)
+                val await = githubService.getUser(login).await()
+                if (await.isSuccessful) await.body()?.let {
+                    saveUser(it)
+                }
+            } catch (ex: Throwable) {
+                if (ex is IOException && params?.getBoolean(CALL_PARAM_REDISPATCH) == true) dispatchUserWorker(login)
                 throw ex
-            } catch (th: Throwable) {
-                th.printStackTrace()
             }
         }
     }
-
 
     private fun dispatchListUsersWorker(lastId: Int = 0) {
         dispatchUsersWorker(Data.Builder().apply { putInt(GithubUsersWorker.DATA_INT_LAST_ID, lastId) })

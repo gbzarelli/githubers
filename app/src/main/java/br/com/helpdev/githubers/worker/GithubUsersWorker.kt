@@ -1,10 +1,12 @@
 package br.com.helpdev.githubers.worker
 
 import android.content.Context
+import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import br.com.helpdev.githubers.data.repository.UserRepository
 import br.com.helpdev.githubers.di.worker.IWorkerFactory
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,17 +21,20 @@ class GithubUsersWorker(
     private val userRepository: UserRepository
 ) : Worker(context, workerParams) {
     companion object {
+        const val TAG = "GithubUsersWorker"
         const val DATA_INT_LAST_ID = "last_id"
         const val DATA_LOAD_ONLY_USER = "login"
     }
 
+    private val handler = CoroutineExceptionHandler { _, ex ->
+        Log.e(TAG, "GithubUsersWorker+CoroutineExceptionHandler", ex)
+    }
+
     override fun doWork(): Result {
-        CoroutineScope(Dispatchers.Main).launch {
-            inputData.getString(DATA_LOAD_ONLY_USER)?.run {
-                userRepository.loadUserRemoteRepo(this)
-            } ?: userRepository.loadUserListRemoteRepo(
-                inputData.getInt(DATA_INT_LAST_ID, 0)
-            )
+        CoroutineScope(Dispatchers.Main + handler).launch {
+            inputData.getString(DATA_LOAD_ONLY_USER)
+                ?.run { userRepository.loadUserRemoteRepo(this, false) }
+                ?: userRepository.loadUserListRemoteRepo(inputData.getInt(DATA_INT_LAST_ID, 0), false)
         }
         return Result.success()
     }
