@@ -101,7 +101,7 @@ class AppModule {
                         OneTimeWorkRequestBuilder<GithubUsersWorker>()
                             .setInputData(Data.Builder().apply {
                                 putString(GithubUsersWorker.DATA_LOAD_ONLY_USER, MY_USER_GITHUB)
-                                putBoolean(GithubUsersWorker.DATA_BOOL_SAVE_IN_FAVORITES, true)
+//                              putBoolean(GithubUsersWorker.DATA_BOOL_SAVE_IN_FAVORITES, true)
                             }.build())
                             .setConstraints(
                                 Constraints.Builder()

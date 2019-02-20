@@ -3,7 +3,6 @@ package br.com.helpdev.githubers.data.repository
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import retrofit2.HttpException
 
 /**
  * Repositorio abstrato com controle de acesso a serviços externos.
@@ -41,14 +40,15 @@ abstract class AbstractServiceRepository {
      */
     internal suspend fun loadFromService(id: Int, params: Bundle? = null): Any? {
         getNetworkServiceStatus(id).value = NetworkServiceStatus(NetworkServiceStatus.STATUS_FETCHING)
-        return try {
-            call(id, params).also {
+        try {
+            return call(id, params).also {
                 getNetworkServiceStatus(id).value = NetworkServiceStatus(NetworkServiceStatus.STATUS_SUCCESS)
             }
         } catch (e: Throwable) {
             getNetworkServiceStatus(id).value = NetworkServiceStatus(NetworkServiceStatus.STATUS_ERROR, e)
             Log.e(TAG, "loadFromService-Throwable", e)
         }
+        return null
     }
 
     @Throws(Throwable::class)
