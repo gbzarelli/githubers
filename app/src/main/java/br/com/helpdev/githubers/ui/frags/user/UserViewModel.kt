@@ -28,6 +28,9 @@ class UserViewModel @Inject constructor(
         user = userRepository.getUserWithFav(coroutineScope, login)
     }
 
+    fun getNetworkServiceStatus() =
+        userRepository.getNetworkServiceStatus(UserRepository.LOAD_SERVICE_USER)
+
     fun addToFavorite() {
         user.value ?: throw IllegalStateException("Init not called")
         coroutineScope.launch {

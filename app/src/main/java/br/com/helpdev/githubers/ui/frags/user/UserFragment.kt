@@ -3,10 +3,13 @@ package br.com.helpdev.githubers.ui.frags.user
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import br.com.helpdev.githubers.R
 import br.com.helpdev.githubers.databinding.FragmentUserDetailsBinding
 import br.com.helpdev.githubers.ui.InjectableBindingFragment
+import br.com.helpdev.githubers.ui.util.NetworkBindingUtil
 import com.google.android.material.snackbar.Snackbar
+import java.io.IOException
 
 /**
  * A placeholder fragment containing a simple view.
@@ -29,11 +32,29 @@ class UserFragment : InjectableBindingFragment<FragmentUserDetailsBinding, UserV
         binding: FragmentUserDetailsBinding,
         savedInstanceState: Bundle?
     ) {
+
         binding.userViewModel = viewModel
+
         binding.fab.setOnClickListener {
             viewModel.addToFavorite()
             Snackbar.make(binding.fab, R.string.user_add, Snackbar.LENGTH_LONG).show()
         }
+
+        NetworkBindingUtil.monitorServiceStatus(this, viewModel.getNetworkServiceStatus(), binding.layoutNetwork,
+            { viewModel.user.value?.user?.created_at != null },
+            {
+                if (it is IOException) {
+                    NetworkBindingUtil.showSnackNetworkError(requireContext(), binding.toolbarLayout)
+                } else {
+                    NetworkBindingUtil.showSnackError(binding.toolbarLayout, it.toString())
+                }
+            }
+        )
+
+        viewModel.user.observe(this, Observer {
+            if (it?.user?.created_at != null) NetworkBindingUtil.setDataReached(binding.layoutNetwork)
+        })
+
         binding.executePendingBindings()
     }
 
