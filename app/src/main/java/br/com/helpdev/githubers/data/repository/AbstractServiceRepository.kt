@@ -39,11 +39,12 @@ abstract class AbstractServiceRepository {
      *
      * Method for calling services. Always use it for NetworkServiceStatus to be monitored.
      */
-    internal suspend fun loadFromService(id: Int, params: Bundle? = null) {
+    internal suspend fun loadFromService(id: Int, params: Bundle? = null): Any? {
         getNetworkServiceStatus(id).value = NetworkServiceStatus(NetworkServiceStatus.STATUS_FETCHING)
-        try {
-            call(id, params)
-            getNetworkServiceStatus(id).value = NetworkServiceStatus(NetworkServiceStatus.STATUS_SUCCESS)
+        return try {
+            call(id, params).also {
+                getNetworkServiceStatus(id).value = NetworkServiceStatus(NetworkServiceStatus.STATUS_SUCCESS)
+            }
         } catch (e: Throwable) {
             getNetworkServiceStatus(id).value = NetworkServiceStatus(NetworkServiceStatus.STATUS_ERROR, e)
             Log.e(TAG, "loadFromService-Throwable", e)
@@ -51,5 +52,5 @@ abstract class AbstractServiceRepository {
     }
 
     @Throws(Throwable::class)
-    abstract suspend fun call(id: Int, params: Bundle? = null)
+    abstract suspend fun call(id: Int, params: Bundle? = null): Any?
 }

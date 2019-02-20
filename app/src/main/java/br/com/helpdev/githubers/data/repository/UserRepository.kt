@@ -39,28 +39,27 @@ class UserRepository @Inject constructor(var userDao: UserDao, var githubService
             .build()
     }
 
-    suspend fun loadUserListRemoteRepo(lastId: Int = 0, redispatch: Boolean = true) {
-        loadFromService(LOAD_SERVICE_USERS, Bundle().apply {
+    suspend fun loadUserListRemoteRepo(lastId: Int = 0, redispatch: Boolean = true): Any? {
+        return loadFromService(LOAD_SERVICE_USERS, Bundle().apply {
             putInt(CALL_PARAM_LAST_ID, lastId)
             putBoolean(CALL_PARAM_REDISPATCH, redispatch)
         })
     }
 
-    suspend fun loadUserRemoteRepo(login: String, redispatch: Boolean = true) {
-        loadFromService(LOAD_SERVICE_USER, Bundle().apply {
+    suspend fun loadUserRemoteRepo(login: String, redispatch: Boolean = true): User? {
+        return loadFromService(LOAD_SERVICE_USER, Bundle().apply {
             putString(CALL_PARAM_LOGIN, login)
             putBoolean(CALL_PARAM_REDISPATCH, redispatch)
-        })
+        }) as? User
     }
 
-    override suspend fun call(id: Int, params: Bundle?) {
+    override suspend fun call(id: Int, params: Bundle?): Any? {
         if (LOAD_SERVICE_USERS == id) {
             val lastId = params?.getInt(CALL_PARAM_LAST_ID) ?: 0
             try {
                 val await = githubService.listUsers(lastId).await()
-                if (await.isSuccessful) await.body()?.let {
-                    saveUsers(it)
-                }
+                if (await.isSuccessful)
+                    return await.body()?.also { saveUsers(it) }
             } catch (ex: Throwable) {
                 if (ex is IOException && params?.getBoolean(CALL_PARAM_REDISPATCH) == true) dispatchListUsersWorker(
                     lastId
@@ -71,14 +70,14 @@ class UserRepository @Inject constructor(var userDao: UserDao, var githubService
             val login = params?.getString(CALL_PARAM_LOGIN) ?: ""
             try {
                 val await = githubService.getUser(login).await()
-                if (await.isSuccessful) await.body()?.let {
-                    saveUser(it)
-                }
+                if (await.isSuccessful)
+                    return await.body()?.also { saveUser(it) }
             } catch (ex: Throwable) {
                 if (ex is IOException && params?.getBoolean(CALL_PARAM_REDISPATCH) == true) dispatchUserWorker(login)
                 throw ex
             }
         }
+        return null
     }
 
     private fun dispatchListUsersWorker(lastId: Int = 0) {

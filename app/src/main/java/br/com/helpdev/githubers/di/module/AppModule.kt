@@ -21,11 +21,16 @@ package br.com.helpdev.githubers.di.module
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
+import androidx.work.*
 import br.com.helpdev.githubers.data.api.github.GithubService
 import br.com.helpdev.githubers.data.db.GithubDatabase
 import br.com.helpdev.githubers.util.DATABASE_NAME
 import br.com.helpdev.githubers.util.GITHUB_BASE_URL
+import br.com.helpdev.githubers.util.MY_USER_GITHUB
 import br.com.helpdev.githubers.util.gson.CalendarDeserializer
+import br.com.helpdev.githubers.worker.GithubUsersWorker
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
@@ -42,7 +47,7 @@ import javax.inject.Singleton
  */
 @Suppress("unused")
 @Module(includes = [ViewModelsModule::class])
-class AppModule{
+class AppModule {
 
 
     @Provides
@@ -86,6 +91,26 @@ class AppModule{
     fun provideDb(app: Application): GithubDatabase = Room
         .databaseBuilder(app, GithubDatabase::class.java, DATABASE_NAME)
         .fallbackToDestructiveMigration()
+        .addCallback(object : RoomDatabase.Callback() {
+            override fun onCreate(db: SupportSQLiteDatabase) {
+                super.onCreate(db)
+                WorkManager.getInstance()
+                    .enqueueUniqueWork(
+                        GithubUsersWorker::class.java.simpleName,
+                        ExistingWorkPolicy.KEEP,
+                        OneTimeWorkRequestBuilder<GithubUsersWorker>()
+                            .setInputData(Data.Builder().apply {
+                                putString(GithubUsersWorker.DATA_LOAD_ONLY_USER, MY_USER_GITHUB)
+                                putBoolean(GithubUsersWorker.DATA_BOOL_SAVE_IN_FAVORITES, true)
+                            }.build())
+                            .setConstraints(
+                                Constraints.Builder()
+                                    .setRequiredNetworkType(NetworkType.CONNECTED)
+                                    .build()
+                            ).build()
+                    )
+            }
+        })
         .build()
 
     /**
