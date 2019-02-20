@@ -47,32 +47,43 @@ class UserRepository @Inject constructor(var userDao: UserDao, var githubService
         if (LOAD_SERVICE_USERS == id) {
             val lastId = params?.getInt("lastId") ?: 0
             try {
-                githubService.listUsers(lastId)
-                    .await()
+                githubService.listUsers(lastId).await()
                     .apply {
                         if (isSuccessful) body()?.let {
                             saveUsers(it)
                         }
                     }
             } catch (ex: IOException) {// <-- Network Exception?! timeout/unknown hostname/etc
-                dispatchUsersWorker(lastId)
+                dispatchListUsersWorker(lastId)
                 throw ex
+            } catch (th: Throwable) {
+                th.printStackTrace()
             }
         } else if (LOAD_SERVICE_USER == id) {
             val login = params?.getString("login") ?: ""
             try {
-                githubService.getUser(login)
-                    .await()
+                githubService.getUser(login).await()
                     .apply {
                         if (isSuccessful) body()?.let {
                             saveUser(it)
                         }
                     }
             } catch (ex: IOException) {// <-- Network Exception?! timeout/unknown hostname/etc
-//                dispatchUsersWorker(lastId) TODO
+                dispatchUserWorker(login)
                 throw ex
+            } catch (th: Throwable) {
+                th.printStackTrace()
             }
         }
+    }
+
+
+    private fun dispatchListUsersWorker(lastId: Int = 0) {
+        dispatchUsersWorker(Data.Builder().apply { putInt(GithubUsersWorker.DATA_INT_LAST_ID, lastId) })
+    }
+
+    private fun dispatchUserWorker(login: String) {
+        dispatchUsersWorker(Data.Builder().apply { putString(GithubUsersWorker.DATA_LOAD_ONLY_USER, login) })
     }
 
     /**
@@ -82,10 +93,7 @@ class UserRepository @Inject constructor(var userDao: UserDao, var githubService
      * Enqueue a {@link GithubUsersWorker} for execute only one time
      * when has network connection
      */
-    private fun dispatchUsersWorker(lastId: Int = 0) {
-        val data = Data.Builder()
-        data.putInt(GithubUsersWorker.DATA_INT_LAST_ID, lastId)
-
+    private fun dispatchUsersWorker(data: Data.Builder) {
         WorkManager.getInstance()
             .enqueueUniqueWork(
                 GithubUsersWorker::class.java.simpleName,

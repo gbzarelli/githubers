@@ -1,6 +1,8 @@
 package br.com.helpdev.githubers.ui
 
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,9 +10,11 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
+import br.com.helpdev.githubers.R
 import br.com.helpdev.githubers.di.Injectable
 import br.com.helpdev.githubers.di.viewmodel.ViewModelInjectorFactory
 import br.com.helpdev.githubers.ui.frags.favusers.FavoritesUsersFragment
+import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
 /**

@@ -2,6 +2,7 @@ package br.com.helpdev.githubers.ui.frags.userslist
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -10,10 +11,10 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import br.com.helpdev.githubers.R
-import br.com.helpdev.githubers.data.repository.NetworkServiceStatus
 import br.com.helpdev.githubers.databinding.FragmentUsersListBinding
 import br.com.helpdev.githubers.ui.InjectableBindingFragment
 import br.com.helpdev.githubers.ui.adapter.UserWithFavAdapter
+import br.com.helpdev.githubers.ui.util.NetworkBindingUtil
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_favorites_users.*
 import java.io.IOException
@@ -40,30 +41,23 @@ class UsersListFragment : InjectableBindingFragment<FragmentUsersListBinding, Us
 
         binding.recyclerView.configure(adapter)
 
-
-        viewModel.getNetworkServiceStatus().observe(this, Observer {
-            binding.isLoading = it.status == NetworkServiceStatus.STATUS_FETCHING
-
-            if (adapter.itemCount <= 0) {
-                binding.noDataAndDoNotLoading = !binding.isLoading
-            }
-
-            when (it.status) {
-                NetworkServiceStatus.STATUS_ERROR -> {
-                    if (it.exception is IOException) {
-                        showSnackNetworkError(binding.recyclerView)
-                    } else {
-                        showSnackError(binding.recyclerView, it.exception.toString())
-                    }
+        NetworkBindingUtil.monitorServiceStatus(this, viewModel.getNetworkServiceStatus(), binding.layoutNetwork,
+            { adapter.itemCount > 0 },
+            {
+                if (it is IOException) {
+                    NetworkBindingUtil.showSnackNetworkError(requireContext(), binding.recyclerView)
+                } else {
+                    NetworkBindingUtil.showSnackError(binding.recyclerView, it.toString())
                 }
             }
-        })
+        )
+
 
         viewModel.getUserWithFavList().observe(this, Observer { list ->
             //Atualiza o adapter se conter elementos
             //Update adapter if has items
             list.isNotEmpty().run {
-                if (binding.noDataAndDoNotLoading) binding.noDataAndDoNotLoading = false
+                NetworkBindingUtil.setDataReached(binding.layoutNetwork)
                 adapter.submitList(list)
             }
         })
@@ -83,22 +77,6 @@ class UsersListFragment : InjectableBindingFragment<FragmentUsersListBinding, Us
         view.findNavController().navigate(
             UsersListFragmentDirections.actionUsersListFragmentToUser(user.user.login)
         )
-    }
-
-    private fun showSnackNetworkError(view: View) {
-        Snackbar.make(
-            view, getString(R.string.verify_conection),
-            Snackbar.LENGTH_LONG
-        ).setActionTextColor(Color.GRAY)
-            .setAction(R.string.dismiss) { }.show()
-    }
-
-    private fun showSnackError(view: View, message: String) {
-        Snackbar.make(
-            view, message,
-            Snackbar.LENGTH_LONG
-        ).setActionTextColor(Color.GRAY)
-            .setAction(R.string.dismiss) { }.show()
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {

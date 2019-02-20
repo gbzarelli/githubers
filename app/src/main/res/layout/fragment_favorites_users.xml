@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 app:layout_constraintVertical_bias="1"
                 style="@style/Widget.MaterialComponents.FloatingActionButton"
-                android:src="@drawable/ic_plus"
+                app:srcCompat="@drawable/ic_plus"
                 app:tint="@android:color/white"
                 app:backgroundTint="@color/colorAccentDark"
                 app:layout_constraintHorizontal_bias="1"

@@ -7,7 +7,6 @@ import br.com.helpdev.githubers.data.repository.UserRepository
 import br.com.helpdev.githubers.di.worker.IWorkerFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Provider
@@ -21,11 +20,14 @@ class GithubUsersWorker(
 ) : Worker(context, workerParams) {
     companion object {
         const val DATA_INT_LAST_ID = "last_id"
+        const val DATA_LOAD_ONLY_USER = "login"
     }
 
     override fun doWork(): Result {
         CoroutineScope(Dispatchers.Main).launch {
-            userRepository.loadUserListRemoteRepo(
+            inputData.getString(DATA_LOAD_ONLY_USER)?.run {
+                userRepository.loadUserRemoteRepo(this)
+            } ?: userRepository.loadUserListRemoteRepo(
                 inputData.getInt(DATA_INT_LAST_ID, 0)
             )
         }

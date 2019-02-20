@@ -62,7 +62,7 @@
         <ImageView
                 android:id="@+id/imageViewSiteAdmin"
                 android:layout_width="wrap_content"
-                android:src="@drawable/site_admin"
+                app:srcCompat="@drawable/site_admin"
                 app:isGone="@{!userFav.user.site_admin}"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="@id/textViewUserLogin"
@@ -74,7 +74,7 @@
         <ImageView
                 android:id="@+id/imageViewStar"
                 android:layout_width="wrap_content"
-                android:src="@android:drawable/btn_star_big_on"
+                app:srcCompat="@drawable/ic_star"
                 android:layout_height="wrap_content"
                 app:isGone="@{!userFav.isFavorite()}"
                 android:contentDescription="@string/contentDescriptionSiteAdmin"
