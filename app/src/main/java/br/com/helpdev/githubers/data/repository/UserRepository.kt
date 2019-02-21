@@ -1,6 +1,7 @@
 package br.com.helpdev.githubers.data.repository
 
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
@@ -12,10 +13,11 @@ import br.com.helpdev.githubers.data.entity.UserWithFav
 import br.com.helpdev.githubers.data.repository.boundary.UserBoundaryCallback
 import br.com.helpdev.githubers.worker.GithubUsersWorker
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -24,6 +26,8 @@ class UserRepository @Inject constructor(var userDao: UserDao, var githubService
     AbstractServiceRepository() {
 
     companion object {
+        internal val TAG by lazy { UserRepository::class.java.simpleName }
+
         const val LOAD_SERVICE_USERS = 1
         const val LOAD_SERVICE_USER = 2
         const val DATABASE_PAGE_SIZE = 20
@@ -111,15 +115,28 @@ class UserRepository @Inject constructor(var userDao: UserDao, var githubService
     }
 
     private suspend fun saveUsers(user: List<User>) {
-        withContext(Dispatchers.IO) { userDao.save(user) }
+        withContext(IO) { userDao.save(user) }
     }
 
     private suspend fun saveUser(user: User) {
-        withContext(Dispatchers.IO) { userDao.save(user) }
+        withContext(IO) { userDao.save(user) }
     }
 
     fun getUserWithFav(coroutineScope: CoroutineScope, login: String): LiveData<UserWithFav> {
-        coroutineScope.launch { loadUserRemoteRepo(login) }
+
+        coroutineScope.launch {
+            val us = withContext(IO) { userDao.loadWithFavInstant(login) }
+            us?.user?.let { user ->
+                user.created_at?.let {
+                    if ((System.currentTimeMillis() - user.registerDateTime!!.timeInMillis) < TimeUnit.HOURS.toMillis(1)) {
+                        Log.i(TAG, "REGISTER UPDATED IN LESS THAN 1Hr. SEARCH IGNORED.")
+                        return@launch
+                    }
+                }
+            }
+            loadUserRemoteRepo(login)
+        }
+
         return userDao.loadWithFav(login)
     }
 

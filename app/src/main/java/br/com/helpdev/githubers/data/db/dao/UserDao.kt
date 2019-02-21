@@ -25,6 +25,9 @@ interface UserDao {
     @Query("SELECT u_.*, f_.user_id f_user_id FROM user u_ left join fav_user f_ ON u_.user_id = f_.user_id WHERE u_.login=:login")
     fun loadWithFav(login: String): LiveData<UserWithFav>
 
+    @Query("SELECT u_.*, f_.user_id f_user_id FROM user u_ left join fav_user f_ ON u_.user_id = f_.user_id WHERE u_.login=:login")
+    fun loadWithFavInstant(login: String): UserWithFav?
+
     @Query("SELECT * FROM user")
     fun load(): DataSource.Factory<Int, User>
 

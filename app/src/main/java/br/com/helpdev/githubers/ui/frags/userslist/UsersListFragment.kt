@@ -1,11 +1,8 @@
 package br.com.helpdev.githubers.ui.frags.userslist
 
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
-import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
@@ -14,8 +11,8 @@ import br.com.helpdev.githubers.R
 import br.com.helpdev.githubers.databinding.FragmentUsersListBinding
 import br.com.helpdev.githubers.ui.InjectableBindingFragment
 import br.com.helpdev.githubers.ui.adapter.UserWithFavAdapter
-import br.com.helpdev.githubers.ui.util.NetworkBindingUtil
-import com.google.android.material.snackbar.Snackbar
+import br.com.helpdev.githubers.ui.util.observerServiceStatus
+import br.com.helpdev.githubers.ui.util.setDataReached
 import kotlinx.android.synthetic.main.fragment_favorites_users.*
 import java.io.IOException
 
@@ -41,23 +38,22 @@ class UsersListFragment : InjectableBindingFragment<FragmentUsersListBinding, Us
 
         binding.recyclerView.configure(adapter)
 
-        NetworkBindingUtil.monitorServiceStatus(this, viewModel.getNetworkServiceStatus(), binding.layoutNetwork,
+        binding.layoutNetwork.observerServiceStatus(this, viewModel.getNetworkServiceStatus(),
             { adapter.itemCount > 0 },
             {
                 if (it is IOException) {
-                    NetworkBindingUtil.showSnackNetworkError(requireContext(), binding.recyclerView)
+                    showSnackNetworkError(requireContext(), binding.recyclerView)
                 } else {
-                    NetworkBindingUtil.showSnackError(binding.recyclerView, it.toString())
+                    showSnackError(binding.recyclerView, it.toString())
                 }
             }
         )
-
 
         viewModel.getUserWithFavList().observe(this, Observer { list ->
             //Atualiza o adapter se conter elementos
             //Update adapter if has items
             list.isNotEmpty().run {
-                NetworkBindingUtil.setDataReached(binding.layoutNetwork)
+                binding.layoutNetwork.setDataReached()
                 adapter.submitList(list)
             }
         })

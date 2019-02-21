@@ -7,7 +7,8 @@ import androidx.lifecycle.Observer
 import br.com.helpdev.githubers.R
 import br.com.helpdev.githubers.databinding.FragmentUserDetailsBinding
 import br.com.helpdev.githubers.ui.InjectableBindingFragment
-import br.com.helpdev.githubers.ui.util.NetworkBindingUtil
+import br.com.helpdev.githubers.ui.util.observerServiceStatus
+import br.com.helpdev.githubers.ui.util.setDataReached
 import com.google.android.material.snackbar.Snackbar
 import java.io.IOException
 
@@ -40,19 +41,19 @@ class UserFragment : InjectableBindingFragment<FragmentUserDetailsBinding, UserV
             Snackbar.make(binding.fab, R.string.user_add, Snackbar.LENGTH_LONG).show()
         }
 
-        NetworkBindingUtil.monitorServiceStatus(this, viewModel.getNetworkServiceStatus(), binding.layoutNetwork,
+        binding.layoutNetwork.observerServiceStatus(this, viewModel.getNetworkServiceStatus(),
             { viewModel.user.value?.user?.created_at != null },
             {
                 if (it is IOException) {
-                    NetworkBindingUtil.showSnackNetworkError(requireContext(), binding.toolbarLayout)
+                    showSnackNetworkError(requireContext(), binding.toolbarLayout)
                 } else {
-                    NetworkBindingUtil.showSnackError(binding.toolbarLayout, it.toString())
+                    showSnackError(binding.toolbarLayout, it.toString())
                 }
             }
         )
 
         viewModel.user.observe(this, Observer {
-            if (it?.user?.created_at != null) NetworkBindingUtil.setDataReached(binding.layoutNetwork)
+            if (it?.user?.created_at != null) binding.layoutNetwork.setDataReached()
         })
 
         binding.executePendingBindings()

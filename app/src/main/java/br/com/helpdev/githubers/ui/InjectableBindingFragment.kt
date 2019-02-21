@@ -1,5 +1,6 @@
 package br.com.helpdev.githubers.ui
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import br.com.helpdev.githubers.R
+import br.com.helpdev.githubers.databinding.LoadNetworkBinding
 import br.com.helpdev.githubers.di.Injectable
 import br.com.helpdev.githubers.di.viewmodel.ViewModelInjectorFactory
 import br.com.helpdev.githubers.ui.frags.favusers.FavoritesUsersFragment
@@ -56,5 +58,21 @@ abstract class InjectableBindingFragment<T : ViewDataBinding, Z : ViewModel>
     abstract fun onCreateBinding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): T
 
     abstract fun subscribeUI(viewModel: Z, binding: T, savedInstanceState: Bundle?)
+
+    fun showSnackNetworkError(context: Context, view: View) {
+        showSnackError(view, context.getString(R.string.verify_conection))
+    }
+
+    fun showSnackError(view: View, message: String) {
+        try {
+            Snackbar.make(
+                view, message,
+                Snackbar.LENGTH_LONG
+            ).setActionTextColor(Color.GRAY)
+                .setAction(R.string.dismiss) { }.show()
+        } catch (th: Throwable) {
+            Log.e(InjectableBindingFragment.TAG, "showSnackError", th)
+        }
+    }
 
 }
