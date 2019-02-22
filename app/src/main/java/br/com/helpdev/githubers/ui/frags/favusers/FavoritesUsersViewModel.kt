@@ -34,4 +34,10 @@ class FavoritesUsersViewModel @Inject constructor(
         }
     }
 
+    fun addToFavorite(id: Int) {
+        coroutineScope.launch {
+            favoriteRepository.addToFavorite(id)
+        }
+    }
+
 }

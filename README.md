@@ -66,7 +66,7 @@ guia de arquitetura do Google.
  - https://github.com/googlesamples/android-architecture-components/tree/88747993139224a4bb6dbe985adf652d557de621/GithubBrowserSample/app/src/main/java/com/android/example/github/di
  - Dagger com Worker:
      - https://stackoverflow.com/questions/52434165/dagger2-unable-to-inject-dependencies-in-workmanager
-     - https://gist.github.com/helpdeveloper/5012ecd63268e26d8ef63c36ed2ee643
+     - https://gist.github.com/gbzarelli/5012ecd63268e26d8ef63c36ed2ee643
 
 ## License
 

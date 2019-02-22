@@ -30,7 +30,7 @@ class UserDaoTest : GithubDatabaseTest() {
         userDao = githubDatabase.userDao()
     }
 
-    private fun loadUserFromJsonToTest() {
+    fun loadUserFromJsonToTest() {
         user = gson.fromJson<User>(JSON_USER, User::class.java)
     }
 
