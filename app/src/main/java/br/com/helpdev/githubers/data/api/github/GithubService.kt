@@ -23,18 +23,16 @@ interface GithubService {
     @GET("users")
     fun listUsers(@Query("since") since: Int? = 0): Deferred<Response<List<User>>>
 
+    @GET("search/users")
+    fun findUsers(@Query("q") query: String): Deferred<Response<List<User>>>
+
+    @GET("search/repositories")
+    fun findRepos(@Query("q") query: String): Deferred<Response<List<UserRepo>>>
+
     @GET("users/{user}")
     fun getUser(@Path("user") user: String): Deferred<Response<User>>
 
     @GET("users/{user}/repos")
     fun getRepos(@Path("user") user: String, @Query("page") page: Int? = 0): Deferred<Response<List<UserRepo>>>
-
-    /**
-     *
-     * TODO CREATE SEARCH METHODS:
-     *  https://api.github.com/search/repositories?q=helpdev
-     *  https://api.github.com/search/users?q=helpdeveloper
-     *
-     */
 
 }

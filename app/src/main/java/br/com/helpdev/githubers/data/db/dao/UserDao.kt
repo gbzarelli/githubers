@@ -3,6 +3,7 @@ package br.com.helpdev.githubers.data.db.dao
 import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
@@ -19,6 +20,9 @@ interface UserDao {
     @Insert(onConflict = REPLACE)
     fun save(user: List<User>)
 
+    @Delete
+    fun remove(user:User)
+
     @Query("SELECT * FROM user WHERE user_id = :userId")
     fun load(userId: Int): LiveData<User>
 
@@ -33,4 +37,7 @@ interface UserDao {
 
     @Query("SELECT u_.*, f_.user_id f_user_id FROM user u_ left join fav_user f_ ON u_.user_id = f_.user_id ORDER BY u_.user_id")
     fun loadWithFav(): DataSource.Factory<Int, UserWithFav>
+
+    @Query("SELECT u_.*, f_.user_id f_user_id FROM user u_ left join fav_user f_ ON u_.user_id = f_.user_id where u_.login like :query OR u_.name like :query OR u_.email like :query ORDER BY u_.user_id")
+    fun findWithFav(query: String): DataSource.Factory<Int, UserWithFav>
 }
