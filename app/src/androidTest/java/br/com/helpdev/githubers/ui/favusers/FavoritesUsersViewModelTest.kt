@@ -43,11 +43,20 @@ class FavoritesUsersViewModelTest {
     }
 
     @Test
-    fun mustBeReturnFavoriteUser() {
+    fun mustReturnFavoriteUser() {
         val value: PagedList<UserWithFav> = getValue(viewModel.getFavoriteUsersList())
         val userWithFav = requireNotNull(value[0])
         Assert.assertEquals(userWithFav.user.id, _user.id)
         Assert.assertNotNull(userWithFav.favorite)
         Assert.assertTrue(userWithFav.favorite!! > 0)
+    }
+
+    @Test
+    fun mustRemoveFavoriteUser() {
+        var value: PagedList<UserWithFav> = getValue(viewModel.getFavoriteUsersList())
+        val userWithFav = requireNotNull(value[0])
+        viewModel.removeFromFavorite(userWithFav.user.id)
+        value = getValue(viewModel.getFavoriteUsersList())
+        assert(value.isNullOrEmpty())
     }
 }
