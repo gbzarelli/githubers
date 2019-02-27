@@ -59,6 +59,11 @@
             android:name="br.com.helpdev.githubers.ui.frags.repolist.RepoListFragment"
             android:label="@string/nav_item_title_repo_list"
             tools:layout="@layout/fragment_users_list">
+
+        <argument
+                android:name="login"
+                app:argType="string"/>
+
         <action android:id="@+id/action_users_list_fragment_to_repo" app:destination="@id/repo_fragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:exitAnim="@anim/nav_default_exit_anim"
@@ -75,7 +80,7 @@
                 android:name="login"
                 app:argType="string"/>
 
-        <action android:id="@+id/action_repo_user_to_repo_list" app:destination="@id/repo_list_fragment"
+        <action android:id="@+id/action_user_to_repo_list" app:destination="@id/repo_list_fragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:exitAnim="@anim/nav_default_exit_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"

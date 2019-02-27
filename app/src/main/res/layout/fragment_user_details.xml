@@ -23,8 +23,8 @@
                 name="userViewModel"
                 type="br.com.helpdev.githubers.ui.frags.user.UserViewModel"/>
         <variable
-                name="user"
-                type="br.com.helpdev.githubers.data.entity.UserWithFav"/>
+                name="onClickToRepositories"
+                type="android.view.View.OnClickListener"/>
 
     </data>
 
@@ -86,10 +86,12 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_margin="10dp"
+                    android:layout_height="wrap_content">
 
                 <TextView
                         android:id="@+id/name"
+                        android:textStyle="bold"
                         android:layout_width="wrap_content"
                         tools:text="@sample/user_detail.json/user_detail/name"
                         android:layout_height="wrap_content"
@@ -98,6 +100,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         android:text="@{userViewModel.user.user.name}"
+                        app:isGone="@{!userViewModel.user.user.hasName()}"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"/>
@@ -105,9 +108,13 @@
                 <TextView
                         android:id="@+id/bio"
                         android:layout_width="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:isGone="@{!userViewModel.user.user.hasBio()}"
                         android:text="@{userViewModel.user.user.bio}"
                         tools:text="@sample/user_detail.json/user_detail/bio"
                         android:layout_height="wrap_content"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintVertical_bias="0"
                         app:layout_constraintBottom_toBottomOf="parent"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                         app:layout_constraintStart_toStartOf="parent"
@@ -115,14 +122,128 @@
                         app:layout_constraintTop_toBottomOf="@+id/name"/>
 
 
-                <!-- TODO -->
+                <TextView
+                        android:id="@+id/infoGithub"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/bio"
+                        android:textStyle="bold"
+                        android:text="@string/github_link"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="8dp"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        app:layout_constraintVertical_bias="0"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <TextView
+                        android:id="@+id/github"
+                        android:layout_width="wrap_content"
+                        android:text="@{userViewModel.user.user.html_url}"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/infoGithub"
+                        app:layout_constraintTop_toTopOf="@id/infoGithub"
+                        app:layout_constraintBottom_toBottomOf="@id/infoGithub"
+                        android:layout_marginStart="8dp"
+                        android:autoLink="web"
+                        tools:text="@sample/user_detail.json/user_detail/html_url"
+                />
+
+                <TextView
+                        android:id="@+id/infoLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/infoGithub"
+                        android:textStyle="bold"
+                        app:isGone="@{!userViewModel.user.user.hasLocation()}"
+                        android:text="@string/user_location"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintVertical_bias="0"
+                        app:layout_constraintHorizontal_bias="0"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <TextView
+                        android:id="@+id/userLocation"
+                        app:isGone="@{!userViewModel.user.user.hasLocation()}"
+                        android:text="@{userViewModel.user.user.location}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/infoLocation"
+                        app:layout_constraintTop_toTopOf="@id/infoLocation"
+                        app:layout_constraintBottom_toBottomOf="@id/infoLocation"
+                        android:layout_marginStart="8dp"
+                        android:autoLink="map"
+                        tools:text="@sample/user_detail.json/user_detail/location"
+                />
+
+                <View
+                        android:layout_width="0dp"
+                        android:background="@drawable/bt_click_repo"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/infoRepos"
+                        android:onClickListener="@{onClickToRepositories}"
+                        android:clickable="true"
+                        app:isGone="@{!userViewModel.user.user.hasLoadDetails()}"
+                        app:layout_constraintBottom_toBottomOf="@id/infoClickToRepo"
+                        android:layout_height="0dp" android:focusable="true"/>
+
+                <TextView
+                        android:id="@+id/infoRepos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/repositories"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        android:layout_marginTop="20dp"
+                        app:layout_constraintEnd_toStartOf="@id/repos"
+                        app:layout_constraintVertical_bias="0"
+                        app:layout_constraintTop_toBottomOf="@id/infoLocation"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:textAllCaps="true"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                />
+
+                <TextView
+                        android:id="@+id/repos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:textInt="@{userViewModel.user.user.public_repos}"
+                        tools:text="@sample/user_detail.json/user_detail/public_repos"
+                        app:layout_constraintStart_toEndOf="@id/infoRepos"
+                        app:layout_constraintTop_toTopOf="@id/infoRepos"
+                        app:layout_constraintBottom_toBottomOf="@id/infoRepos"
+                        android:layout_marginStart="8dp"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                />
+                <TextView
+                        android:id="@+id/infoClickToRepo"
+                        android:layout_width="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/infoRepos"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:text="@string/click_to_view_repos"
+                        android:textColor="@android:color/white"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                        android:layout_height="wrap_content"/>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
 
-        <include android:id="@+id/layout_network" layout="@layout/load_network"/>
+        <include
+                tools:visibility="invisible"
+                android:id="@+id/layout_network"
+                layout="@layout/load_network"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab"
@@ -135,7 +256,7 @@
                 android:layout_marginEnd="10dp"
                 app:layout_anchor="@id/appbar"
                 app:layout_anchorGravity="bottom|right|end"
-                android:src="@android:drawable/btn_star_big_on"/>
+                app:srcCompat="@drawable/ic_star"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

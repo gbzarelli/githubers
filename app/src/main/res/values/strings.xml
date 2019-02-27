@@ -23,4 +23,8 @@
     <string name="remove_favorite">Remove favorite</string>
     <string name="add_favorite">Add favorite</string>
     <string name="user_add">User added to favorite</string>
+    <string name="user_location">User location:</string>
+    <string name="github_link">Github link:</string>
+    <string name="click_to_view_repos">(click to view repos)</string>
+    <string name="repositories">Repositories:</string>
 </resources>

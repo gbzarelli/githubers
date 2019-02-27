@@ -2,11 +2,14 @@ package br.com.helpdev.githubers.ui.frags.user
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import br.com.helpdev.githubers.R
 import br.com.helpdev.githubers.databinding.FragmentUserDetailsBinding
 import br.com.helpdev.githubers.ui.InjectableBindingFragment
+import br.com.helpdev.githubers.ui.frags.repolist.RepoListFragmentDirections
 import br.com.helpdev.githubers.ui.util.observerServiceStatus
 import br.com.helpdev.githubers.ui.util.setDataReached
 import com.google.android.material.snackbar.Snackbar
@@ -42,7 +45,7 @@ class UserFragment : InjectableBindingFragment<FragmentUserDetailsBinding, UserV
         }
 
         binding.layoutNetwork.observerServiceStatus(this, viewModel.getNetworkServiceStatus(),
-            { viewModel.user.value?.user?.created_at != null },
+            { viewModel.user.value?.user?.hasLoadDetails() == true },
             {
                 if (it is IOException) {
                     showSnackNetworkError(requireContext(), binding.toolbarLayout)
@@ -53,8 +56,15 @@ class UserFragment : InjectableBindingFragment<FragmentUserDetailsBinding, UserV
         )
 
         viewModel.user.observe(this, Observer {
-            if (it?.user?.created_at != null) binding.layoutNetwork.setDataReached()
+            if (it?.user?.hasLoadDetails() == true) binding.layoutNetwork.setDataReached()
+            binding.notifyChange()
         })
+
+        binding.onClickToRepositories = View.OnClickListener {
+            it.findNavController().navigate(
+                UserFragmentDirections.actionUserToRepoList(UserFragmentArgs.fromBundle(arguments!!).login)
+            )
+        }
 
         binding.executePendingBindings()
     }

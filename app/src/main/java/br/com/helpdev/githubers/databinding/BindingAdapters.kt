@@ -18,6 +18,7 @@ package br.com.helpdev.githubers.databinding
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 
@@ -50,6 +51,11 @@ fun bindIsVisible(view: View, isVisible: Boolean) {
     } else {
         View.GONE
     }
+}
+
+@BindingAdapter("textInt")
+fun bindTextInt(view: TextView, integer: Int) {
+    view.text = integer.toString()
 }
 
 @BindingAdapter("imageFromUrl")
