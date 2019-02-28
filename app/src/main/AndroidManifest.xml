@@ -24,8 +24,26 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <meta-data android:name="android.app.default_searchable"
+                       android:value=".ui.SearchableActivity"/>
         </activity>
 
+
+        <provider
+                android:name=".data.provider.UserLoginSuggestionProvider"
+                android:authorities="${applicationId}.loginsuggestion.auth"
+                android:enabled="true"
+                android:exported="false"/>
+
+
+        <activity android:name=".ui.SearchableActivity"
+                  android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                       android:resource="@xml/searchable"/>
+        </activity>
 
         <!--
         Incluir o provider para autorizar o WorkManager subistituir o Factory

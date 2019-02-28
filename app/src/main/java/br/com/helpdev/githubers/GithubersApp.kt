@@ -2,12 +2,16 @@ package br.com.helpdev.githubers
 
 import android.app.Activity
 import android.app.Application
+import android.content.ContentProvider
+import android.content.Context
 import androidx.work.Configuration
 import androidx.work.WorkManager
 import br.com.helpdev.githubers.di.AppInjector
 import br.com.helpdev.githubers.di.worker.WorkerInjectorFactory
+import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
+import dagger.android.HasContentProviderInjector
 import javax.inject.Inject
 
 /**
@@ -20,7 +24,8 @@ import javax.inject.Inject
  * automatically into the activities.
  *
  */
-class GithubersApp : Application(), HasActivityInjector {
+class GithubersApp : Application(), HasActivityInjector
+    , HasContentProviderInjector {
 
     /**
      * Cria uma instancia para de AndroidInjector.
@@ -32,6 +37,9 @@ class GithubersApp : Application(), HasActivityInjector {
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
 
+    @Inject
+    lateinit var dispatchingContentProviderInjector: DispatchingAndroidInjector<ContentProvider>
+
     /**
      * Injeta o WorkerInjectorFactory para configurar o WorkManager
      * Inject the WorkerInjectorFactory to configure WorkManager
@@ -41,12 +49,21 @@ class GithubersApp : Application(), HasActivityInjector {
 
     override fun onCreate() {
         super.onCreate()
+        configureWorkerWithDagger()
+    }
+
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
         /**
          * Init DI to the Activities and Fragments
+         *
+         * Foi inicializado aqui por causa do Inject do ContentProvider, por algum motivo,
+         * ele acaba não iniciando o dispacher no momento que o programa executa. Quando
+         * o Provider chama o onCreate o Inject acaba pegando uma instancia nulla do Dispacher
+         *
+         * <https://stackoverflow.com/questions/23521083/inject-database-in-a-contentprovider-with-dagger>
          */
         AppInjector.init(this)
-
-        configureWorkerWithDagger()
     }
 
     /**
@@ -64,4 +81,5 @@ class GithubersApp : Application(), HasActivityInjector {
      */
     override fun activityInjector() = dispatchingAndroidInjector
 
+    override fun contentProviderInjector() = dispatchingContentProviderInjector
 }

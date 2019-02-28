@@ -1,5 +1,6 @@
 package br.com.helpdev.githubers.data.db.dao
 
+import android.database.Cursor
 import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.room.Dao
@@ -21,7 +22,14 @@ interface UserDao {
     fun save(user: List<User>)
 
     @Delete
-    fun remove(user:User)
+    fun remove(user: User)
+
+    @Query("SELECT user_id,login,user_id from user WHERE login LIKE '%'||:query||'%' limit :limit")
+    fun findLoginSuggestion(query: String, limit:Int): Cursor
+
+    @Query("SELECT user_id,login,user_id from user WHERE user_id=:userId")
+    fun findLoginSuggestion(userId: Int): Cursor
+
 
     @Query("SELECT * FROM user WHERE user_id = :userId")
     fun load(userId: Int): LiveData<User>

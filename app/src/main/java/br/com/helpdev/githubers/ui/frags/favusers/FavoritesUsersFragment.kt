@@ -1,9 +1,7 @@
 package br.com.helpdev.githubers.ui.frags.favusers
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.ViewGroup
+import android.view.*
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -12,12 +10,26 @@ import br.com.helpdev.githubers.databinding.FragmentFavoritesUsersBinding
 import br.com.helpdev.githubers.ui.InjectableBindingFragment
 import br.com.helpdev.githubers.ui.adapter.UserWithFavAdapter
 import kotlinx.android.synthetic.main.fragment_favorites_users.*
+import br.com.helpdev.githubers.ui.SearchableActivity
+import android.content.ComponentName
+import android.content.Context.SEARCH_SERVICE
+import androidx.core.content.ContextCompat.getSystemService
+import android.app.SearchManager
+import androidx.appcompat.widget.SearchView
+import androidx.databinding.adapters.SearchViewBindingAdapter.setOnQueryTextListener
+import androidx.core.view.MenuItemCompat
+
 
 /**
  * A placeholder fragment containing a simple view.
  */
 class FavoritesUsersFragment : InjectableBindingFragment<FragmentFavoritesUsersBinding, FavoritesUsersViewModel>
     (FavoritesUsersViewModel::class.java) {
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        setHasOptionsMenu(true)
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
 
     override fun onCreateBinding(
         inflater: LayoutInflater,
@@ -56,6 +68,23 @@ class FavoritesUsersFragment : InjectableBindingFragment<FragmentFavoritesUsersB
             it.findNavController()
                 .navigate(FavoritesUsersFragmentDirections.actionFavoritesUsersFragmentToUsersList())
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_search, menu)
+
+        val searchItem = menu.findItem(R.id.search)
+        val searchView = searchItem.actionView as SearchView
+
+        val searchManager = requireContext().getSystemService(SEARCH_SERVICE) as SearchManager?
+        searchView.setSearchableInfo(
+            searchManager!!.getSearchableInfo(
+                ComponentName(requireContext(), SearchableActivity::class.java)
+            )
+        )
+        searchView.setIconifiedByDefault(false)
+
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     private fun configureAdapter() = UserWithFavAdapter { view, user ->

@@ -23,6 +23,7 @@ import android.content.Context
 import br.com.helpdev.githubers.GithubersApp
 import br.com.helpdev.githubers.di.module.ActivitiesModule
 import br.com.helpdev.githubers.di.module.AppModule
+import br.com.helpdev.githubers.di.module.ProvidersModule
 import br.com.helpdev.githubers.di.module.WorkersModule
 import br.com.helpdev.githubers.di.worker.WorkerInjectorFactory
 import dagger.BindsInstance
@@ -37,6 +38,7 @@ import javax.inject.Singleton
         AndroidInjectionModule::class,
         AppModule::class,
         ActivitiesModule::class,
+        ProvidersModule::class,
         WorkersModule::class
         /* ADD YOUR MODULES HERE */
     ]
