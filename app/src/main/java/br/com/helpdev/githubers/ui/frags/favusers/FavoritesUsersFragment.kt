@@ -26,11 +26,6 @@ import androidx.core.view.MenuItemCompat
 class FavoritesUsersFragment : InjectableBindingFragment<FragmentFavoritesUsersBinding, FavoritesUsersViewModel>
     (FavoritesUsersViewModel::class.java) {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        setHasOptionsMenu(true)
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
-
     override fun onCreateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?, savedInstanceState: Bundle?
@@ -68,23 +63,6 @@ class FavoritesUsersFragment : InjectableBindingFragment<FragmentFavoritesUsersB
             it.findNavController()
                 .navigate(FavoritesUsersFragmentDirections.actionFavoritesUsersFragmentToUsersList())
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_search, menu)
-
-        val searchItem = menu.findItem(R.id.search)
-        val searchView = searchItem.actionView as SearchView
-
-        val searchManager = requireContext().getSystemService(SEARCH_SERVICE) as SearchManager?
-        searchView.setSearchableInfo(
-            searchManager!!.getSearchableInfo(
-                ComponentName(requireContext(), SearchableActivity::class.java)
-            )
-        )
-        searchView.setIconifiedByDefault(false)
-
-        super.onCreateOptionsMenu(menu, inflater)
     }
 
     private fun configureAdapter() = UserWithFavAdapter { view, user ->

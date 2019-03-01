@@ -1,15 +1,18 @@
 package br.com.helpdev.githubers.ui.frags.userslist
 
+import android.app.SearchManager
+import android.content.ComponentName
+import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import br.com.helpdev.githubers.R
 import br.com.helpdev.githubers.databinding.FragmentUsersListBinding
 import br.com.helpdev.githubers.ui.InjectableBindingFragment
+import br.com.helpdev.githubers.ui.SearchableActivity
 import br.com.helpdev.githubers.ui.adapter.UserWithFavAdapter
 import br.com.helpdev.githubers.ui.util.observerServiceStatus
 import br.com.helpdev.githubers.ui.util.setDataReached
@@ -23,6 +26,11 @@ import java.io.IOException
 class UsersListFragment : InjectableBindingFragment<FragmentUsersListBinding, UsersListViewModel>(
     UsersListViewModel::class.java
 ) {
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        setHasOptionsMenu(true)
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
 
     override fun onCreateBinding(
         inflater: LayoutInflater,
@@ -58,9 +66,6 @@ class UsersListFragment : InjectableBindingFragment<FragmentUsersListBinding, Us
             }
         })
 
-        binding.fab.setOnClickListener {
-            //TODO - Navigate to search user activity
-        }
     }
 
     private fun RecyclerView.configure(adapter: UserWithFavAdapter) {
@@ -82,5 +87,22 @@ class UsersListFragment : InjectableBindingFragment<FragmentUsersListBinding, Us
             R.id.remove_favorite -> viewModel.removeFavorite(itemContext!!.user.id)
         }
         return super.onContextItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_search, menu)
+
+        val searchItem = menu.findItem(R.id.search)
+        val searchView = searchItem.actionView as SearchView
+
+        val searchManager = requireContext().getSystemService(Context.SEARCH_SERVICE) as SearchManager?
+        searchView.setSearchableInfo(
+            searchManager!!.getSearchableInfo(
+                ComponentName(requireContext(), SearchableActivity::class.java)
+            )
+        )
+        searchView.setIconifiedByDefault(false)
+
+        super.onCreateOptionsMenu(menu, inflater)
     }
 }

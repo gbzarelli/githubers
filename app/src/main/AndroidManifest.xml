@@ -31,7 +31,7 @@
 
         <provider
                 android:name=".data.provider.UserLoginSuggestionProvider"
-                android:authorities="${applicationId}.loginsuggestion.auth"
+                android:authorities="${applicationId}.loginsuggestion.provider"
                 android:enabled="true"
                 android:exported="false"/>
 

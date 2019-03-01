@@ -20,19 +20,19 @@ class UserLoginSuggestionProvider : ContentProvider() {
 
         private const val TYPE_ALL_SUGGESTIONS = 1
         private const val TYPE_SINGLE_SUGGESTION = 2
+
+        private var mUriMatcher = UriMatcher(UriMatcher.NO_MATCH).apply {
+            addURI(AUTHORITY, "/#", TYPE_SINGLE_SUGGESTION)
+            addURI(AUTHORITY, "search_suggest_query/*", TYPE_ALL_SUGGESTIONS)
+        }
     }
 
     @Inject
     lateinit var userDao: UserDao
 
-    lateinit var mUriMatcher: UriMatcher
-
     override fun onCreate(): Boolean {
         AndroidInjection.inject(this)
-        mUriMatcher = UriMatcher(UriMatcher.NO_MATCH)
-        mUriMatcher.addURI(AUTHORITY, "/#", TYPE_SINGLE_SUGGESTION)
-        mUriMatcher.addURI(AUTHORITY, "search_suggest_query/*", TYPE_ALL_SUGGESTIONS)
-        return false
+        return true
     }
 
     override fun query(
@@ -42,16 +42,17 @@ class UserLoginSuggestionProvider : ContentProvider() {
         selectionArgs: Array<String>?,
         sortOrder: String?
     ): Cursor? {
-
-        if (mUriMatcher.match(uri) == TYPE_ALL_SUGGESTIONS) {
-            val query = uri.lastPathSegment!!.toLowerCase()
-            val limit = uri.getQueryParameter(SearchManager.SUGGEST_PARAMETER_LIMIT)!!.toInt()
-            return userDao.findLoginSuggestion(query, limit)
-        } else if (mUriMatcher.match(uri) == TYPE_SINGLE_SUGGESTION) {
-            return userDao.findLoginSuggestion(uri.lastPathSegment!!.toInt())
+        return when (mUriMatcher.match(uri)) {
+            TYPE_ALL_SUGGESTIONS -> {
+                val query = uri.lastPathSegment!!.toLowerCase()
+                val limit = uri.getQueryParameter(SearchManager.SUGGEST_PARAMETER_LIMIT)!!.toInt()
+                userDao.findLoginSuggestion(query, limit)
+            }
+            TYPE_SINGLE_SUGGESTION -> {
+                userDao.findLoginSuggestion(uri.lastPathSegment!!.toInt())
+            }
+            else -> null
         }
-
-        return null
     }
 
 
