@@ -16,6 +16,8 @@ fun getGithubService(): GithubService = AppModule().let { it.provideGithubServic
 class GithubServiceTest {
     companion object {
         const val USERNAME = "gbzarelli"
+        const val QUERY_SEARCH_USERNAME = "help"
+        const val MAX_SIZE_ITEMS_API = 30
     }
 
     private lateinit var githubService: GithubService
@@ -49,7 +51,7 @@ class GithubServiceTest {
             with(githubService.listUsers().await()) {
                 assert(isSuccessful)
                 assertNotNull(body())
-                assertEquals(body()!!.size, 30)
+                assertEquals(body()!!.size, MAX_SIZE_ITEMS_API)
             }
         }
     }
@@ -63,6 +65,19 @@ class GithubServiceTest {
                 assert(isSuccessful)
                 assertNotNull(body())
                 assert(body()!!.isNotEmpty())
+            }
+        }
+    }
+
+    @Test
+    @ExperimentalCoroutinesApi
+    fun searchUsersWithSuccess() {
+        cs.launch {
+            with(githubService.findUsers(QUERY_SEARCH_USERNAME).execute().body()) {
+                assertNotNull(this)
+                if (null == this) return@launch
+                assert(items.isNotEmpty())
+                assertEquals(items.size, MAX_SIZE_ITEMS_API)
             }
         }
     }

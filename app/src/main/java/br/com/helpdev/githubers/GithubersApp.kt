@@ -24,8 +24,9 @@ import javax.inject.Inject
  * automatically into the activities.
  *
  */
-class GithubersApp : Application(), HasActivityInjector
-    , HasContentProviderInjector {
+class GithubersApp : Application(),
+    HasActivityInjector,
+    HasContentProviderInjector {
 
     /**
      * Cria uma instancia para de AndroidInjector.
@@ -37,6 +38,13 @@ class GithubersApp : Application(), HasActivityInjector
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
 
+    /**
+     * Cria uma instancia para de AndroidInjector.
+     * Responsável em injetar as dependencias mapeadas de forma automatica nos Providers.
+     *
+     * Creates an instance of AndroidInjector.
+     * Responsible for injecting dependencies mapped automatically into the providers.
+     */
     @Inject
     lateinit var dispatchingContentProviderInjector: DispatchingAndroidInjector<ContentProvider>
 
@@ -52,6 +60,14 @@ class GithubersApp : Application(), HasActivityInjector
         configureWorkerWithDagger()
     }
 
+
+    /**
+     * Set the base context for this ContextWrapper.  All calls will then be
+     * delegated to the base context.  Throws
+     * IllegalStateException if a base context has already been set.
+     *
+     * @param base The new base context for this wrapper.
+     */
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
         /**
@@ -81,5 +97,8 @@ class GithubersApp : Application(), HasActivityInjector
      */
     override fun activityInjector() = dispatchingAndroidInjector
 
+    /**
+     * HasProviderInjector overrider; return the dispatching injector
+     */
     override fun contentProviderInjector() = dispatchingContentProviderInjector
 }

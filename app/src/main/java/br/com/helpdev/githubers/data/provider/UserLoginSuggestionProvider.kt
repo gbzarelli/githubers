@@ -5,30 +5,32 @@ import android.content.ContentValues
 import android.database.Cursor
 import android.net.Uri
 import br.com.helpdev.githubers.BuildConfig
-import br.com.helpdev.githubers.data.db.dao.UserDao
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 import android.content.UriMatcher
 import android.app.SearchManager
+import br.com.helpdev.githubers.data.repository.UserRepository
 
 
 class UserLoginSuggestionProvider : ContentProvider() {
 
     companion object {
-        private const val PATH = "loginsuggestion"
-        private const val AUTHORITY = BuildConfig.APPLICATION_ID + ".$PATH.provider"
+        private const val PATH_SEARCH_SUGGEST_QUERY = "search_suggest_query"
+        private const val AUTHORITY = BuildConfig.APPLICATION_ID + ".loginsuggestion.provider"
+
+        val URI_SEARCH_SUGGEST_QUERY = Uri.parse("content://$AUTHORITY/$PATH_SEARCH_SUGGEST_QUERY/")!!
 
         private const val TYPE_ALL_SUGGESTIONS = 1
         private const val TYPE_SINGLE_SUGGESTION = 2
 
         private var mUriMatcher = UriMatcher(UriMatcher.NO_MATCH).apply {
             addURI(AUTHORITY, "/#", TYPE_SINGLE_SUGGESTION)
-            addURI(AUTHORITY, "search_suggest_query/*", TYPE_ALL_SUGGESTIONS)
+            addURI(AUTHORITY, "$PATH_SEARCH_SUGGEST_QUERY/*", TYPE_ALL_SUGGESTIONS)
         }
     }
 
     @Inject
-    lateinit var userDao: UserDao
+    lateinit var userRepository: UserRepository
 
     override fun onCreate(): Boolean {
         AndroidInjection.inject(this)
@@ -46,17 +48,18 @@ class UserLoginSuggestionProvider : ContentProvider() {
             TYPE_ALL_SUGGESTIONS -> {
                 val query = uri.lastPathSegment!!.toLowerCase()
                 val limit = uri.getQueryParameter(SearchManager.SUGGEST_PARAMETER_LIMIT)!!.toInt()
-                userDao.findLoginSuggestion(query, limit)
+                userRepository.findLoginSuggestionSynchronous(query, limit)
             }
             TYPE_SINGLE_SUGGESTION -> {
-                userDao.findLoginSuggestion(uri.lastPathSegment!!.toInt())
+                userRepository.findLoginSuggestionSynchronous(uri.lastPathSegment!!.toInt())
             }
             else -> null
         }
     }
 
 
-    override fun insert(uri: Uri, values: ContentValues?) = throw UnsupportedOperationException("Not yet implemented")
+    override fun insert(uri: Uri, values: ContentValues?) =
+        throw UnsupportedOperationException("Not yet implemented")
 
     override fun update(uri: Uri, values: ContentValues?, selection: String?, selectionArgs: Array<String>?) =
         throw UnsupportedOperationException("Not yet implemented")
@@ -64,7 +67,8 @@ class UserLoginSuggestionProvider : ContentProvider() {
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?) =
         throw UnsupportedOperationException("Not yet implemented")
 
-    override fun getType(uri: Uri) = throw UnsupportedOperationException("Not yet implemented")
+    override fun getType(uri: Uri) =
+        throw UnsupportedOperationException("Not yet implemented")
 
 
 }

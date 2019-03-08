@@ -17,6 +17,7 @@
             tools:ignore="GoogleAppIndexingWarning">
         <activity
                 android:name=".ui.GithubersActivity"
+                android:launchMode="singleTop"
                 android:label="@string/title_activity_githubers"
                 android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

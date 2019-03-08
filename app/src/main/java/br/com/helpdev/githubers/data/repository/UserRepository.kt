@@ -1,5 +1,6 @@
 package br.com.helpdev.githubers.data.repository
 
+import android.database.Cursor
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -14,6 +15,7 @@ import br.com.helpdev.githubers.data.repository.boundary.UserBoundaryCallback
 import br.com.helpdev.githubers.worker.GithubUsersWorker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
@@ -123,7 +125,6 @@ class UserRepository @Inject constructor(var userDao: UserDao, var githubService
     }
 
     fun getUserWithFav(coroutineScope: CoroutineScope, login: String): LiveData<UserWithFav> {
-
         coroutineScope.launch {
             val us = withContext(IO) { userDao.loadWithFavInstant(login) }
             us?.user?.let { user ->
@@ -138,6 +139,41 @@ class UserRepository @Inject constructor(var userDao: UserDao, var githubService
         }
 
         return userDao.loadWithFav(login)
+    }
+
+    /**
+     * Busca informações de usuarios como sugestões de pesquisa.
+     * O Limit é utilizado para limitar a quantidade de registro e para realizar
+     * uma validação aonde, se os dados retornados do banco forem inferiores ao limit,
+     * será realizado uma busca na API que popula a base e retorna os novos valores.
+     *
+     * Find the information of users as search suggestions
+     * The limit is used to limit the register quantity and to realize a validation where,
+     * if the returned data of the database is lower than the limit, a search will be carried
+     * that fill the database and the new values will be returned
+     *
+     * @return Cursor - pode ser null ( retorna '_id' e 'suggest_text_1' - Baseado no SearchManager )
+     */
+    fun findLoginSuggestionSynchronous(query: String, limit: Int): Cursor? {
+        return userDao.findLoginSuggestion(query, limit).let { cursor ->
+            if (cursor.count < limit) {
+                return@let githubService.findUsers(query).execute().body()?.let { searchUsers ->
+                    userDao.save(searchUsers.items)
+                    userDao.findLoginSuggestion(query, limit)
+                }
+            }
+            cursor
+        }
+    }
+
+    /**
+     * Busca apenas um usuário como dados de sugestão baseado no seu user_id.
+     * Search only a user as suggestion data based on your user_id
+     *
+     * @return Cursor - pode ser null ( retorna '_id' e 'suggest_text_1' - Baseado no SearchManager )
+     */
+    fun findLoginSuggestionSynchronous(userId: Int): Cursor? {
+        return userDao.findLoginSuggestion(userId)
     }
 
 }

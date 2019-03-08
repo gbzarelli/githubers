@@ -42,7 +42,7 @@ class UsersListFragment : InjectableBindingFragment<FragmentUsersListBinding, Us
         binding: FragmentUsersListBinding,
         savedInstanceState: Bundle?
     ) {
-        val adapter = configureAdapter()
+        val adapter = createAdapter()
 
         binding.recyclerView.configure(adapter)
 
@@ -68,18 +68,38 @@ class UsersListFragment : InjectableBindingFragment<FragmentUsersListBinding, Us
 
     }
 
+    /**
+     * Configura o RecyclerView.
+     * - Define o adapter
+     * - Registra o contextMenu nele.
+     *
+     * Configure the RecyclerView.
+     *  - Define the adapter
+     *  - Register the contextMenu in them
+     */
     private fun RecyclerView.configure(adapter: UserWithFavAdapter) {
         this.adapter = adapter
         //Register Recycler context in Fragment (listen click in override onContextItemSelected)->
         registerForContextMenu(this)
     }
 
-    private fun configureAdapter() = UserWithFavAdapter { view, user ->
+
+    /**
+     * Create the UserWithFavAdapter
+     */
+    private fun createAdapter() = UserWithFavAdapter { view, user ->
         view.findNavController().navigate(
             UsersListFragmentDirections.actionUsersListFragmentToUser(user.user.login)
         )
     }
 
+    /**
+     * Configura o click do contextMenu.
+     * - Atualmente está tratando o contextMenu criado pelo RecyclerView.
+     *
+     * Configure the contextMenu's click
+     * - Is currently handling the contextMenu created by RecyclerView
+     */
     override fun onContextItemSelected(item: MenuItem): Boolean {
         val itemContext = (recyclerView.adapter as UserWithFavAdapter).itemContext
         when (item.itemId) {
@@ -89,6 +109,9 @@ class UsersListFragment : InjectableBindingFragment<FragmentUsersListBinding, Us
         return super.onContextItemSelected(item)
     }
 
+    /**
+     * Create menu Search.
+     */
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_search, menu)
 
@@ -96,6 +119,21 @@ class UsersListFragment : InjectableBindingFragment<FragmentUsersListBinding, Us
         val searchView = searchItem.actionView as SearchView
 
         val searchManager = requireContext().getSystemService(Context.SEARCH_SERVICE) as SearchManager?
+
+        /**
+         * Define as informações de busca.
+         * Aparentemente o Android busca o searchableInfo do ComponentName que foi passado como parametro.
+         * Esse SearchableInfo foi definido no Manifest da Activity passada pelo ComponentName:
+         *
+         * Define the search information.
+         * Apparently the Android finds the searchableInfo of the ComponentName that was passed as parameter
+         *
+         *      <intent-filter>
+         *          <action android:name="android.intent.action.SEARCH"/>
+         *       </intent-filter>
+         *       <meta-data android:name="android.app.searchable"
+         *       android:resource="@xml/searchable"/>
+         */
         searchView.setSearchableInfo(
             searchManager!!.getSearchableInfo(
                 ComponentName(requireContext(), SearchableActivity::class.java)

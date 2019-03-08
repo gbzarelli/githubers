@@ -8,6 +8,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -15,6 +16,8 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.work.*
 import br.com.helpdev.githubers.R
 import br.com.helpdev.githubers.databinding.ActivityGithubersBinding
+import br.com.helpdev.githubers.ui.frags.favusers.FavoritesUsersFragmentDirections
+import br.com.helpdev.githubers.ui.frags.user.UserFragmentDirections
 import br.com.helpdev.githubers.worker.GithubUsersWorker
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -37,6 +40,9 @@ import javax.inject.Inject
  * @author Guilherme Biff Zarelli
  */
 class GithubersActivity : InjectableFragmentActivity() {
+    companion object {
+        const val INTENT_STRING_USER_LOGIN = "INTENT_STRING_USER_LOGIN"
+    }
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navController: NavController
@@ -68,6 +74,16 @@ class GithubersActivity : InjectableFragmentActivity() {
 
         // Configura a view de navegação / Set up navigation menu
         binding.navigationView.setupWithNavController(navController)
+
+        if (savedInstanceState == null && intent.hasExtra(INTENT_STRING_USER_LOGIN)) {
+            navController.navigate(
+                FavoritesUsersFragmentDirections.actionFavoritesUsersFragmentToUser(
+                    intent.getStringExtra(
+                        INTENT_STRING_USER_LOGIN
+                    )
+                )
+            )
+        }
     }
 
     /**
