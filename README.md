@@ -16,18 +16,18 @@ guia de arquitetura do Google.
  
  ------
  
- Funcionalidades / Functionalities: 
+ Functionalities: 
    
- - Lista de usuários favoritos; List of favorite users;
- - Lista de usuários genérica retornada pela API; Generic list of users returned by the API
- - Detalhes do usuário; User details; List of user repositories;
- - Lista de repositórios do usuário; List of user repositories;
- - Detalhes do repositório; Repository details;
- - Lista de repositórios favoritos; List of favorite repositories;
- - Busca de usuários; Search for users;
- - Busca de repositórios; Search of repositories;
+ - List of favorite users;
+ - Generic list of users returned by the API
+ - List of user repositories;
+ - List of user repositories;
+ - Repository details;
+ - List of favorite repositories;
+ - Search of users;
+ - Search of repositories;
  
- ### Projeto em desenvolvimento; Project under development ...
+ ### Project under development (Projeto em desenvolvimento) ...
  
 ## Dependencies / Libraries:
 
