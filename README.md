@@ -1,25 +1,36 @@
 <img src="https://github.com/helpdeveloper/githubers/blob/master/app/src/main/ic_launcher-web.png" width="128">
 
 # Githubers
-
+ ### Project under development (Projeto em desenvolvimento) ...
+ 
+[pt]
  Githubers é um aplicativo que utiliza a [API do GitHub](https://developer.github.com/v3/) para realizar consultas e favoritar usuários ou repositórios.
    
  A idéia desse projeto é documentar e desenvolver de maneira simples quase todos os novos recursos do JetPack
 e outras dependências essenciais no desenvolvimento de uma aplicação bem arquitetada seguindo os passos do próprio
 guia de arquitetura do Google.
+
+[en]
+ Githubers is an application that uses the [GitHub API](https://developer.github.com/v3/) to perform queries and favor users or repositories. 
  
- Funcionalidades: 
+ The idea behind this project is to document and develop in a simple way almost all new JetPack features and other essential dependencies in developing a well-designed application following the steps of Google's own architectural guide. 
+ 
+ ------
+ 
+  Technologies / Resources: 
+  
+   JetPack, Navigation, Room, Glide, Coroutines, Retrofit, Data Binding, LiveData, ViewModel, Dagger2, Worker, Gson, ContentProvider, SearchableView etc.
+ 
+ Functionalities: 
    
- - Lista de usuários favoritos;
- - Lista de usuários genérica retornada pela API
- - Detalhes do usuário;
- - Lista de repositórios do usuário;
- - Detalhes do repositório;
- - Lista de repositórios favoritos;
- - Busca de usuários;
- - Busca de repositórios;
- 
- Projeto em desenvolvimento...
+ - List of favorite users;
+ - Generic list of users returned by the API
+ - List of user repositories;
+ - List of user repositories;
+ - Repository details;
+ - List of favorite repositories;
+ - Search of users;
+ - Search of repositories;
  
 ## Dependencies / Libraries:
 
@@ -47,7 +58,8 @@ guia de arquitetura do Google.
  - [GitHub - android-architecture-components](https://github.com/googlesamples/android-architecture-components)
  - [GitHub - android-sunflower](https://github.com/googlesamples/android-sunflower)
  - [CodeLabs - android-paging](https://codelabs.developers.google.com/codelabs/android-paging)
-
+ - [Search Interface](https://developer.android.com/guide/topics/search/search-dialog)
+ 
 ### Coroutines 
 
  - https://proandroiddev.com/kotlin-coroutines-patterns-anti-patterns-f9d12984c68e
