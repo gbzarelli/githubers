@@ -1,36 +1,20 @@
 package br.com.helpdev.githubers.ui
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.work.*
 import br.com.helpdev.githubers.R
 import br.com.helpdev.githubers.databinding.ActivityGithubersBinding
 import br.com.helpdev.githubers.ui.frags.favusers.FavoritesUsersFragmentDirections
-import br.com.helpdev.githubers.ui.frags.user.UserFragmentDirections
-import br.com.helpdev.githubers.worker.GithubUsersWorker
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
-import javax.inject.Inject
 
 /**
- * Atividade principal. Nela é configurado o DrawerLayout e a navegação dos fragments.
- * Esta classe utiliza recursos do DataBinding e Navigation do androidx.
- *
- * A implementação do HasSupportFragmentInjector define essa activity como injetora de
- * dependencias para seus fragments.
- *
  * Main activity. In it is configured the DrawerLayout and navigation of fragments.
  * This class uses androidx's DataBinding and Navigation features.
  *
@@ -51,52 +35,40 @@ class GithubersActivity : InjectableFragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        /** Faz a ligação da activity com o layout /
-         * Make the activity bind with the layout */
+        /** Make the activity bind with the layout */
         val binding: ActivityGithubersBinding = DataBindingUtil.setContentView(
             this, R.layout.activity_githubers
         )
         drawerLayout = binding.drawerLayout
 
-        /** Cria um controller para navegação. Indica o fragment para troca de layout
-         *  Make a controller to navigation . Indicates the fragment to layout changes
-         */
+        /** Make a controller to navigation . Indicates the fragment to layout changes */
         navController = Navigation.findNavController(this, R.id.nav_fragment)
 
-        /** Cria uma barra de navegação para a toolbar baseada no drawerLayout e o controller de navegação
-         *  Make a navigation bar for the toolbar based on drawerLayout and the navigation controller
-         * */
+        /**  Make a navigation bar for the toolbar based on drawerLayout and the navigation controller */
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
 
-        // Configura a ActionBar / Set up ActionBar
         setSupportActionBar(binding.toolbar)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        // Configura a view de navegação / Set up navigation menu
         binding.navigationView.setupWithNavController(navController)
 
-        if (savedInstanceState == null && intent.hasExtra(INTENT_STRING_USER_LOGIN)) {
-            navController.navigate(
-                FavoritesUsersFragmentDirections.actionFavoritesUsersFragmentToUser(
-                    intent.getStringExtra(
-                        INTENT_STRING_USER_LOGIN
-                    )
-                )
-            )
-        }
+        if (savedInstanceState == null) checkIntentToNavigateToUser()
+    }
+
+    private fun checkIntentToNavigateToUser() {
+        if (intent?.hasExtra(INTENT_STRING_USER_LOGIN) == false) return
+        navigateToUser(intent.getStringExtra(INTENT_STRING_USER_LOGIN))
+    }
+
+    private fun navigateToUser(login: String) {
+        navController.navigate(
+            FavoritesUsersFragmentDirections.actionFavoritesUsersFragmentToUser(login)
+        )
     }
 
     /**
-     * Configura o botão de voltar. Fecha o DrawerLayout se estiver aberto, se não,
-     * executa a ação de voltar.
-     *
      * Set the back button. Close the DrawerLayout when it's open, else,
      * execute press back action
-     *
-     * ---
-     * Called when the activity has detected the user's press of the back
-     * key
-     *
      */
     override fun onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -107,10 +79,6 @@ class GithubersActivity : InjectableFragmentActivity() {
     }
 
     /**
-     * Esse método é chamado sempre que o usuário opta por navegar para Cima na hierarquia de
-     * atividades do seu aplicativo na barra de ações.
-     *
-     * ---
      * This method is called whenever the user chooses to navigate Up within your application's
      * activity hierarchy from the action bar.
      *

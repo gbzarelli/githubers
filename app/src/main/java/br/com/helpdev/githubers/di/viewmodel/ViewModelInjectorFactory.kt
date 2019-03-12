@@ -26,18 +26,6 @@ import javax.inject.Provider
 import javax.inject.Singleton
 
 /**
- * Factory para os ViewModel que utilizam DI.
- *  A necessidade de um factory para os ViewModel é devido ao seus contrutores que não podem conter argumentos,
- * porem com a injeção os mesmo devem conter para injetar seus valores.
- *
- *  O Factory verifica o Map de ViewModel definido pela notação {@link ViewModelKey}
- * no Modulo de {@link ViewModelsModule} para criar uma instancia do ViewModel injetável.
- *
- *  Deve sempre utilizar esse Factory quando se tem ViewModels com @Inject, lembre-se de inserir os
- * ViewsModels no modulo {@link ViewModelsModule} do projeto
- *
- * ---
- *
  * Factory for ViewModel that use DI.
  *  The need for a factory for the ViewModel is due to its constructor that can not contain arguments,
  * however with the injection the same must contain to inject their values.

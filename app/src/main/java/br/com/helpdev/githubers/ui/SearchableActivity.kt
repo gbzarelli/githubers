@@ -21,15 +21,15 @@ class SearchableActivity : AppCompatActivity() {
     private fun handleIntent(intent: Intent) {
         if (Intent.ACTION_SEARCH == intent.action) {
             intent.getStringExtra(SearchManager.QUERY)?.also { query ->
-                doMySearch(query)
+                doSearchQuery(query)
             }
             intent.getCharSequenceExtra(SearchManager.USER_QUERY)?.also { login ->
-                userSearchDone(login.toString())
+                showUser(login.toString())
             }
         }
     }
 
-    private fun userSearchDone(login: String) {
+    private fun showUser(login: String) {
         startActivity(
             Intent(
                 this,
@@ -38,7 +38,7 @@ class SearchableActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun doMySearch(query: String) {
-        Toast.makeText(this, "doMySearch-$query", Toast.LENGTH_LONG).show()
+    private fun doSearchQuery(query: String) {
+        Toast.makeText(this, "doSearchQuery-$query", Toast.LENGTH_LONG).show()
     }
 }

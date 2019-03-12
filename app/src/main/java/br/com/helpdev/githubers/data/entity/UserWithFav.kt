@@ -2,6 +2,7 @@ package br.com.helpdev.githubers.data.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Embedded
+import br.com.helpdev.githubers.R
 
 class UserWithFav {
 
@@ -12,4 +13,5 @@ class UserWithFav {
 
     fun isFavorite() = favorite != null
 
+    fun getFavoriteActionMenuId() = if (isFavorite()) R.id.add_favorite else R.id.remove_favorite
 }

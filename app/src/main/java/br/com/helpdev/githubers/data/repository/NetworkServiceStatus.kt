@@ -1,7 +1,6 @@
 package br.com.helpdev.githubers.data.repository
 
 /**
- * Classe para controle do status de rede
  * Class for network status control
  */
 class NetworkServiceStatus(var status: Int = STATUS_NULL, var exception: Throwable? = null) {

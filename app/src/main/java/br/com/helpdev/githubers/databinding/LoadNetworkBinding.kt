@@ -1,10 +1,9 @@
-package br.com.helpdev.githubers.ui.util
+package br.com.helpdev.githubers.databinding
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import br.com.helpdev.githubers.data.repository.NetworkServiceStatus
-import br.com.helpdev.githubers.databinding.LoadNetworkBinding
 
 fun LoadNetworkBinding.observerServiceStatus(
     owner: LifecycleOwner,

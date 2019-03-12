@@ -17,8 +17,6 @@ package br.com.helpdev.githubers.di.viewmodel
  *
  * Source: https://github.com/googlesamples/android-architecture-components/blob/master/GithubBrowserSample/app/src/main/java/com/android/example/github/di/ViewModelKey.kt
  */
-
-
 import androidx.lifecycle.ViewModel
 import dagger.MapKey
 import kotlin.reflect.KClass

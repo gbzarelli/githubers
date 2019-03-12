@@ -8,11 +8,6 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 /**
- * O WorkerInjectorFactory é responsável por instanciar o {@link IWorkerFactory} do Worker.
- * Ele injeta as dependências dentro do {@link IWorkerFactory} que gera o Worker
- *
- * Obs: Lembre-se de mapear seu Worker em um modulo com o {@link WorkerKey}.
- *
  * The WorkerInjectorFactory is responsible to instancing the {@link IWorkerFactory} of the Worker.
  * It inject the dependencies into the {@link IWorkerFactory} that create the Worker.
  *

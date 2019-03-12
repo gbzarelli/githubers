@@ -3,9 +3,7 @@ package br.com.helpdev.githubers.data.repository.boundary
 import androidx.paging.PagedList
 import br.com.helpdev.githubers.data.entity.UserWithFav
 import br.com.helpdev.githubers.data.repository.UserRepository
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class UserBoundaryCallback(
@@ -16,14 +14,14 @@ class UserBoundaryCallback(
     override fun onZeroItemsLoaded() {
         super.onZeroItemsLoaded()
         coroutineScope.launch {
-            userRepo.loadUserListRemoteRepo()
+            userRepo.loadUserList()
         }
     }
 
     override fun onItemAtEndLoaded(itemAtEnd: UserWithFav) {
         super.onItemAtEndLoaded(itemAtEnd)
         coroutineScope.launch {
-            userRepo.loadUserListRemoteRepo(itemAtEnd.user.id)
+            userRepo.loadUserList(itemAtEnd.user.id)
         }
     }
 }

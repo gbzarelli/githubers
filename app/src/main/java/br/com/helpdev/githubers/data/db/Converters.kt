@@ -20,30 +20,13 @@ import androidx.room.TypeConverter
 import java.util.Calendar
 
 /**
- * Conversor de tipos complexos aceitos pelo Room.
  * Type converters to allow Room to reference complex data types.
  */
 class Converters {
 
-    /**
-     * Realiza a conversão de um Calendar para um long.
-     * - Caso seu objeto contém um calendar ele passa para um long, assim ele pormite a persistência.
-     *
-     * Performs the conversion of a Calendar to a long
-     * - Case your object contains a calendar, it passes to a long. So it allows persistence
-     *
-     */
     @TypeConverter
     fun calendarToDatestamp(calendar: Calendar?): Long? = calendar?.timeInMillis
 
-    /**
-     * Realiza a conversão de um long para um Calendar.
-     * - Caso seu objeto contém um Calendar e no banco está long ele infla em um Calendar
-     *
-     * Performs the conversion of a long to a Calendar.
-     * - Case your object contains a Calendar and in database it's a long, it inflates in a Calendar
-     *
-     */
     @TypeConverter
     fun datestampToCalendar(value: Long?): Calendar? =
         value?.let { Calendar.getInstance().apply { timeInMillis = it } }

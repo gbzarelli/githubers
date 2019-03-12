@@ -9,12 +9,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 /**
- *  Classe responsável em tratar a deserialização de elementos json para um tipo Calendar.
- *  Caso o objeto esteja mapeado com um atributo do tipo Calendar ele passa por essa rotina para realizar a
- * deserialização;
- *
- *  Essa classe deve ser utilizada no momento de criar o objeto Gson atravez do {@link GsonBuilder()}
- *
  *  Class responsible for handling deserialization of json elements for a Calendar type.
  *  If the object is mapped with a Calendar type attribute it goes through this routine to perform the
  * deserialization;

@@ -24,7 +24,5 @@ abstract class GithubDatabase : RoomDatabase() {
     abstract fun userRepoDao(): UserRepoDao
 
 
-    /** Todos seus DAO devem ser anotados como abstratos nessa clase
-     *  All your DAO should be annotated as abstract in this class
-     */
+    /** All your DAO should be annotated as abstract in this class */
 }

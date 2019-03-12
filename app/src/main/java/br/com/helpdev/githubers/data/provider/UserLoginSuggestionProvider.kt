@@ -46,15 +46,21 @@ class UserLoginSuggestionProvider : ContentProvider() {
     ): Cursor? {
         return when (mUriMatcher.match(uri)) {
             TYPE_ALL_SUGGESTIONS -> {
-                val query = uri.lastPathSegment!!.toLowerCase()
-                val limit = uri.getQueryParameter(SearchManager.SUGGEST_PARAMETER_LIMIT)!!.toInt()
-                userRepository.findLoginSuggestionSynchronous(query, limit)
+                findLoginSuggestions(uri)
             }
             TYPE_SINGLE_SUGGESTION -> {
-                userRepository.findLoginSuggestionSynchronous(uri.lastPathSegment!!.toInt())
+                findLoginSuggestionById(uri.lastPathSegment!!.toInt())
             }
             else -> null
         }
+    }
+
+    private fun findLoginSuggestionById(userId: Int) = userRepository.findLoginSuggestionsSynchronous(userId)
+
+    private fun findLoginSuggestions(uri: Uri): Cursor? {
+        val query = uri.lastPathSegment!!.toLowerCase()
+        val limit = uri.getQueryParameter(SearchManager.SUGGEST_PARAMETER_LIMIT)!!.toInt()
+        return userRepository.findLoginSuggestionsSynchronous(query, limit)
     }
 
 

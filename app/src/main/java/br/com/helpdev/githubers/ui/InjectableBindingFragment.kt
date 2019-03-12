@@ -20,9 +20,6 @@ import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
 /**
- * Fragment abstrato que realiza o auto-onCreateBinding com a view e já com suporte a DI.
- * Também abstrai o carregamento do ViewModel.
- *
  * Abstract fragment that performs auto-onCreateBinding with the view and already with DI support.
  * Also abstracts the loading of the ViewModel.
  */

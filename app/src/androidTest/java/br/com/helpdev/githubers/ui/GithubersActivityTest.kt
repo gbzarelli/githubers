@@ -36,14 +36,12 @@ class GithubersActivityTest {
 
     @Test
     fun useAppContext() {
-        // Context of the app under test.
         val appContext = InstrumentationRegistry.getTargetContext()
         assertEquals("br.com.helpdev.githubers", appContext.packageName)
     }
 
     @Test
     fun clickOnAndroidHomeIcon_OpensAndClosesNavigation() {
-        // Check that drawer is closed at startup
         Espresso.onView(ViewMatchers.withId(R.id.drawer_layout))
             .check(ViewAssertions.matches(DrawerMatchers.isClosed(Gravity.START)))
 

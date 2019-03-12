@@ -20,7 +20,7 @@ class UsersListViewModel @Inject constructor(
     private var userList: LiveData<PagedList<UserWithFav>>? = null
 
     fun getUserWithFavList(): LiveData<PagedList<UserWithFav>> {
-        return userList ?: userRepository.getUserWithFavList(coroutineScope).also { userList = it }
+        return userList ?: userRepository.getUsers(coroutineScope).also { userList = it }
     }
 
     fun addToFavorite(id: Int) {

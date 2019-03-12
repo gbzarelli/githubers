@@ -25,7 +25,7 @@ class UserViewModel @Inject constructor(
 
     fun init(login: String) {
         this.login = login
-        user = userRepository.getUserWithFav(coroutineScope, login)
+        user = userRepository.getUser(coroutineScope, login)
     }
 
     fun getNetworkServiceStatus() =

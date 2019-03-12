@@ -23,9 +23,6 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 
 /**
- * Gera um atributo para controlar a visibilidade da view.
- * Utiliza-se nos xml de layout.
- *  --
  * Generates an attribute to control view visibility.
  * Uses in layout xml.
  *

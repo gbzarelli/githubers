@@ -9,7 +9,6 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 
 /**
- * Modulo para registrar os Workers
  * Modulo to the Workers register
  */
 @Suppress("unused")

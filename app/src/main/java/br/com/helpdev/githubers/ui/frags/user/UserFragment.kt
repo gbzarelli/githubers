@@ -9,8 +9,8 @@ import androidx.navigation.findNavController
 import br.com.helpdev.githubers.R
 import br.com.helpdev.githubers.databinding.FragmentUserDetailsBinding
 import br.com.helpdev.githubers.ui.InjectableBindingFragment
-import br.com.helpdev.githubers.ui.util.observerServiceStatus
-import br.com.helpdev.githubers.ui.util.setDataReached
+import br.com.helpdev.githubers.databinding.observerServiceStatus
+import br.com.helpdev.githubers.databinding.setDataReached
 import com.google.android.material.snackbar.Snackbar
 import java.io.IOException
 

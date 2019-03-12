@@ -5,7 +5,6 @@ import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
 
 /**
- * Interface para criar os Factory de cada Worker.
  * Interface to creates Factory of each Worker.
  *
  * Sample to use:

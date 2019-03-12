@@ -14,8 +14,8 @@ import br.com.helpdev.githubers.databinding.FragmentUsersListBinding
 import br.com.helpdev.githubers.ui.InjectableBindingFragment
 import br.com.helpdev.githubers.ui.SearchableActivity
 import br.com.helpdev.githubers.ui.adapter.UserWithFavAdapter
-import br.com.helpdev.githubers.ui.util.observerServiceStatus
-import br.com.helpdev.githubers.ui.util.setDataReached
+import br.com.helpdev.githubers.databinding.observerServiceStatus
+import br.com.helpdev.githubers.databinding.setDataReached
 import kotlinx.android.synthetic.main.fragment_favorites_users.*
 import java.io.IOException
 

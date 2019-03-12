@@ -11,8 +11,6 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
- * Interface utilizada pelo Retrofit; Aqui mapeamos as chamadas da API
- * --
  * Interface used by Retrofit: Here maping the calls of api
  *
  * -> Docs: https://developer.github.com/v3/
