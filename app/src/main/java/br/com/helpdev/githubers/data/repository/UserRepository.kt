@@ -2,7 +2,6 @@ package br.com.helpdev.githubers.data.repository
 
 import android.database.Cursor
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
@@ -47,7 +46,7 @@ class UserRepository @Inject constructor(var userDao: UserDao, var githubService
     fun getUser(coroutineScope: CoroutineScope, login: String): LiveData<UserWithFav> {
         coroutineScope.launch {
             val userWithFav = withContext(IO) { userDao.loadWithFavInstant(login) }
-            if (userWithFav == null || checkIfNeedUpdateUser(userWithFav)) {
+            if (userWithFav == null || userWithFav.isNeedUpdate()) {
                 loadUser(login)
             }
         }
@@ -110,19 +109,6 @@ class UserRepository @Inject constructor(var userDao: UserDao, var githubService
     private suspend fun saveUser(user: User) {
         withContext(IO) { userDao.save(user) }
     }
-
-    private fun checkIfNeedUpdateUser(userWithFav: UserWithFav): Boolean {
-        userWithFav.user.created_at?.let {
-            if (isLessThanOneHour(userWithFav.user.registerDateTime?.timeInMillis ?: 0L)) {
-                Log.i(TAG, "REGISTER UPDATED IN LESS THAN 1Hr. SEARCH IGNORED.")
-                return false
-            }
-        }
-        return true
-    }
-
-    private fun isLessThanOneHour(timeInMillis: Long) =
-        (System.currentTimeMillis() - timeInMillis) < TimeUnit.HOURS.toMillis(1)
 
     /**
      * Find the information of users as search suggestions
