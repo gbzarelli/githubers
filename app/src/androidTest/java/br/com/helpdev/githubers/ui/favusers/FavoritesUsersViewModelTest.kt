@@ -34,7 +34,7 @@ class FavoritesUsersViewModelTest {
             _user = user
         }.testInsertNewUserWithSuccess()
 
-        viewModel.addToFavorite(_user.id)
+        viewModel.addFavorite(_user.id)
     }
 
     @After
@@ -55,7 +55,7 @@ class FavoritesUsersViewModelTest {
     fun mustRemoveFavoriteUser() {
         var value: PagedList<UserWithFav> = getValue(viewModel.getFavoriteUsersList())
         val userWithFav = requireNotNull(value[0])
-        viewModel.removeFromFavorite(userWithFav.user.id)
+        viewModel.removeFavorite(userWithFav.user.id)
         value = getValue(viewModel.getFavoriteUsersList())
         assert(value.isNullOrEmpty())
     }

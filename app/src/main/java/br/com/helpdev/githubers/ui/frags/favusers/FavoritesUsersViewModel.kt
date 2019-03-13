@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
 import br.com.helpdev.githubers.data.entity.UserWithFav
 import br.com.helpdev.githubers.data.repository.FavoriteRepository
-import br.com.helpdev.githubers.data.repository.UserRepository
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
@@ -28,15 +27,15 @@ class FavoritesUsersViewModel @Inject constructor(
         job.cancel()
     }
 
-    fun removeFromFavorite(id: Int) {
+    fun removeFavorite(id: Int) {
         coroutineScope.launch {
             favoriteRepository.removeFavorite(id)
         }
     }
 
-    fun addToFavorite(id: Int) {
+    fun addFavorite(id: Int) {
         coroutineScope.launch {
-            favoriteRepository.addToFavorite(id)
+            favoriteRepository.addFavorite(id)
         }
     }
 

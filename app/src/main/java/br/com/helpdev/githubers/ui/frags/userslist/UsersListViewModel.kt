@@ -23,9 +23,9 @@ class UsersListViewModel @Inject constructor(
         return userList ?: userRepository.getUsers(coroutineScope).also { userList = it }
     }
 
-    fun addToFavorite(id: Int) {
+    fun addFavorite(id: Int) {
         coroutineScope.launch {
-            favoriteRepository.addToFavorite(id)
+            favoriteRepository.addFavorite(id)
         }
     }
 

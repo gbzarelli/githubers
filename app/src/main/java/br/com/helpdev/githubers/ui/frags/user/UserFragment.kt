@@ -20,11 +20,6 @@ import java.io.IOException
 class UserFragment : InjectableBindingFragment<FragmentUserDetailsBinding, UserViewModel>
     (UserViewModel::class.java) {
 
-    companion object {
-        private const val PARAM_LOGIN = "login"
-        fun getParamsToNav(login: String) = Bundle().apply { putString(PARAM_LOGIN, login) }
-    }
-
     override fun onCreateBinding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
         FragmentUserDetailsBinding.inflate(inflater, container, false).apply {
             lifecycleOwner = this@UserFragment//<- I need understand why?!
@@ -42,11 +37,8 @@ class UserFragment : InjectableBindingFragment<FragmentUserDetailsBinding, UserV
     ) {
 
         binding.userViewModel = viewModel
-
-        binding.fab.setOnClickListener {
-            viewModel.addToFavorite()
-            Snackbar.make(binding.fab, R.string.user_add, Snackbar.LENGTH_LONG).show()
-        }
+        binding.onClickToRepositories = View.OnClickListener { navigateToRepoList(it) }
+        binding.fab.setOnClickListener { onClickListenerFAB() }
 
         binding.layoutNetwork.observerServiceStatus(this, viewModel.getNetworkServiceStatus(),
             { viewModel.user.value?.user?.hasLoadDetails() == true },
@@ -64,13 +56,19 @@ class UserFragment : InjectableBindingFragment<FragmentUserDetailsBinding, UserV
             binding.notifyChange()
         })
 
-        binding.onClickToRepositories = View.OnClickListener {
-            it.findNavController().navigate(
-                UserFragmentDirections.actionUserToRepoList(UserFragmentArgs.fromBundle(arguments!!).login)
-            )
-        }
-
         binding.executePendingBindings()
+    }
+
+
+    private fun onClickListenerFAB() {
+        viewModel.addToFavorite()
+        Snackbar.make(binding.fab, R.string.user_add, Snackbar.LENGTH_LONG).show()
+    }
+
+    private fun navigateToRepoList(it: View) {
+        it.findNavController().navigate(
+            UserFragmentDirections.actionUserToRepoList(UserFragmentArgs.fromBundle(arguments!!).login)
+        )
     }
 
 

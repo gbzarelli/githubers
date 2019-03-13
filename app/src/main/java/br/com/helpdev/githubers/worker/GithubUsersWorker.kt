@@ -36,7 +36,7 @@ class GithubUsersWorker(
             inputData.getString(DATA_LOAD_ONLY_USER)?.let { login ->
                 val user = userRepository.loadUser(login, false)
                 if (inputData.getBoolean(DATA_BOOL_SAVE_IN_FAVORITES, false) && user is User) {
-                    favoriteRepository.addToFavorite(user.id)
+                    favoriteRepository.addFavorite(user.id)
                 }
             } ?: userRepository.loadUserList(inputData.getInt(DATA_INT_LAST_ID, 0), false)
         }

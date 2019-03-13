@@ -16,7 +16,7 @@ class FavoriteRepository @Inject constructor(var userDao: FavoriteDao) {
 
     fun getFavUsers(): LiveData<PagedList<UserWithFav>> = LivePagedListBuilder(userDao.loadFavorites(), 50).build()
 
-    suspend fun addToFavorite(id: Int) {
+    suspend fun addFavorite(id: Int) {
         withContext(Dispatchers.IO) {
             userDao.insertFavorite(FavUser(id))
         }

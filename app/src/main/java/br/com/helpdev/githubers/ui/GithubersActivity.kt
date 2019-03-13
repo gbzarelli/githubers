@@ -11,6 +11,7 @@ import androidx.navigation.ui.*
 import br.com.helpdev.githubers.R
 import br.com.helpdev.githubers.databinding.ActivityGithubersBinding
 import br.com.helpdev.githubers.ui.frags.user.UserFragment
+import br.com.helpdev.githubers.ui.frags.user.UserFragmentArgs
 
 /**
  * Main activity. In it is configured the DrawerLayout and navigation of fragments.
@@ -60,7 +61,7 @@ class GithubersActivity : InjectableFragmentActivity() {
     }
 
     private fun navigateToUser(login: String) {
-        navController.navigate(R.id.action_to_user, UserFragment.getParamsToNav(login))
+        navController.navigate(R.id.action_to_user, UserFragmentArgs.Builder(login).build().toBundle())
     }
 
     override fun onBackPressed() {

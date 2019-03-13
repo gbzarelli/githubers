@@ -34,7 +34,7 @@ class UserViewModel @Inject constructor(
     fun addToFavorite() {
         user.value ?: throw IllegalStateException("Init not called")
         coroutineScope.launch {
-            favoriteRepository.addToFavorite(user.value!!.user.id)
+            favoriteRepository.addFavorite(user.value!!.user.id)
         }
     }
 

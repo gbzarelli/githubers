@@ -8,8 +8,8 @@ import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.RecyclerView
 import br.com.helpdev.githubers.R
+import br.com.helpdev.githubers.data.entity.UserWithFav
 import br.com.helpdev.githubers.databinding.FragmentUsersListBinding
 import br.com.helpdev.githubers.ui.InjectableBindingFragment
 import br.com.helpdev.githubers.ui.SearchableActivity
@@ -42,9 +42,10 @@ class UsersListFragment : InjectableBindingFragment<FragmentUsersListBinding, Us
         binding: FragmentUsersListBinding,
         savedInstanceState: Bundle?
     ) {
-        val adapter = createAdapter()
+        val adapter = createUserAdapter()
 
-        binding.recyclerView.configure(adapter)
+        binding.recyclerView.adapter = adapter
+        registerForContextMenu(binding.recyclerView)
 
         binding.layoutNetwork.observerServiceStatus(this, viewModel.getNetworkServiceStatus(),
             { adapter.itemCount > 0 },
@@ -58,8 +59,6 @@ class UsersListFragment : InjectableBindingFragment<FragmentUsersListBinding, Us
         )
 
         viewModel.getUserWithFavList().observe(this, Observer { list ->
-            //Atualiza o adapter se conter elementos
-            //Update adapter if has items
             list.isNotEmpty().run {
                 binding.layoutNetwork.setDataReached()
                 adapter.submitList(list)
@@ -68,57 +67,38 @@ class UsersListFragment : InjectableBindingFragment<FragmentUsersListBinding, Us
 
     }
 
-    /**
-     * Configura o RecyclerView.
-     * - Define o adapter
-     * - Registra o contextMenu nele.
-     *
-     * Configure the RecyclerView.
-     *  - Define the adapter
-     *  - Register the contextMenu in them
-     */
-    private fun RecyclerView.configure(adapter: UserWithFavAdapter) {
-        this.adapter = adapter
-        //Register Recycler context in Fragment (listen click in override onContextItemSelected)->
-        registerForContextMenu(this)
-    }
-
-
-    /**
-     * Create the UserWithFavAdapter
-     */
-    private fun createAdapter() = UserWithFavAdapter { view, user ->
+    private fun createUserAdapter() = UserWithFavAdapter { view, user ->
         view.findNavController().navigate(
             UsersListFragmentDirections.actionUsersListFragmentToUser(user.user.login)
         )
     }
 
     /**
-     * Configura o click do contextMenu.
-     * - Atualmente está tratando o contextMenu criado pelo RecyclerView.
-     *
      * Configure the contextMenu's click
      * - Is currently handling the contextMenu created by RecyclerView
      */
     override fun onContextItemSelected(item: MenuItem): Boolean {
-        val itemContext = (recyclerView.adapter as UserWithFavAdapter).itemContext
+        val user = (recyclerView.adapter as UserWithFavAdapter).itemContext ?: return false
         when (item.itemId) {
-            R.id.add_favorite -> viewModel.addToFavorite(itemContext!!.user.id)
-            R.id.remove_favorite -> viewModel.removeFavorite(itemContext!!.user.id)
+            R.id.add_favorite -> onClickAddToFavorite(user)
+            R.id.remove_favorite -> onClickRemoveToFavorite(user)
         }
         return super.onContextItemSelected(item)
     }
 
-    /**
-     * Create menu Search.
-     */
+    private fun onClickRemoveToFavorite(itemContext: UserWithFav) {
+        viewModel.removeFavorite(itemContext.user.id)
+    }
+
+    private fun onClickAddToFavorite(itemContext: UserWithFav) {
+        viewModel.addFavorite(itemContext.user.id)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_search, menu)
 
         val searchItem = menu.findItem(R.id.search)
         val searchView = searchItem.actionView as SearchView
-
-        val searchManager = requireContext().getSystemService(Context.SEARCH_SERVICE) as SearchManager?
 
         /**
          * Define as informações de busca.
@@ -134,6 +114,7 @@ class UsersListFragment : InjectableBindingFragment<FragmentUsersListBinding, Us
          *       <meta-data android:name="android.app.searchable"
          *       android:resource="@xml/searchable"/>
          */
+        val searchManager = requireContext().getSystemService(Context.SEARCH_SERVICE) as SearchManager?
         searchView.setSearchableInfo(
             searchManager!!.getSearchableInfo(
                 ComponentName(requireContext(), SearchableActivity::class.java)
