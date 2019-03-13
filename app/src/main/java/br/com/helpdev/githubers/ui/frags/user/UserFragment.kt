@@ -20,6 +20,11 @@ import java.io.IOException
 class UserFragment : InjectableBindingFragment<FragmentUserDetailsBinding, UserViewModel>
     (UserViewModel::class.java) {
 
+    companion object {
+        private const val PARAM_LOGIN = "login"
+        fun getParamsToNav(login: String) = Bundle().apply { putString(PARAM_LOGIN, login) }
+    }
+
     override fun onCreateBinding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
         FragmentUserDetailsBinding.inflate(inflater, container, false).apply {
             lifecycleOwner = this@UserFragment//<- I need understand why?!

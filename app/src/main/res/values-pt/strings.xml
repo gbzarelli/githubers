@@ -27,4 +27,6 @@
     <string name="github_link">Github link:</string>
     <string name="click_to_view_repos">(click to view repos)</string>
     <string name="repositories">Repositories:</string>
+    <string name="searchable_user_hint">Enter with an user</string>
+    <string name="searchable_user_label">User search</string>
 </resources>

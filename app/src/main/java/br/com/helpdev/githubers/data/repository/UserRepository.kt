@@ -138,6 +138,6 @@ class UserRepository @Inject constructor(var userDao: UserDao, var githubService
     /**
      * @return Cursor - retorna '_id' e 'suggest_text_1' - Baseado no SearchManager
      */
-    fun findLoginSuggestionsSynchronous(userId: Int) = userDao.findLoginSuggestion(userId)
+    fun findLoginSuggestionsSynchronous(login: String) = userDao.findLoginSuggestion(login)
 
 }

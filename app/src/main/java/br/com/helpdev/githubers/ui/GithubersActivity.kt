@@ -1,18 +1,16 @@
 package br.com.helpdev.githubers.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.ui.*
 import br.com.helpdev.githubers.R
 import br.com.helpdev.githubers.databinding.ActivityGithubersBinding
-import br.com.helpdev.githubers.ui.frags.favusers.FavoritesUsersFragmentDirections
+import br.com.helpdev.githubers.ui.frags.user.UserFragment
 
 /**
  * Main activity. In it is configured the DrawerLayout and navigation of fragments.
@@ -34,42 +32,37 @@ class GithubersActivity : InjectableFragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        /** Make the activity bind with the layout */
-        val binding: ActivityGithubersBinding = DataBindingUtil.setContentView(
-            this, R.layout.activity_githubers
-        )
-        drawerLayout = binding.drawerLayout
-
-        /** Make a controller to navigation . Indicates the fragment to layout changes */
-        navController = Navigation.findNavController(this, R.id.nav_fragment)
-
-        /**  Make a navigation bar for the toolbar based on drawerLayout and the navigation controller */
-        appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
-
-        setSupportActionBar(binding.toolbar)
-        setupActionBarWithNavController(navController, appBarConfiguration)
-
-        binding.navigationView.setupWithNavController(navController)
-
-        if (savedInstanceState == null) checkIntentToNavigateToUser()
+        val binding: ActivityGithubersBinding = DataBindingUtil.setContentView(this, R.layout.activity_githubers)
+        configureActivity(binding)
+        configureNavigation(binding)
     }
 
-    private fun checkIntentToNavigateToUser() {
-        if (intent?.hasExtra(INTENT_STRING_USER_LOGIN) == false) return
-        navigateToUser(intent.getStringExtra(INTENT_STRING_USER_LOGIN))
+    private fun configureActivity(binding: ActivityGithubersBinding) {
+        setSupportActionBar(binding.toolbar)
+        drawerLayout = binding.drawerLayout
+    }
+
+    private fun configureNavigation(binding: ActivityGithubersBinding) {
+        navController = Navigation.findNavController(this, R.id.nav_fragment)
+        appBarConfiguration = AppBarConfiguration(navController.graph, binding.drawerLayout)
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        binding.navigationView.setupWithNavController(navController)
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        intent?.let { checkIntentToNavigate(intent) }
+    }
+
+    private fun checkIntentToNavigate(intent: Intent) {
+        if (intent.hasExtra(INTENT_STRING_USER_LOGIN))
+            navigateToUser(intent.getStringExtra(INTENT_STRING_USER_LOGIN))
     }
 
     private fun navigateToUser(login: String) {
-        navController.navigate(
-            FavoritesUsersFragmentDirections.actionFavoritesUsersFragmentToUser(login)
-        )
+        navController.navigate(R.id.action_to_user, UserFragment.getParamsToNav(login))
     }
 
-    /**
-     * Set the back button. Close the DrawerLayout when it's open, else,
-     * execute press back action
-     */
     override fun onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)

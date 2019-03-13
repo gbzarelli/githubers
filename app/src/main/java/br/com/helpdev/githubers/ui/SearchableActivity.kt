@@ -20,21 +20,18 @@ class SearchableActivity : AppCompatActivity() {
 
     private fun handleIntent(intent: Intent) {
         if (Intent.ACTION_SEARCH == intent.action) {
-            intent.getStringExtra(SearchManager.QUERY)?.also { query ->
-                doSearchQuery(query)
-            }
-            intent.getCharSequenceExtra(SearchManager.USER_QUERY)?.also { login ->
-                showUser(login.toString())
-            }
+            intent.getStringExtra(SearchManager.QUERY)?.let { doSearchQuery(it) }
+        } else if (Intent.ACTION_VIEW == intent.action) {
+            intent.data?.lastPathSegment?.let { showUser(it) }
         }
     }
 
     private fun showUser(login: String) {
         startActivity(
-            Intent(
-                this,
-                GithubersActivity::class.java
-            ).also { it.putExtra(GithubersActivity.INTENT_STRING_USER_LOGIN, login) })
+            Intent(this, GithubersActivity::class.java)
+                .also {
+                    it.putExtra(GithubersActivity.INTENT_STRING_USER_LOGIN, login)
+                })
         finish()
     }
 

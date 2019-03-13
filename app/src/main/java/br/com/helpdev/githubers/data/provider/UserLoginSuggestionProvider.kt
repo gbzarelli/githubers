@@ -49,13 +49,13 @@ class UserLoginSuggestionProvider : ContentProvider() {
                 findLoginSuggestions(uri)
             }
             TYPE_SINGLE_SUGGESTION -> {
-                findLoginSuggestionById(uri.lastPathSegment!!.toInt())
+                findLoginSuggestionByLogin(uri.lastPathSegment!!)
             }
             else -> null
         }
     }
 
-    private fun findLoginSuggestionById(userId: Int) = userRepository.findLoginSuggestionsSynchronous(userId)
+    private fun findLoginSuggestionByLogin(login: String) = userRepository.findLoginSuggestionsSynchronous(login)
 
     private fun findLoginSuggestions(uri: Uri): Cursor? {
         val query = uri.lastPathSegment!!.toLowerCase()

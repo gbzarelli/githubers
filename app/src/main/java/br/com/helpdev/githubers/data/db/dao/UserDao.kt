@@ -24,11 +24,11 @@ interface UserDao {
     @Delete
     fun remove(user: User)
 
-    @Query("SELECT user_id as _id,login as suggest_text_1 from user WHERE login LIKE '%'||:query||'%' limit :limit")
+    @Query("SELECT user_id as _id,login as suggest_text_1, login as suggest_intent_data_id from user WHERE login LIKE '%'||:query||'%' limit :limit")
     fun findLoginSuggestion(query: String, limit: Int): Cursor
 
-    @Query("SELECT user_id as _id,login as suggest_text_1 from user WHERE user_id=:userId")
-    fun findLoginSuggestion(userId: Int): Cursor
+    @Query("SELECT user_id as _id,login as suggest_text_1 from user WHERE login=:login")
+    fun findLoginSuggestion(login: String): Cursor
 
     @Query("SELECT * FROM user WHERE user_id = :userId")
     fun load(userId: Int): LiveData<User>
