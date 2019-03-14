@@ -28,6 +28,19 @@
                        android:value=".ui.SearchableActivity"/>
         </activity>
 
+        <activity android:name=".ui.BrowsableActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data android:scheme="https"
+                      android:host="github.com"/>
+                <data android:scheme="http"
+                      android:host="github.com"/>
+            </intent-filter>
+        </activity>
+
         <provider
                 android:name=".data.provider.UserLoginSuggestionProvider"
                 android:authorities="${applicationId}.loginsuggestion.provider"

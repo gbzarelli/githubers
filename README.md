@@ -4,22 +4,28 @@
  ### Project under development (Projeto em desenvolvimento) ...
  
 [pt]
- Githubers é um aplicativo que utiliza a [API do GitHub](https://developer.github.com/v3/) para realizar consultas e favoritar usuários ou repositórios.
+ Githubers é um aplicativo que utiliza a [API do GitHub](https://developer.github.com/v3/) para realizar 
+ consultas e favoritar usuários ou repositórios.
    
  A idéia desse projeto é documentar e desenvolver de maneira simples quase todos os novos recursos do JetPack
-e outras dependências essenciais no desenvolvimento de uma aplicação bem arquitetada seguindo os passos do próprio
+e outras dependências essenciais no desenvolvimento de uma aplicação bem arquitetada seguindo os passos do 
+próprio
 guia de arquitetura do Google.
 
 [en]
- Githubers is an application that uses the [GitHub API](https://developer.github.com/v3/) to perform queries and favor users or repositories. 
+ Githubers is an application that uses the [GitHub API](https://developer.github.com/v3/) to perform queries 
+ and favor users or repositories. 
  
- The idea behind this project is to document and develop in a simple way almost all new JetPack features and other essential dependencies in developing a well-designed application following the steps of Google's own architectural guide. 
+ The idea behind this project is to document and develop in a simple way almost all new JetPack features and 
+ other essential dependencies in developing a well-designed application following the steps of Google's own 
+ architectural guide. 
  
  ------
  
   Technologies / Resources: 
   
-   JetPack, Navigation, Room, Glide, Coroutines, Retrofit, Data Binding, LiveData, ViewModel, Dagger2, Worker, Gson, ContentProvider, SearchableView etc.
+   JetPack, Navigation, Room, Glide, Coroutines, Retrofit, Data Binding, LiveData, ViewModel, Dagger2, Worker, 
+   Gson, ContentProvider, SearchableView, Category Browsable etc.
  
  Functionalities: 
    
@@ -31,6 +37,7 @@ guia de arquitetura do Google.
  - List of favorite repositories;
  - Search of users;
  - Search of repositories;
+ - Open in-app external links from github.com
  
 ## Dependencies / Libraries:
 
@@ -48,9 +55,9 @@ guia de arquitetura do Google.
    - [Glide](https://bumptech.github.io/glide/)
    - [Retrofit](https://square.github.io/retrofit/)
     
-   Veja as dependências utilizadas: [build.gradle](/app/build.gradle)
+   See the dependencies used: [build.gradle](/app/build.gradle)
 
-## Tutoriais e guias
+## Tutorials and guides
 
 ### Android guides / architecture / Projects (github)
 

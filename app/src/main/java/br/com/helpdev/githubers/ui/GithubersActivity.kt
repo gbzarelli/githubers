@@ -7,11 +7,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.ui.*
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import br.com.helpdev.githubers.R
 import br.com.helpdev.githubers.databinding.ActivityGithubersBinding
-import br.com.helpdev.githubers.ui.frags.user.UserFragment
 import br.com.helpdev.githubers.ui.frags.user.UserFragmentArgs
+
 
 /**
  * Main activity. In it is configured the DrawerLayout and navigation of fragments.
@@ -25,6 +28,7 @@ import br.com.helpdev.githubers.ui.frags.user.UserFragmentArgs
 class GithubersActivity : InjectableFragmentActivity() {
     companion object {
         const val INTENT_STRING_USER_LOGIN = "INTENT_STRING_USER_LOGIN"
+        private val TAG by lazy { GithubersActivity::class.java.simpleName }
     }
 
     private lateinit var drawerLayout: DrawerLayout
@@ -36,6 +40,7 @@ class GithubersActivity : InjectableFragmentActivity() {
         val binding: ActivityGithubersBinding = DataBindingUtil.setContentView(this, R.layout.activity_githubers)
         configureActivity(binding)
         configureNavigation(binding)
+        savedInstanceState ?: onNewIntent(intent)
     }
 
     private fun configureActivity(binding: ActivityGithubersBinding) {

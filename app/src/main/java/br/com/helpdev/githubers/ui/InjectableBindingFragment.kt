@@ -62,13 +62,12 @@ abstract class InjectableBindingFragment<T : ViewDataBinding, Z : ViewModel>
 
     fun showSnackError(view: View, message: String) {
         try {
-            Snackbar.make(
-                view, message,
-                Snackbar.LENGTH_LONG
-            ).setActionTextColor(Color.GRAY)
-                .setAction(R.string.dismiss) { }.show()
+            Snackbar.make(view, message, Snackbar.LENGTH_LONG)
+                .setActionTextColor(Color.GRAY)
+                .setAction(R.string.dismiss) { }
+                .show()
         } catch (th: Throwable) {
-            Log.e(InjectableBindingFragment.TAG, "showSnackError", th)
+            Log.e(TAG, "showSnackError", th)
         }
     }
 
