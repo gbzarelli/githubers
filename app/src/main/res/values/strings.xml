@@ -29,4 +29,5 @@
     <string name="repositories">Repositories:</string>
     <string name="searchable_user_hint">Enter with an user</string>
     <string name="searchable_user_label">User search</string>
+    <string name="share">Share</string>
 </resources>

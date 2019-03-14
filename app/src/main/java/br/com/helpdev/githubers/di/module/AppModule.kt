@@ -27,7 +27,7 @@ import androidx.work.*
 import br.com.helpdev.githubers.data.api.github.GithubService
 import br.com.helpdev.githubers.data.db.GithubDatabase
 import br.com.helpdev.githubers.util.DATABASE_NAME
-import br.com.helpdev.githubers.util.GITHUB_BASE_URL
+import br.com.helpdev.githubers.util.GITHUB_API_BASE_URL
 import br.com.helpdev.githubers.util.MY_USER_GITHUB
 import br.com.helpdev.githubers.util.gson.CalendarDeserializer
 import br.com.helpdev.githubers.worker.GithubUsersWorker
@@ -64,7 +64,7 @@ class AppModule {
     @Provides
     fun provideGithubService(gson: Gson): GithubService {
         return Retrofit.Builder()
-            .baseUrl(GITHUB_BASE_URL)
+            .baseUrl(GITHUB_API_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build().create(GithubService::class.java)

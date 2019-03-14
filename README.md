@@ -38,6 +38,8 @@ guia de arquitetura do Google.
  - Search of users;
  - Search of repositories;
  - Open in-app external links from github.com
+ - Share user link
+ - Share repo link
  
 ## Dependencies / Libraries:
 
