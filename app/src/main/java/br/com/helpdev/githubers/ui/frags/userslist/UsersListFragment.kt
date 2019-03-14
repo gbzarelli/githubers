@@ -9,7 +9,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import br.com.helpdev.githubers.R
-import br.com.helpdev.githubers.data.entity.UserWithFav
+import br.com.helpdev.githubers.data.db.entity.UserWithFav
 import br.com.helpdev.githubers.databinding.FragmentUsersListBinding
 import br.com.helpdev.githubers.ui.InjectableBindingFragment
 import br.com.helpdev.githubers.ui.SearchableActivity

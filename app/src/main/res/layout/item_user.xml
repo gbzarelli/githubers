@@ -10,7 +10,7 @@
         <variable name="longClickListener"
                   type="android.view.View.OnLongClickListener"/>
         <variable name="userFav"
-                  type="br.com.helpdev.githubers.data.entity.UserWithFav"/>
+                  type="br.com.helpdev.githubers.data.db.entity.UserWithFav"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

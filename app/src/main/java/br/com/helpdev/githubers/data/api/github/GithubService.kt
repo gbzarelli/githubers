@@ -1,8 +1,8 @@
 package br.com.helpdev.githubers.data.api.github
 
-import br.com.helpdev.githubers.data.entity.User
-import br.com.helpdev.githubers.data.entity.UserRepo
-import br.com.helpdev.githubers.data.model.SearchUsers
+import br.com.helpdev.githubers.data.db.entity.User
+import br.com.helpdev.githubers.data.db.entity.UserRepo
+import br.com.helpdev.githubers.data.objects.SearchUsers
 import kotlinx.coroutines.Deferred
 import retrofit2.Call
 import retrofit2.Response

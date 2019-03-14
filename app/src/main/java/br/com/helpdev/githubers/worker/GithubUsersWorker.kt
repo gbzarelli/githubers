@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import br.com.helpdev.githubers.data.entity.User
+import br.com.helpdev.githubers.data.db.entity.User
 import br.com.helpdev.githubers.data.repository.FavoriteRepository
 import br.com.helpdev.githubers.data.repository.UserRepository
 import br.com.helpdev.githubers.di.worker.IWorkerFactory

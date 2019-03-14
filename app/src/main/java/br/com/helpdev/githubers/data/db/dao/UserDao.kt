@@ -8,8 +8,8 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
-import br.com.helpdev.githubers.data.entity.User
-import br.com.helpdev.githubers.data.entity.UserWithFav
+import br.com.helpdev.githubers.data.db.entity.User
+import br.com.helpdev.githubers.data.db.entity.UserWithFav
 
 
 @Dao
@@ -39,12 +39,6 @@ interface UserDao {
     @Query("SELECT u_.*, f_.user_id f_user_id FROM user u_ left join fav_user f_ ON u_.user_id = f_.user_id WHERE u_.login=:login")
     fun loadWithFavInstant(login: String): UserWithFav?
 
-    @Query("SELECT * FROM user")
-    fun load(): DataSource.Factory<Int, User>
-
     @Query("SELECT u_.*, f_.user_id f_user_id FROM user u_ left join fav_user f_ ON u_.user_id = f_.user_id ORDER BY u_.user_id")
     fun loadWithFav(): DataSource.Factory<Int, UserWithFav>
-
-    @Query("SELECT u_.*, f_.user_id f_user_id FROM user u_ left join fav_user f_ ON u_.user_id = f_.user_id where u_.login like :query OR u_.name like :query OR u_.email like :query ORDER BY u_.user_id")
-    fun findWithFav(query: String): DataSource.Factory<Int, UserWithFav>
 }

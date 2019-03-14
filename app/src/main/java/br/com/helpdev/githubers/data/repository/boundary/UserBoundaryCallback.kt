@@ -1,7 +1,7 @@
 package br.com.helpdev.githubers.data.repository.boundary
 
 import androidx.paging.PagedList
-import br.com.helpdev.githubers.data.entity.UserWithFav
+import br.com.helpdev.githubers.data.db.entity.UserWithFav
 import br.com.helpdev.githubers.data.repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

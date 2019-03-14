@@ -1,4 +1,4 @@
-package br.com.helpdev.githubers.data.entity
+package br.com.helpdev.githubers.data.db.entity
 
 import androidx.room.*
 import com.google.gson.annotations.Expose

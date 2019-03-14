@@ -1,6 +1,8 @@
 package br.com.helpdev.githubers.data.entity
 
 import br.com.helpdev.githubers.R
+import br.com.helpdev.githubers.data.db.entity.User
+import br.com.helpdev.githubers.data.db.entity.UserWithFav
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test

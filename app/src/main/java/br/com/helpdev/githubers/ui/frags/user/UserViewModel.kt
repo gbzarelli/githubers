@@ -2,7 +2,7 @@ package br.com.helpdev.githubers.ui.frags.user
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import br.com.helpdev.githubers.data.entity.UserWithFav
+import br.com.helpdev.githubers.data.db.entity.UserWithFav
 import br.com.helpdev.githubers.data.repository.FavoriteRepository
 import br.com.helpdev.githubers.data.repository.UserRepository
 import kotlinx.coroutines.CoroutineScope

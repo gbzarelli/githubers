@@ -6,9 +6,9 @@ import androidx.room.TypeConverters
 import br.com.helpdev.githubers.data.db.dao.FavoriteDao
 import br.com.helpdev.githubers.data.db.dao.UserDao
 import br.com.helpdev.githubers.data.db.dao.UserRepoDao
-import br.com.helpdev.githubers.data.entity.FavUser
-import br.com.helpdev.githubers.data.entity.User
-import br.com.helpdev.githubers.data.entity.UserRepo
+import br.com.helpdev.githubers.data.db.entity.FavUser
+import br.com.helpdev.githubers.data.db.entity.User
+import br.com.helpdev.githubers.data.db.entity.UserRepo
 import br.com.helpdev.githubers.util.DATABASE_VERSION
 
 @Database(

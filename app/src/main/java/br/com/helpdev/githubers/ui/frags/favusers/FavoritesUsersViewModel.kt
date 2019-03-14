@@ -3,7 +3,7 @@ package br.com.helpdev.githubers.ui.frags.favusers
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
-import br.com.helpdev.githubers.data.entity.UserWithFav
+import br.com.helpdev.githubers.data.db.entity.UserWithFav
 import br.com.helpdev.githubers.data.repository.FavoriteRepository
 import kotlinx.coroutines.*
 import javax.inject.Inject

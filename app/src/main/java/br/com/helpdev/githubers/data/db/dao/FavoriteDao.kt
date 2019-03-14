@@ -2,8 +2,8 @@ package br.com.helpdev.githubers.data.db.dao
 
 import androidx.paging.DataSource
 import androidx.room.*
-import br.com.helpdev.githubers.data.entity.FavUser
-import br.com.helpdev.githubers.data.entity.UserWithFav
+import br.com.helpdev.githubers.data.db.entity.FavUser
+import br.com.helpdev.githubers.data.db.entity.UserWithFav
 
 @Dao
 interface FavoriteDao {

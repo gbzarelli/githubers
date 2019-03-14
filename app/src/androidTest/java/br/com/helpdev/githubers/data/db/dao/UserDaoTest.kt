@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import br.com.helpdev.githubers.JSON_USER
 import br.com.helpdev.githubers.data.db.GithubDatabase
 import br.com.helpdev.githubers.data.db.GithubDatabaseTest
-import br.com.helpdev.githubers.data.entity.User
+import br.com.helpdev.githubers.data.db.entity.User
 import br.com.helpdev.githubers.di.module.AppModule
 import br.com.helpdev.githubers.util.getValue
 import org.junit.Assert

@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import br.com.helpdev.githubers.data.db.dao.FavoriteDao
-import br.com.helpdev.githubers.data.entity.FavUser
-import br.com.helpdev.githubers.data.entity.UserWithFav
+import br.com.helpdev.githubers.data.db.entity.FavUser
+import br.com.helpdev.githubers.data.db.entity.UserWithFav
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

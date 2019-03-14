@@ -4,8 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.paging.PagedList
 import br.com.helpdev.githubers.data.db.GithubDatabaseTest
 import br.com.helpdev.githubers.data.db.dao.UserDaoTest
-import br.com.helpdev.githubers.data.entity.User
-import br.com.helpdev.githubers.data.entity.UserWithFav
+import br.com.helpdev.githubers.data.db.entity.User
+import br.com.helpdev.githubers.data.db.entity.UserWithFav
 import br.com.helpdev.githubers.data.repository.FavoriteRepository
 import br.com.helpdev.githubers.ui.frags.favusers.FavoritesUsersViewModel
 import br.com.helpdev.githubers.util.getValue

@@ -1,7 +1,7 @@
 package br.com.helpdev.githubers
 
-import br.com.helpdev.githubers.data.entity.User
-import br.com.helpdev.githubers.data.entity.UserRepo
+import br.com.helpdev.githubers.data.db.entity.User
+import br.com.helpdev.githubers.data.db.entity.UserRepo
 import br.com.helpdev.githubers.di.module.AppModule
 import com.google.gson.Gson
 import org.junit.Assert.assertEquals

@@ -1,6 +1,6 @@
-package br.com.helpdev.githubers.data.model
+package br.com.helpdev.githubers.data.objects
 
-import br.com.helpdev.githubers.data.entity.User
+import br.com.helpdev.githubers.data.db.entity.User
 
 class SearchUsers(
     val total_count: Int,

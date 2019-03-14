@@ -7,8 +7,8 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import br.com.helpdev.githubers.data.api.github.GithubService
 import br.com.helpdev.githubers.data.db.dao.UserDao
-import br.com.helpdev.githubers.data.entity.User
-import br.com.helpdev.githubers.data.entity.UserWithFav
+import br.com.helpdev.githubers.data.db.entity.User
+import br.com.helpdev.githubers.data.db.entity.UserWithFav
 import br.com.helpdev.githubers.data.repository.boundary.UserBoundaryCallback
 import br.com.helpdev.githubers.worker.dispatchListUsersWorker
 import br.com.helpdev.githubers.worker.dispatchUserWorker
