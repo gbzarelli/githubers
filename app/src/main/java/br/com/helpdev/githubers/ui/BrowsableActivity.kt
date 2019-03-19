@@ -1,6 +1,7 @@
 package br.com.helpdev.githubers.ui
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
@@ -11,12 +12,12 @@ class BrowsableActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (Intent.ACTION_VIEW == intent.action) processIntentAction()
+        if (Intent.ACTION_VIEW == intent.action) processIntentAction(intent)
         finish()
     }
 
-    private fun processIntentAction() {
-        val expectedUserLogin = getExpectedUserLogin()
+    private fun processIntentAction(intent: Intent) {
+        val expectedUserLogin = intent.data?.let { getExpectedUserLogin(it) }
         if (expectedUserLogin.isNullOrEmpty()) {
             openGithubers()
         } else {
@@ -24,8 +25,8 @@ class BrowsableActivity : AppCompatActivity() {
         }
     }
 
-    private fun getExpectedUserLogin(): String? {
-        return intent.data?.pathSegments?.let {
+    private fun getExpectedUserLogin(uri: Uri): String? {
+        return uri.pathSegments?.let {
             if (it.isEmpty()) null else it[0]
         }
     }

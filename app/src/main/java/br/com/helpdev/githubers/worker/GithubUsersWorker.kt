@@ -2,16 +2,14 @@ package br.com.helpdev.githubers.worker
 
 import android.content.Context
 import android.util.Log
+import androidx.work.CoroutineWorker
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import br.com.helpdev.githubers.data.db.entity.User
 import br.com.helpdev.githubers.data.repository.FavoriteRepository
 import br.com.helpdev.githubers.data.repository.UserRepository
 import br.com.helpdev.githubers.di.worker.IWorkerFactory
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -19,7 +17,8 @@ class GithubUsersWorker(
     context: Context, workerParams: WorkerParameters,
     private val userRepository: UserRepository,
     private val favoriteRepository: FavoriteRepository
-) : Worker(context, workerParams) {
+) : CoroutineWorker(context, workerParams) {
+
     companion object {
         const val TAG = "GithubUsersWorker"
         const val DATA_INT_LAST_ID = "last_id"
@@ -31,15 +30,17 @@ class GithubUsersWorker(
         Log.e(TAG, "GithubUsersWorker+CoroutineExceptionHandler", ex)
     }
 
-    override fun doWork(): Result {
-        CoroutineScope(Dispatchers.Main + handler).launch {
-            inputData.getString(DATA_LOAD_ONLY_USER)?.let { login ->
-                val user = userRepository.loadUser(login, false)
-                if (inputData.getBoolean(DATA_BOOL_SAVE_IN_FAVORITES, false) && user is User) {
-                    favoriteRepository.addFavorite(user.id)
-                }
-            } ?: userRepository.loadUserList(inputData.getInt(DATA_INT_LAST_ID, 0), false)
-        }
+    init {
+        coroutineContext.plus(handler)
+    }
+
+    override suspend fun doWork(): Result {
+        inputData.getString(DATA_LOAD_ONLY_USER)?.let { login ->
+            val user = userRepository.loadUser(login, false)
+            if (inputData.getBoolean(DATA_BOOL_SAVE_IN_FAVORITES, false) && user is User) {
+                favoriteRepository.addFavorite(user.id)
+            }
+        } ?: userRepository.loadUserList(inputData.getInt(DATA_INT_LAST_ID, 0), false)
         return Result.success()
     }
 

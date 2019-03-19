@@ -2,19 +2,16 @@ package br.com.helpdev.githubers.ui.frags.favusers
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.paging.PagedList
 import br.com.helpdev.githubers.data.db.entity.UserWithFav
 import br.com.helpdev.githubers.data.repository.FavoriteRepository
-import kotlinx.coroutines.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class FavoritesUsersViewModel @Inject constructor(
     private val favoriteRepository: FavoriteRepository
-) :
-    ViewModel() {
-
-    private val job = Job()
-    private val coroutineScope = CoroutineScope(Dispatchers.Main + job)
+) : ViewModel() {
 
     private var userList: LiveData<PagedList<UserWithFav>>? = null
 
@@ -22,19 +19,14 @@ class FavoritesUsersViewModel @Inject constructor(
         return userList ?: favoriteRepository.getFavUsers().also { userList = it }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        job.cancel()
-    }
-
     fun removeFavorite(id: Int) {
-        coroutineScope.launch {
+        viewModelScope.launch {
             favoriteRepository.removeFavorite(id)
         }
     }
 
     fun addFavorite(id: Int) {
-        coroutineScope.launch {
+        viewModelScope.launch {
             favoriteRepository.addFavorite(id)
         }
     }
