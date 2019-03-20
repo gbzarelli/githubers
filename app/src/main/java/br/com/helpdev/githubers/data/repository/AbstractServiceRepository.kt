@@ -27,13 +27,13 @@ abstract class AbstractServiceRepository {
      * Method for calling services. Always use it for NetworkServiceStatus to be monitored.
      */
     internal suspend fun callMonitoredService(id: Int, params: Bundle? = null): Any? {
-        getNetworkServiceStatus(id).value = NetworkServiceStatus(NetworkServiceStatus.STATUS_FETCHING)
+        getNetworkServiceStatus(id).postValue(NetworkServiceStatus(NetworkServiceStatus.STATUS_FETCHING))
         try {
             return doCallService(id, params).also {
-                getNetworkServiceStatus(id).value = NetworkServiceStatus(NetworkServiceStatus.STATUS_SUCCESS)
+                getNetworkServiceStatus(id).postValue(NetworkServiceStatus(NetworkServiceStatus.STATUS_SUCCESS))
             }
         } catch (e: Throwable) {
-            getNetworkServiceStatus(id).value = NetworkServiceStatus(NetworkServiceStatus.STATUS_ERROR, e)
+            getNetworkServiceStatus(id).postValue(NetworkServiceStatus(NetworkServiceStatus.STATUS_ERROR, e))
             Log.e(TAG, "callMonitoredService-Throwable", e)
         }
         return null
